@@ -1,0 +1,15 @@
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        // "modules": "./src/modules",
+        "components": "./src/components",
+        "themes": "./src/themes",
+        "utils": "./src/utils",
+        "styles": "./src/styles"
+      }
+    }]
+  ]
+}
