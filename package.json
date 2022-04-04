@@ -1,0 +1,23 @@
+{
+  "name": "mokopio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon serverLocal.js -e js,html --ignore src",
+    "prod": "node serverProd.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/milangladis/mokopio.git"
+  },
+  "author": "Milan Gladis",
+  "bugs": {
+    "url": "https://github.com/milangladis/mokopio/issues"
+  },
+  "homepage": "https://github.com/milangladis/mokopio#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
