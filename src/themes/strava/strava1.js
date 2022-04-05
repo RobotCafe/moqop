@@ -9,11 +9,10 @@ export default function Theme(activityData) {
 
     <div className="relative">
 
-      {/* <img className='absolute z-20 opacity-30' src="./images/header.svg" alt="" />
+      <img className='absolute z-20 opacity-30' src="./images/header.svg" alt="" />
 
       <div className="relative h-full rounded overflow-hidden aspect-[0.5625]">
         <div className='absolute  z-20 h-full w-full flex flex-col text-white'>
-          <div className='m-24'>{activityData.name}</div>
           <div className="flex items-end flex-1 w-full justify-center gap-32 mb-80">
             <div className=''>
               <span className='block text-14 text-white/80'>{activityData.type}</span>
@@ -36,14 +35,15 @@ export default function Theme(activityData) {
           </div>
         </div>
         
-        <Canvas polyline={activityData.map.polyline} className="absolute z-20 h-full w-full scale-[.8]" width="1080" height="1920" />
-        <Canvas className="absolute z-20 h-full w-full scale-[.8]" width="1080" height="1920" />
+        <Canvas {...activityData} />
+        {/* <Canvas {...activityData} className="absolute z-20 h-full w-full scale-[.8]" width="1080" height="1920" /> */}
+        {/* <Canvas polyline={activityData.map ? activityData.map.polyline : ''} className="absolute z-20 h-full w-full scale-[.8]" width="1080" height="1920" /> */}
+        {/* <Canvas className="absolute z-20 h-full w-full scale-[.8]" width="1080" height="1920" /> */}
 
         <div className="absolute z-10 top-0 h-full l-0 w-full bg-gradient-to-b from-[#243c5a]/10 to-[#243c5a]/50"></div>
 
-        <img className='block absolute z-0 top-0 h-full aspect-video' src={activityData.photos.primary.urls[600]}/>
-      </div> */}
-      commented canvas
+        <img className='block absolute z-0 top-0 h-full aspect-video' src={activityData.photos?activityData.photos.primary.urls[600]:''}/>
+      </div>
     </div>
   )
 }

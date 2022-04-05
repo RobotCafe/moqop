@@ -156,7 +156,6 @@ export default function Home(props) {
       <Head>
         <title>Strava activity image</title>
         <meta name="description" content="Generated pretty image from your Strava activity" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Integration /> 

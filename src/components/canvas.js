@@ -7,20 +7,9 @@ export default function Canvas({...props}) {
   
   const canvasRef = useRef(null)
 
-  // console.log(props)
+  console.log(props.name)
 
-  useEffect(() => {
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext('2d')
-    // //Our first draw
-    ctx.fillStyle = '#cccccc'
-    // context.fillRect(0, 0, context.canvas.width, context.canvas.height)
-
-    // let arr = polyline.decode(props.polyline )
-
-    let arr = polyline.decode(
-      "msydHgx`q@_A~IkDL\\pJsPrWcQhv@cJxKq@bIpIjAzE~OzKdMbKrd@jK~FtMbTbL}H~DzVpLnJpTwB_CpPdNjOsDkKoNiGiKdHcIiDoTnDm]gMwWlQgy@sOiQpUyQqTuZdHwHgBlHuCqLoCyIzBaBpGgHSyKwF{AgIuGcAsNdIc]v@cKqEyLxFoYuMkd@pGoYsFkI`FuEpRy_@|g@iLlp@gIvBcUyRbAyJ_KEeV_]gLgGiNe}@yFmM|J}LeJiDoAoH{Uh@}BgT{Hk@qLcOja@aZsPyXgDyOzKLt@kN_ScXoAuTp@oYxN}LxQ}CgNm_AjJuCtj@cn@bh@sI~C{NnWmEjCiIhHWpDqHde@A~X_Nv]hO`S`Sda@aGfL`LGxEwLdQ`N~e@iT`k@XhEdDaBkC|Z~Jr_@}Sp_@~D`ReFg@qEjLiTsNeAwG}Ht@{BhFGt]lJtOxJfE`D|J`R|Hle@kTzPrY~ZmLlPpEbMqGxJeQxYqM~\\zNb\\uE|PlX~DoIlGnArGaHbQmw@nHcM"
-    );
+  const update = async (arr, canvas, ctx) => {
     // var canvas = document.getElementById("canvas");
     // var ctx = canvas.getContext("2d");
 
@@ -60,14 +49,37 @@ export default function Canvas({...props}) {
     ctx.lineJoin = "round";
     ctx.lineCap = 'round',
     ctx.stroke();
+ }
+
+  useEffect(() => {
+    console.log('useEffect')
+    console.log(props)
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // //Our first draw
+    // ctx.fillStyle = '#cccccc'
+    // context.fillRect(0, 0, context.canvas.width, context.canvas.height)
+    if (props.data === 'initial') {
+      let arr = polyline.decode(
+        "msydHgx`q@_A~IkDL\\pJsPrWcQhv@cJxKq@bIpIjAzE~OzKdMbKrd@jK~FtMbTbL}H~DzVpLnJpTwB_CpPdNjOsDkKoNiGiKdHcIiDoTnDm]gMwWlQgy@sOiQpUyQqTuZdHwHgBlHuCqLoCyIzBaBpGgHSyKwF{AgIuGcAsNdIc]v@cKqEyLxFoYuMkd@pGoYsFkI`FuEpRy_@|g@iLlp@gIvBcUyRbAyJ_KEeV_]gLgGiNe}@yFmM|J}LeJiDoAoH{Uh@}BgT{Hk@qLcOja@aZsPyXgDyOzKLt@kN_ScXoAuTp@oYxN}LxQ}CgNm_AjJuCtj@cn@bh@sI~C{NnWmEjCiIhHWpDqHde@A~X_Nv]hO`S`Sda@aGfL`LGxEwLdQ`N~e@iT`k@XhEdDaBkC|Z~Jr_@}Sp_@~D`ReFg@qEjLiTsNeAwG}Ht@{BhFGt]lJtOxJfE`D|J`R|Hle@kTzPrY~ZmLlPpEbMqGxJeQxYqM~\\zNb\\uE|PlX~DoIlGnArGaHbQmw@nHcM"
+      );
+      console.log('initial')
+      update(arr, canvas, ctx)
+    } else {
+      let arr = polyline.decode(props.map.polyline)
+      update(arr, canvas, ctx)
+      console.log('real')
+    }
+
+
 
     // ctx.font = 2 * window.innerWidth + "px Inter";
     // ctx.fillText  ('Keyboard Cat', 0, 270);
 
-
   }, [])
   
-  return <canvas ref={canvasRef} {...props}/>
+  return <canvas ref={canvasRef} className="absolute z-20 h-full w-full scale-[.8]" width="1080" height="1920" />
 }
 
 
