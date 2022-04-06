@@ -2,6 +2,7 @@
 module.exports = function(app) {
   // var page   = require('./controller/page');
   var strava   = require('./controller/strava');
+  var render   = require('./controller/render');
   // var dynamicPages   = require('./controller/dynamic');
 
 // app.get('/', function(req, res){    
@@ -22,6 +23,7 @@ module.exports = function(app) {
 
   // Static Pages
   app.route('/api/strava/:id').get(strava.activity);
+  app.route('/api/render/strava-one').get(render.stravaOne);
   // app.route('/request').get(staticPages.request);
   // app.route('/sell').get(staticPages.sell);
   // app.route('/terms-of-use').get(staticPages.termsOfUse);

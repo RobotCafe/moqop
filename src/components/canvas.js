@@ -52,10 +52,11 @@ export default function Canvas({...props}) {
  }
 
   useEffect(() => {
-    console.log('useEffect')
-    console.log(props)
+    
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
+    console.log('useEffect')
+    console.log(props)
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // //Our first draw
     // ctx.fillStyle = '#cccccc'

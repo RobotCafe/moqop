@@ -6,8 +6,9 @@ export default function Button(props) {
 
 
   var classname = `
-    inline-flex rounded-sm px-16 py-8 font-medium rounded-4 bg-blue justify-center text-white
-    ${props.bg === 'blue' ? 'bg-blue text-white' : ''}
+    inline-flex rounded-sm px-16 font-medium rounded-4 bg-blue justify-center text-white
+    ${props.type === 'secondary' ? 'bg-black' : ''}
+    ${props.size === 'small' ? 'py-4 px-16 text-12' : 'py-8'}
     ${props.className}
   `
 

@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 
 export default function Home(props) {
   
-  // const [activityID, setactivityID] = useState(6871108204);
+  const [activityID, setactivityID] = useState(6871108204);
   
   // Load initial state
   // const postsResponse = fetch(`${server}/data/activity.json`);
@@ -75,7 +75,7 @@ export default function Home(props) {
     // return await resStats.json()
   // }
 
-    const activityID = 6929723242
+    // const activityID = 6929723242
     // const activityID = 6871108204
     // var activityData
 
