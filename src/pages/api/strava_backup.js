@@ -17,6 +17,7 @@ async function getStrava() {
   
   const response = await fetch(url, options)
   console.log(response.status)
+  console.log('REQUEST!')
   if (response.status == 401) {
     console.log('fetch new token')
     // https://www.strava.com/oauth/authorize?client_id=80214&redirect_uri=http://localhost&response_type=code&scope=activity:read_all

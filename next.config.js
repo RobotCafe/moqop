@@ -2,8 +2,8 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/src/pages/api',
-        destination: '/api',
+        destination: '/src/pages/api',
+        source: '/api',
       },
     ]
   },

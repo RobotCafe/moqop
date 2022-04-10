@@ -23,7 +23,7 @@ module.exports = function(app) {
 
   // Static Pages
   app.route('/api/strava/:id').get(strava.activity);
-  app.route('/api/render/strava-one').get(render.stravaOne);
+  app.route('/api/render/strava-one/:id').get(render.stravaOne);
   // app.route('/request').get(staticPages.request);
   // app.route('/sell').get(staticPages.sell);
   // app.route('/terms-of-use').get(staticPages.termsOfUse);

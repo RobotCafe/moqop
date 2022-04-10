@@ -49,6 +49,7 @@ exports.activity = async function(req,res) {
   // console.log(entries);
   let [{access_token, refresh_token}] = await entries.docs.map(entry => entry.data())
   console.log('tokens: ' + access_token, refresh_token)
+  console.log('Request – Refresh token')
   const resToken = await fetch(
     `https://www.strava.com/api/v3/oauth/token?client_id=${process.env.CLIENT_ID_STRAVA}&client_secret=${process.env.CLIENT_SECRET_STRAVA}&grant_type=refresh_token&refresh_token=${refresh_token}`,
     {
@@ -59,6 +60,7 @@ exports.activity = async function(req,res) {
   .then(dataAuth => {
     console.log('dataAuth')
     console.log(dataAuth)
+    console.log('Request - Activity')
     fetch(
       // 'https://www.strava.com/api/v3/athletes/42409445/stats',
       `https://www.strava.com/api/v3/activities/${req.params.id}`,
@@ -75,7 +77,7 @@ exports.activity = async function(req,res) {
       response => (response.json())
     )
     .then(dataActivity => {
-        console.log(dataActivity)
+        // console.log(dataActivity)
         const {
           access_token: newToken,
           refresh_token: newRefreshToken,
