@@ -27,7 +27,7 @@ exports.stravaOne = async function(req,res) {
   // Render canvas
   function renderCanvas() {
     var Image = Canvas.Image;
-    var canvas = Canvas.createCanvas(950, 950);
+    var canvas = Canvas.createCanvas(1000, 1300);
     var context = canvas.getContext('2d');
     let arr = polyline.decode(mapPolyline);
 
@@ -55,8 +55,10 @@ exports.stravaOne = async function(req,res) {
     const mapCenterX = (maxX + minX) / 2;
     const mapCenterY = (maxY + minY) / 2;
 
+    console.log(mapWidth, mapHeight, mapCenterX, mapCenterY)
+
     // to find the scale that will fit the canvas get the min scale to fit height or width
-    const scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight);
+    const scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.9;
 
     // Now you can draw the map centered on the cavas
     context.beginPath();
@@ -64,14 +66,18 @@ exports.stravaOne = async function(req,res) {
     
     arr.forEach((p, i) => {
       if (i === 0) {
-        firstPoint[0] = (p[1] - mapCenterX) * scale*0.9 + canvas.width / 2
-        firstPoint[1] = (p[0] - mapCenterY) * scale*0.9 + canvas.height / 2
+        firstPoint[0] = (p[1] - mapCenterX) * scale + canvas.width / 2
+        firstPoint[1] = (p[0] - mapCenterY) * -scale + canvas.height / 2
       }
       context.lineTo(
-        (p[1] - mapCenterX) * scale*0.9 + canvas.width / 2,
-        (p[0] - mapCenterY) * scale*0.9 + canvas.height / 2
+        (p[1] - mapCenterX) * scale + canvas.width / 2,
+        (p[0] - mapCenterY) * -scale + canvas.height / 2
       );
     });
+
+    // TODO - make it rounded
+    // https://stackoverflow.com/questions/29074956/in-mapbox-js-how-to-smooth-a-polyline
+
     context.lineWidth = 8;
     context.strokeStyle = 'white';
     context.lineJoin = "round";
@@ -166,7 +172,7 @@ exports.stravaOne = async function(req,res) {
           .stats {
             position: absolute; 
             z-index: 10; 
-            bottom: 10rem; 
+            bottom: 8rem; 
             width:100%; 
             display:flex; 
             justify-content: 
@@ -205,10 +211,9 @@ exports.stravaOne = async function(req,res) {
             z-index: 9;
             left:50%;
             top: 50%;
-            width: 950px;
-            height: 950px;
-            /*transform: translate(-50%, -50%) scale(1, -1.5);*/
-            transform: translate(-50%, -50%) scale(1, -1);
+            width: 1000px;
+            height: 1300px;
+            transform: translate(-50%, -55%);
           }
         </style>
       </head>
@@ -230,15 +235,15 @@ exports.stravaOne = async function(req,res) {
   
   `)
 
-  res.send(output)
+  // res.send(output)
 
-  // const image = await nodeHtmlToImage({
-  //   html: output,
-  //   defaultViewport: {
-  //     width: 1080,
-  //     height: 1920
-  //   }
-  // });
-  // res.writeHead(200, { 'Content-Type': 'image/png' });
-  // res.end(image, 'binary');
+  const image = await nodeHtmlToImage({
+    html: output,
+    defaultViewport: {
+      width: 1080,
+      height: 1920
+    }
+  });
+  res.writeHead(200, { 'Content-Type': 'image/png' });
+  res.end(image, 'binary');
 }

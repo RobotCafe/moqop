@@ -1,10 +1,8 @@
 const express = require('express')
 const next = require('next')
-// require('trace-unhandled/register');
 var cookieParser = require('cookie-parser')
-const cors = require('cors');
 var bodyParser = require('body-parser')
-var timeout = require('connect-timeout'); //express v4
+
 const port = parseInt(process.env.PORT, 10) || 8000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -16,24 +14,8 @@ app.prepare().then(() => {
   var routes = require('./api/routes');
   routes(server); 
 
-    // server.use(cors({ preflightContinue: false, optionsSuccessStatus: 200 }));
+    server.use(cookieParser());
 
-    // //to put this middleaware in final of middleawares
-    // server.use(timeout(36000000)); //10min
-    // server.use((req, res, next) => {
-    //   if (!req.timedout) next();
-    // });
-  
-
-    server.use(timeout('5s'))
-    server.use(bodyParser())
-    server.use(haltOnTimedout)
-    server.use(cookieParser())
-    server.use(haltOnTimedout)
-    
-    function haltOnTimedout (req, res, next) {
-      if (!req.timedout) next()
-    }
     server.all('*', (req, res) => {
       return handle(req, res)
     })
@@ -42,9 +24,6 @@ app.prepare().then(() => {
     if (err) throw err
     console.log(`> Ready on http://localhost:${port}`)
   })
-
-  // var listen = app.listen(3333, () => console.log('running'));
-  // listen.setTimeout(36000000); //10min
 
 })
 
