@@ -84,7 +84,7 @@ export default function Home(props) {
       .then(response => response.json())
       .then(data => {
         setActivityData(data)
-        console.log(activityData)
+        console.log(data)
         // activityData = data
         // console.log(activityData)
         return activityData

@@ -2,7 +2,7 @@ import Canvas from 'components/canvas'
 import {toFixedIfNecessary, formatSeconds} from 'utils/functions'
 
 export default function Theme(activityData) {
-  console.log(activityData)
+  // console.log(activityData)
   // console.log(activityData.map.polyline)
   
   return (
