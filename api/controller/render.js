@@ -9,14 +9,15 @@ const {toFixedIfNecessary, formatSeconds, server} = require('../utils/functions'
 
 
 exports.stravaOne = async function(req,res) {
-  //console.log(req.params.id)
+  console.log('req.user: ' + req._passport.session.user)
+  console.log(req)
 
   // Fetch strava data
   urlStravaData = `${server()}/api/strava/${req.params.id}`
   var stravaData = await fetch(urlStravaData)
     .then(response => response.json())
     .then(data => {
-      console.log(data)
+      // console.log(data)
       return data
     })
 
@@ -235,15 +236,15 @@ exports.stravaOne = async function(req,res) {
   
   `)
 
-  // res.send(output)
+  res.send(output)
 
-  const image = await nodeHtmlToImage({
-    html: output,
-    defaultViewport: {
-      width: 1080,
-      height: 1920
-    }
-  });
-  res.writeHead(200, { 'Content-Type': 'image/png' });
-  res.end(image, 'binary');
+  // const image = await nodeHtmlToImage({
+  //   html: output,
+  //   defaultViewport: {
+  //     width: 1080,
+  //     height: 1920
+  //   }
+  // });
+  // res.writeHead(200, { 'Content-Type': 'image/png' });
+  // res.end(image, 'binary');
 }

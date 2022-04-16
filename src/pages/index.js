@@ -84,7 +84,7 @@ export default function Home(props) {
       .then(response => response.json())
       .then(data => {
         setActivityData(data)
-        console.log(data)
+        // console.log(data)
         // activityData = data
         // console.log(activityData)
         return activityData
@@ -101,7 +101,7 @@ export default function Home(props) {
         //   console.log(result)
         //   console.log(setActivityData)
         // })
-      }
+    }
       
       // console.log(activityData)
     // activityData = changeActivityID()
@@ -122,7 +122,7 @@ export default function Home(props) {
       .then(data => {
         // activityData = data
         setActivityData(data)
-        console.log(activityData)
+        // console.log(activityData)
         return activityData
         // setToDos(data) // Set the toDo variable
         // setIsLoading(false)

@@ -10,7 +10,7 @@ https://www.youtube.com/watch?v=sgscChKfGyg&ab_channel=franchyze923
 1) Get authorization code from authorization page. This is a one time, manual step. 
 Paste the below code in a browser, hit enter then grab the "code" part from the resulting url. 
 
-https://www.strava.com/oauth/authorize?client_id=your_client_id&redirect_uri=http://localhost&response_type=code&scope=activity:read_all
+https://www.strava.com/oauth/authorize?client_id=your_client_id&redirect_uri=http://localhost:8000/api/cookie/set&response_type=code&scope=activity:read_all
 
 2) Exchange authorization code for access token & refresh token
 

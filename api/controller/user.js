@@ -14,7 +14,7 @@ async function isUser(userSessionId) {
     return false
   } else {
     console.log('User exists')
-    return true
+    return (doc.data())
   }
 }
 
@@ -41,6 +41,12 @@ function getcookie(req) {
     return {mokopioSession: 'false'}
   }
 } 
+
+
+async function checkAccess(tokens) {
+  console.log('Ping strava and get info if tokens are valid')
+  console.log(tokens)
+}
 
 exports.get = async function(req,res) {
 
@@ -75,14 +81,21 @@ exports.get = async function(req,res) {
 
 async function refreshToken(sessionID) {
   console.log(sessionID);
-  // return res.send(`Fetched activity from strava: ${sessionID}`);
+  console.log('test')
   
   const entries = await db.collection('users').get()
   
   let [{access_token, refresh_token}] = await entries.docs.map(entry => entry.data())
   console.log('tokens: ' + access_token, refresh_token)
+
+  // TODO: Get first token and refresh token
+  // `https://www.strava.com/oauth/token?client_id=${process.env.CLIENT_ID_STRAVA}&&client_secret=${process.env.CLIENT_SECRET_STRAVA}&code=${TODO:Returnedcode}&grant_type=authorization_code`
+
+
+
   console.log('Request – Refresh token')
   const resToken = await fetch(
+    // `https://www.strava.com/api/v3/oauth/token?client_id=${process.env.CLIENT_ID_STRAVA}&client_secret=${process.env.CLIENT_SECRET_STRAVA}&grant_type=refresh_token&refresh_token=${refresh_token}`,
     `https://www.strava.com/api/v3/oauth/token?client_id=${process.env.CLIENT_ID_STRAVA}&client_secret=${process.env.CLIENT_SECRET_STRAVA}&grant_type=refresh_token&refresh_token=${refresh_token}`,
     {
       method: 'POST',
@@ -109,21 +122,23 @@ async function refreshToken(sessionID) {
       response => (response.json())
     )
     .then(dataActivity => {
+      console.log('dataActivity')
       console.log(dataActivity)
         const {
           access_token: newToken,
           refresh_token: newRefreshToken,
         } = dataAuth
 
-        
         console.log('New tokens: ' + access_token, refresh_token)
         db.collection('users')
-          .doc(sessionID)
-          .update({
-              access_token: newToken,
-              refresh_token: newRefreshToken,
-            })
-    })
+        .doc(sessionID)
+        .update({
+          access_token: newToken,
+          refresh_token: newRefreshToken,
+        })
+        return dataAuth;
+
+      })
   })
 
 }
@@ -135,8 +150,10 @@ exports.set = async function(req,res) {
   const checkUser = await isUser(user)
 
   if(checkUser){
-    console.log(checkUser)
     res.send({message: {user: 'User exist'}})
+    refreshToken(user)
+    checkAccess(checkUser)
+
   } else {
     const userId = generateId();
     console.log(oneYearAhead())

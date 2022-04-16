@@ -3,14 +3,14 @@
 // var firebaseConfig = require('../utils/firebase')
 // const app = initializeApp(firebaseConfig);
 // const db = getFirestore(app);
-const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
+// const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
 const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
 
-const serviceAccount = require('../utils/firebase.json');
+// const serviceAccount = require('../utils/firebase.json');
 
-initializeApp({
-  credential: cert(serviceAccount)
-});
+// initializeApp({
+//   credential: cert(serviceAccount)
+// });
 
 const db = getFirestore();
 
