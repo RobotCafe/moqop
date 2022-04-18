@@ -5,7 +5,7 @@ var Canvas = require('canvas');
 const polyline = require("@mapbox/polyline");
 const font = require('../fonts/roboto.js');
 const fontRoboto = font.roboto;
-const {toFixedIfNecessary, formatSeconds, server} = require('../utils/functions')
+const {toFixedIfNecessary, formatSeconds, server, hdImage} = require('../utils/functions')
 
 
 exports.stravaOne = async function(req,res) {
@@ -21,8 +21,8 @@ exports.stravaOne = async function(req,res) {
       return data
     })
 
-    
-  var stravaPicture = stravaData.photos.primary.urls[600]
+  
+  var stravaPicture = hdImage(stravaData.photos.primary.urls[600])
   var mapPolyline = stravaData.map.polyline
 
   // Render canvas
@@ -236,15 +236,15 @@ exports.stravaOne = async function(req,res) {
   
   `)
 
-  res.send(output)
+  // res.send(output)
 
-  // const image = await nodeHtmlToImage({
-  //   html: output,
-  //   defaultViewport: {
-  //     width: 1080,
-  //     height: 1920
-  //   }
-  // });
-  // res.writeHead(200, { 'Content-Type': 'image/png' });
-  // res.end(image, 'binary');
+  const image = await nodeHtmlToImage({
+    html: output,
+    defaultViewport: {
+      width: 1080,
+      height: 1920
+    }
+  });
+  res.writeHead(200, { 'Content-Type': 'image/png' });
+  res.end(image, 'binary');
 }

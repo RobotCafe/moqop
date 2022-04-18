@@ -29,3 +29,32 @@ exports.server = function() {
   const server = dev ? 'http://localhost:8000' : 'https://strava-story.vercel.app';
   return server
 }
+
+exports.hdImage = function(url) {
+  const path = url.split('-')
+  console.log(path)
+  var size = path[path.length - 1];
+  size = size.split('.')
+  size = size[0].split('x')
+  var x = size[0]
+  var y = size[1]
+  var ratio = x/y
+  var newSize;
+
+  if (x < y) {
+    // console.log('portrait')
+    newSize = [2048*ratio, 2048]
+  } else {
+    // console.log('landscape')
+    newSize = [2048, 2048*ratio]
+  }
+
+  // console.log(path)
+
+  path[path.length - 1] = `${newSize[0]}x${newSize[1]}.jpg`
+  var newPath = path.join('-')
+  // console.log(newPath)
+  // console.log(x, y, ratio, newSize)
+  // console.log(`${path[0]}-${newSize[0]}x${newSize[1]}.jpg`)
+  return newPath
+}
