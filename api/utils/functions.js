@@ -24,9 +24,20 @@ exports.formatSeconds = function(time) {
   return ret;
 }
 
+
+exports.formatPace = function(timeInSeconds, distanceInMetres) {
+  var pace = (timeInSeconds/distanceInMetres)/60*1000;
+  var leftover = pace % 1;
+  var minutes = pace - leftover;
+  var seconds = Math.round(leftover * 60);
+  var finalPace = minutes+":"+seconds
+  console.log(finalPace)
+  return finalPace
+}
+
 exports.server = function() {
   const dev = process.env.NODE_ENV !== 'production';
-  const server = dev ? 'http://localhost:8000' : 'https://strava-story.vercel.app';
+  const server = dev ? 'http://192.168.0.182:8000' : 'https://strava-story.vercel.app';
   return server
 }
 
@@ -39,22 +50,24 @@ exports.hdImage = function(url) {
   var x = size[0]
   var y = size[1]
   var ratio = x/y
-  var newSize;
+  var newSize = Math.ceil(2048*ratio);
 
   if (x < y) {
-    // console.log('portrait')
-    newSize = [2048*ratio, 2048]
+    console.log('portrait')
+    newSize = [newSize, 2048]
   } else {
-    // console.log('landscape')
-    newSize = [2048, 2048*ratio]
+    console.log('landscape')
+    newSize = [2048, newSize]
   }
 
+
+  // console.log('---------')
+  // console.log(url)
   // console.log(path)
 
   path[path.length - 1] = `${newSize[0]}x${newSize[1]}.jpg`
   var newPath = path.join('-')
   // console.log(newPath)
   // console.log(x, y, ratio, newSize)
-  // console.log(`${path[0]}-${newSize[0]}x${newSize[1]}.jpg`)
   return newPath
 }

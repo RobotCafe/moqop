@@ -1,10 +1,16 @@
 import Head from 'next/head'
 import Integration from 'components/integration'
+// var polyline = require('@mapbox/polyline');
+// var Canvas = require('canvas');
+import polyline from '@mapbox/polyline'
+import Canvas from 'canvas'
 import Button from 'components/button'
 import Theme from 'themes/strava/strava1'
 import Seturl from 'components/seturl'
 // import db from 'utils/firebase'
 import { useEffect, useState } from 'react'
+import {server} from '../../api/utils/functions'
+import e from 'connect-timeout'
 
 export default function Home(props) {
   
@@ -13,251 +19,192 @@ export default function Home(props) {
   // Load initial state
   // const postsResponse = fetch(`${server}/data/activity.json`);
   // var initialActivityData = postsResponse.json();
-  const [activityData, setActivityData] = useState({data: 'initial'});
+  const [activityData, setActivityData] = useState(undefined);
+  const [userData, setUserData] = useState(undefined);
 
-  // console.log(props.test.logs.new_token)
-
-  // useEffect(() => {
-  //   // fetch('https://www.strava.com/api/v3/athlete',
-  //   fetch(`https://www.strava.com/api/v3/activities/${activityID}`,
-  //       {
-  //         method: 'GET',
-  //         'Content-Type': 'application/json', 
-  //         headers: {
-  //           Authorization: `Bearer ${props.test.logs.new_token}`,
-  //         },
-  //       },
-  //     )
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setActivityData(data)
-  //     })
-  // }, [])
-
-
-  // const fetchData = async (event) => {
-    // console.log('in da event' + event)
-    // const resStats = await fetch(
-    //   // 'https://www.strava.com/api/v3/athletes/42409445/stats',
-    //   // `https://www.strava.com/api/v3/activities/${event}`,
-    //   'https://www.strava.com/api/v3/athlete',
-    //   {
-    //     method: 'GET',
-    //     'Content-Type': 'application/json', 
-    //     headers: {
-    //       Authorization: `Bearer ${props.test.logs.new_token}`,
-    //     },
-    //   },
-    // )
-    // .then(
-    //   response => (
-    //     console.log(response.json()),
-    //     // setActivityData(response)
-    //   )
-    // )
-    // .then(data => {
-    //     console.log(data)
-    //     setActivityData(data)
-    // })
-
-
-    // var activityData = await resStats.json()
-
-
-    // fetch('https://jsonplaceholder.typicode.com/todos/')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //         setToDos(data) // Set the toDo variable
-  //         setIsLoading(false)
-  //     })
-    // console.log(event)
-    // setActivityData(resStats.json())
-    // return await resStats.json()
-  // }
-
-    // const activityID = 6929723242
-    // const activityID = 6871108204
-    // var activityData
-
-    const changeActivityID = async (event) => {
-      fetch(`/api/strava/${event}`)
-      .then(response => response.json())
-      .then(data => {
-        setActivityData(data)
-        // console.log(data)
-        // activityData = data
-        // console.log(activityData)
-        return activityData
-        // setToDos(data) // Set the toDo variable
-        // setIsLoading(false)
-      })
-      // console.log('test')
-      // console.log(`number: ${event}`)
-      // setactivityID(event)
-      // console.log(activityID)
-      // let fetchedData = await fetchData(event)
-      // fetchedData.then(function(result){
-        //   setActivityData(result)
-        //   console.log(result)
-        //   console.log(setActivityData)
-        // })
+  function formatSeconds(time) {
+    var hrs = ~~(time / 3600);
+    var mins = ~~((time % 3600) / 60);
+    var secs = ~~time % 60;
+  
+    // Output like "1:01" or "4:03:59" or "123:03:59"
+    var ret = "";
+    if (hrs > 0) {
+      ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
     }
-      
-      // console.log(activityData)
-    // activityData = changeActivityID()
-
-
-  // callback = (activityData) => {
-  //     // do something with value in parent component, like save to state
-  // }
-
-  const downloadImage = async (event) => {
-    console.log('GTD')
+    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+    ret += "" + secs;
+    return ret;
   }
+
+  function formatPace(timeInSeconds, distanceInMetres) {
+    var pace = (timeInSeconds/distanceInMetres)/60*1000;
+    var leftover = pace % 1;
+    var minutes = pace - leftover;
+    var seconds = Math.round(leftover * 60);
+    var finalPace = minutes+":"+seconds
+    // console.log(finalPace)
+    return finalPace
+  }
+
+  function renderCanvas(data) {
+    // console.log(data)
+    if (data === null) {
+      return
+    }
+    var Image = Canvas.Image;
+    var canvas = Canvas.createCanvas(200, 200);
+    var context = canvas.getContext('2d');
+    let arr = polyline.decode(data);
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    var minX, minY, maxX, maxY;
+    var firstPoint = [0,0]
+    arr.forEach((p, i) => {
+      if (i === 0) {
+        // if first point
+        minX = maxX = p[1];
+        minY = maxY = p[0];
+      } else {
+        minX = Math.min(p[1], minX);
+        minY = Math.min(p[0], minY);
+        maxX = Math.max(p[1], maxX);
+        maxY = Math.max(p[0], maxY);
+      }
+    });
+
+    // console.log(minX, minY, maxX, maxY)
+
+    // now get the map width and heigth in its local coords
+    const mapWidth = maxX - minX;
+    const mapHeight = maxY - minY;
+    const mapCenterX = (maxX + minX) / 2;
+    const mapCenterY = (maxY + minY) / 2;
+
+    // console.log(mapWidth, mapHeight, mapCenterX, mapCenterY)
+
+    // to find the scale that will fit the canvas get the min scale to fit height or width
+    const scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.9;
+
+    // Now you can draw the map centered on the cavas
+    context.beginPath();
+    // console.log(arr[0][0]);
+    
+    arr.forEach((p, i) => {
+      if (i === 0) {
+        firstPoint[0] = (p[1] - mapCenterX) * scale + canvas.width / 2
+        firstPoint[1] = (p[0] - mapCenterY) * -scale + canvas.height / 2
+      }
+      context.lineTo(
+        (p[1] - mapCenterX) * scale + canvas.width / 2,
+        (p[0] - mapCenterY) * -scale + canvas.height / 2
+      );
+    });
+
+    // TODO - make it rounded
+    // https://stackoverflow.com/questions/29074956/in-mapbox-js-how-to-smooth-a-polyline
+
+    context.lineWidth = 8;
+    context.strokeStyle = '#cccccc';
+    context.lineJoin = "round";
+    context.lineCap = 'round',
+    context.stroke();
+
+    const radius = 4;
+    const x = firstPoint[0]
+    const y = firstPoint[1]
+    context.beginPath();
+    // console.log('radius: ' + radius)
+   
+    // Clearing circle
+    context.arc(x, y, radius, 0, 2 * Math.PI, false);
+    context.clip()
+    context.clearRect(x - radius, y-radius, x + radius*2, y + radius*2);
+    // console.log('firstPoint: ' + firstPoint)
+    
+    // Starting point circle
+    context.beginPath();
+    context.lineWidth = 16;
+    context.strokeStyle = 'white';
+    context.arc(x, y, radius, 0, 2 * Math.PI, false);
+    // console.log('radius: ' + radius)
+    context.stroke();
+
+    // save canvas image as data url (png format by default)
+    return canvas.toDataURL();
+  }
+
   
   useEffect(() => {
 
-    fetch(`/api/strava/${activityID}`)
+    fetch(`/api/user`)
       .then(response => response.json())
-      .then(data => {
-        // activityData = data
-        setActivityData(data)
-        // console.log(activityData)
-        return activityData
-        // setToDos(data) // Set the toDo variable
-        // setIsLoading(false)
+      .then(userData => {
+        if (userData.message === undefined ) {
+          setUserData(userData)
+          console.log('userData in fetch')
+          console.log(userData)  
+          fetch(`/api/activity`)
+          .then(response => response.json())
+          .then(data => {
+            setActivityData(data)
+            console.log('data')
+            console.log(data)
+          })
+          .catch(rejected => {
+            console.log(rejected);
+          });
+        } else {
+          console.log('no user = no data')
+        }
       })
+      .catch(rejected => {
+        console.log(rejected);
+      });
 
-//     // setIsLoading(true)
-//     const fetchData = async (event) => {
-//       const resStats = await fetch(
-//         // 'https://www.strava.com/api/v3/athletes/42409445/stats',
-//         'https://www.strava.com/api/v3/activities/6871108204',
-//         // 'https://www.strava.com/api/v3/athlete',
-//         {
-//           method: 'GET',
-//           'Content-Type': 'application/json', 
-//           headers: {
-//             Authorization: `Bearer ${props.test.logs.new_token}`,
-//           },
-//         },
-//       )
-//       console.log(resStats.json())
-//       setActivityData(resStats.json())
-//       // return await resStats.json()
-//     }
-
-
-//     // fetch('https://jsonplaceholder.typicode.com/todos/')
-//     //     .then(response => response.json())
-//     //     .then(data => {
-//     //         setToDos(data) // Set the toDo variable
-//     //         setIsLoading(false)
-//     //     })
 }, [])
 
   
-
-
-
-
-  // const fetchData = async () => {
-  //   // const response = await fetch("/api/person");
-  //   const response = await fetch("/data/activity.json");
-  
-  //   if (!response.ok) {
-  //     console.log(response.status);
-  //   }
-  //   const activity = await response.json();
-  //   console.log(activity);
-  //   return activity.body;
-  // };
-
-  // const activityData = await fetchData()
-
+  console.log('userData in return')
+  console.log(userData)
   return (
-    <section className=''>
+    <section>
       <Head>
         <title>Strava activity image</title>
         <meta name="description" content="Generated pretty image from your Strava activity" />
       </Head>
 
-      <Integration /> 
+      <Integration loginButton={userData ? false : true}/> 
 
-      <Seturl onChildChange={changeActivityID} />
-      <div className="text-center opacity-50 text-12 -mt-32 ">{activityID}</div>
-      <Theme {...activityData} />
+      {/* <Seturl onChildChange={changeActivityID} /> */}
+      {/* <div className="text-center opacity-50 text-12 -mt-32 ">{activityID}</div> */}
+      {/* <Theme {...activityData} /> */}
       
-      <Button onChildClick={downloadImage} text="Download image" className='w-full mt-16' />
+      {/* <Button onChildClick={downloadImage} text="Download image" className='w-full mt-16' /> */}
+
+      {/* {activityData[0].map((key, index) => (
+        // <Button key={index} text={key} bg="grey" size="small" className="mr-8" />
+        <div key={index} className=''>{key}</div>
+      ))} */}
+
+      {activityData ? 
+        activityData.map(function(key, index){
+          var distance = `${+parseFloat(key.distance/1000).toFixed(2)} km`;
+          var time = formatSeconds(key.moving_time)
+          return (
+            <a className='flex border rounded-4 mb-8 border-grey py-4 px-8 hover:bg-grey' key={index} href={`${server()}/api/render/${key.id}`}>
+              {key.map ? 
+                <img src={renderCanvas(key.map.summary_polyline)} className="w-48 h-48 mr-16" />
+              : ''}
+              <div>
+                <span className='mt-4'>{key.name}</span>
+                <span className='block text-12 opacity-50'>{distance} · {formatPace(key.moving_time, key.distance) } · {key.total_elevation_gain} m · {time}</span>
+              </div>
+            </a>
+          )
+        })
+      : '' }
 
     </section>
   )
 }
-
-
-// const dev = process.env.NODE_ENV !== 'production';
-// const server = dev ? 'http://localhost:3000' : 'https://strava-story.vercel.app';
-
-// export async function getStaticProps(context) {
-
-  // const postsResponse = await fetch(`${server}/data/activity.json`);
-  // var activityData = await postsResponse.json();
-
-  // const entries = await db.collection('access_tokens').get()
-  // let [{access_token, refresh_token}] = entries.docs.map(entry => entry.data())
-  // const resToken = await fetch(
-  //   `https://www.strava.com/api/v3/oauth/token?client_id=${process.env.CLIENT_ID_STRAVA}&client_secret=${process.env.CLIENT_SECRET_STRAVA}&grant_type=refresh_token&refresh_token=${refresh_token}`,
-  //   {
-  //     method: 'POST',
-  //   },
-  // )
-  // const {
-  //   access_token: newToken,
-  //   refresh_token: newRefreshToken,
-  // } = await resToken.json()
-
-  // const resStats = await fetch(
-  //   // 'https://www.strava.com/api/v3/athletes/42409445/stats',
-  //   'https://www.strava.com/api/v3/activities/6871108204',
-  //   // 'https://www.strava.com/api/v3/athlete',
-  //   {
-  //     method: 'GET',
-  //     'Content-Type': 'application/json', 
-  //     headers: {
-  //       Authorization: `Bearer ${newToken}`,
-  //     },
-  //   },
-  // )
-  
-  // console.log(access_token, refresh_token)
-  // db.collection('access_tokens')
-  //   .doc('92x9OctuhXthN1dmsW4z')
-  //   .update({
-  //       access_token: newToken,
-  //       refresh_token: newRefreshToken,
-  //     })
-    
-  // Add const to predefined activity 
-  // var activityData = await resStats.json()
-
-//   const clientId = process.env.CLIENT_ID_STRAVA
-//   var test = {
-//     logs: {
-//       'client_id': clientId,
-//       'new_token' : newToken,
-//       'access_token' : access_token,
-//       'refresh_token' : refresh_token,
-//       'context': context
-//     }
-//   }
-
-//   test = JSON.parse(JSON.stringify(test))
-
-//   return {
-//     props: {
-//       // activityData,
-//       test
-//     },
-//     revalidate: 86400,
-//   }
-// }

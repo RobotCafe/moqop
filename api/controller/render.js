@@ -5,24 +5,48 @@ var Canvas = require('canvas');
 const polyline = require("@mapbox/polyline");
 const font = require('../fonts/roboto.js');
 const fontRoboto = font.roboto;
-const {toFixedIfNecessary, formatSeconds, server, hdImage} = require('../utils/functions')
+const {toFixedIfNecessary, formatSeconds, server, hdImage, formatPace} = require('../utils/functions')
 
 
 exports.stravaOne = async function(req,res) {
   console.log('req.user: ' + req._passport.session.user)
-  console.log(req)
+  console.log('req.user.token: ' + req._passport.session.user.token)
+  var access_token = req._passport.session.user.token
+  // console.log(req)
 
-  // Fetch strava data
-  urlStravaData = `${server()}/api/strava/${req.params.id}`
-  var stravaData = await fetch(urlStravaData)
-    .then(response => response.json())
-    .then(data => {
-      // console.log(data)
-      return data
+  // OLD: Fetch strava data
+  // urlStravaData = `${server()}/api/strava/${req.params.id}`
+  // var stravaData = await fetch(urlStravaData)
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     // console.log(data)
+  //     return data
+  //   })
+
+  var stravaData = await fetch(
+      // 'https://www.strava.com/api/v3/athletes/42409445/stats',
+      `https://www.strava.com/api/v3/activities/${req.params.id}`,
+      // 'https://www.strava.com/api/v3/athlete',
+      {
+        method: 'GET',
+        'Content-Type': 'application/json', 
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      },
+    ).then(
+      response => (response.json())
+    ).then(dataActivity => {
+      return dataActivity
     })
 
   
-  var stravaPicture = hdImage(stravaData.photos.primary.urls[600])
+    if (stravaData.photos.count === 0) {
+      var stravaPicture = false
+      // return false
+    } else {
+      var stravaPicture = hdImage(stravaData.photos.primary.urls[600])
+    }
   var mapPolyline = stravaData.map.polyline
 
   // Render canvas
@@ -48,7 +72,7 @@ exports.stravaOne = async function(req,res) {
       }
     });
 
-    console.log(minX, minY, maxX, maxY)
+    // console.log(minX, minY, maxX, maxY)
 
     // now get the map width and heigth in its local coords
     const mapWidth = maxX - minX;
@@ -56,14 +80,14 @@ exports.stravaOne = async function(req,res) {
     const mapCenterX = (maxX + minX) / 2;
     const mapCenterY = (maxY + minY) / 2;
 
-    console.log(mapWidth, mapHeight, mapCenterX, mapCenterY)
+    // console.log(mapWidth, mapHeight, mapCenterX, mapCenterY)
 
     // to find the scale that will fit the canvas get the min scale to fit height or width
     const scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.9;
 
     // Now you can draw the map centered on the cavas
     context.beginPath();
-    console.log(arr[0][0]);
+    // console.log(arr[0][0]);
     
     arr.forEach((p, i) => {
       if (i === 0) {
@@ -89,20 +113,20 @@ exports.stravaOne = async function(req,res) {
     const x = firstPoint[0]
     const y = firstPoint[1]
     context.beginPath();
-    console.log('radius: ' + radius)
+    // console.log('radius: ' + radius)
    
     // Clearing circle
     context.arc(x, y, radius, 0, 2 * Math.PI, false);
     context.clip()
     context.clearRect(x - radius, y-radius, x + radius*2, y + radius*2);
-    console.log('firstPoint: ' + firstPoint)
+    // console.log('firstPoint: ' + firstPoint)
     
     // Starting point circle
     context.beginPath();
     context.lineWidth = 16;
     context.strokeStyle = 'white';
     context.arc(x, y, radius, 0, 2 * Math.PI, false);
-    console.log('radius: ' + radius)
+    // console.log('radius: ' + radius)
     context.stroke();
 
     // save canvas image as data url (png format by default)
@@ -116,14 +140,14 @@ exports.stravaOne = async function(req,res) {
         name: stravaData.type,
         value: distance
       }, 
-      // {
-      //   name: 'Pace',
-      //   value: stravaData.average_speed
-      // }, 
       {
-        name: 'Elev Gain',
-        value: stravaData.total_elevation_gain + ' m'
+        name: 'Pace',
+        value: formatPace(stravaData.moving_time, stravaData.distance)
       }, 
+      // {
+      //   name: 'Elev Gain',
+      //   value: stravaData.total_elevation_gain + ' m'
+      // }, 
       {
         name: 'Time',
         value: formatSeconds(stravaData.moving_time)
@@ -132,7 +156,7 @@ exports.stravaOne = async function(req,res) {
 
     var content = "";
     const asdf = data.forEach((value, index) => {
-      console.log(index)
+      // console.log(index)
       // console.log('Index: ' + index + ' Value: ' + value);
       var item = `
       <div>
@@ -207,6 +231,15 @@ exports.stravaOne = async function(req,res) {
             height: 100%;
             background: linear-gradient(180deg, rgba(58, 63, 75, 0.8) 0%, rgba(34, 53, 74, 0) 45.25%, rgba(161, 115, 76, 0) 58.79%, rgba(75, 54, 36, 0.8) 98.9%);
           }
+          .solid {
+            position: absolute;
+            z-index: 9;
+            left:0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #38424B;
+          }
           .canvas {
             position: absolute;
             z-index: 9;
@@ -223,10 +256,13 @@ exports.stravaOne = async function(req,res) {
           <div class="stats">
             ${stats()}
           </div>
-          <div class="gradient"></div>
-          <img src="${stravaPicture}" class="picture" />
+          ${stravaPicture ? 
+            `
+            <div class="gradient"></div>
+            <img src=${stravaPicture} class="picture" />
+            `
+          : '<div class="solid"></div>'}
           <img src="${renderCanvas()}" class="canvas" />
-          
         </div>
         <script>
         

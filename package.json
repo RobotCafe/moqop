@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon serverLocal.js -e js,html --ignore src",
+    "pure": "nodemon server.js -e js,html --ignore src",
     "prod": "node serverProd.js",
     "tailwind:css": "postcss public/styles/tailwind.css -o public/styles/style.css"
   },
@@ -19,6 +20,8 @@
   },
   "homepage": "https://github.com/milangladis/mokopio#readme",
   "dependencies": {
+    "@google-cloud/connect-firestore": "^2.0.2",
+    "@google-cloud/firestore": "^4.15.1",
     "@mapbox/polyline": "^1.1.1",
     "autoprefixer": "^10.4.4",
     "babel": "^6.23.0",
@@ -33,7 +36,7 @@
     "express-session": "^1.17.2",
     "firebase-admin": "^10.0.2",
     "font2base64": "^1.0.1",
-    "next": "^12.1.4",
+    "next": "^12.1.5",
     "node-font2base64": "^0.7.1",
     "node-html-to-image": "^3.2.4",
     "nodemon": "^2.0.15",

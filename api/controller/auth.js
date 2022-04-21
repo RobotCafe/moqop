@@ -6,67 +6,53 @@ const crypto = require("crypto");
 
 
 exports.account = async function(req, res) {
-// server.get('/account', ensureAuthenticated, function(req, res){
-  // res.render('account', { user: req.user });
   res.send(req._passport.session.user._json);
-// });
+}
+
+exports.user = async function(req, res) {
+  if (req.isAuthenticated()) { 
+    // return next(); 
+    res.send(req._passport.session.user._json);
+  } else {
+    return res.status(400).send({
+      message: 'User is not logged in!'
+    });
+  }
+  // res.redirect('/auth/strava/')
 }
 
 exports.test = async function(req, res) {
-// server.get('/test', 
-  // passport.authenticate('strava'),
-  // function(req, res){
     res.send(req._passport.session.user);
 }
 
 exports.strava = async function(req, res) {
-// server.get('/auth/strava',
-  // passport.authenticate('strava', { scope: ['activity:read_all'] }),
-  // function(req, res){
-    console.log('The request will be redirected to Strava for authentication, so this')
-    // The request will be redirected to Strava for authentication, so this
-    // function will not be called.
-  // });
+  console.log('The request will be redirected to Strava for authentication, so this')
 }
 
-  exports.callback = async function(req, res) {
-  // server.get('/auth/strava/callback', 
-    // passport.authenticate('strava', { failureRedirect: '/login' }),
-    // function(req, res) {
+exports.callback = async function(req, res) {
 
-      return req.session.save((err) => {
-        console.log(err);
-        // res.send({ message :`ok` })
-        res.redirect('/account/')
-      });
-
-      // console.log(req._passport.session.user._json)
-      // console.log(res)
-      return res.send(req._passport.session.user);
-      // res.redirect('/');
-    // });
-  }
   
-    exports.logout = async function(req, res) {
-      // server.get('/logout', function(req, res){
-      req.logout();
-      res.redirect('/');
-      // });
-    }
-    
+  console.log(req._passport.session.user._json)
+  var user = req._passport.session.user._json
+  console.log('user.id')
+  console.log(user.id)
+  console.log('user')
+  console.log(user)
+  // const response = await db.collection('users').doc(user.id).set(req._passport.session.user._json);
 
+  const usersRef = db.collection('users');
+  const response = await usersRef.doc(String(user.id)).set(user);
+  // const res = await db.collection('users').doc(userIdString).set(user._json);
+  
+  return req.session.save((err) => {
+    console.log(err);
+    res.redirect('/')
+    // res.redirect('/account/')
+  });
+  // return res.send(req._passport.session.user);
+}
 
-// server.all('*', (req, res) => {
-//   return handle(req, res)
-// })
-
-
-// const user = await db.collection('users').doc(userSessionId)
-// const doc = await user.get();
-// if (!doc.exists) {
-//   console.log('User does not exist')
-//   return false
-// } else {
-//   console.log('User exists')
-//   return (doc.data())
-// }
+exports.logout = async function(req, res) {
+  req.logout();
+  res.redirect('/');
+}

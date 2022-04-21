@@ -10,8 +10,8 @@ module.exports = function(app) {
 
   // Static Pages
   app.route('/api/strava/:id').get(strava.activity);
-  app.route('/api/render/strava-one/:id').get(render.stravaOne);
-  
+  app.route('/api/render/:id').get(render.stravaOne);
+  // app.route('/api/render/strava-one/:id').get(passport.authenticate('strava', { failureRedirect: '/login' }),render.stravaOne);
   // Cookies
   app.route('/api/cookie/get').get(user.get);
   app.route('/api/cookie/set').get(user.set);
@@ -19,6 +19,7 @@ module.exports = function(app) {
 
   // Authentification
   app.route('/account').get(ensureAuthenticated, auth.account)
+  app.route('/api/user').get(auth.user)
   app.route('/test').get(passport.authenticate('strava'), auth.test)
   app.route('/auth/strava').get(passport.authenticate('strava', { scope: ['activity:read_all'] }), auth.strava)
   app.route('/auth/strava/callback').get(passport.authenticate('strava', { failureRedirect: '/login' }), auth.callback)
@@ -33,8 +34,8 @@ module.exports = function(app) {
 
 
 function ensureAuthenticated(req, res, next) {
-  console.log('req._passport.session.user');
-  console.log(req._passport.session.user);
+  // console.log('req._passport.session.user');
+  // console.log(req._passport.session.user);
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/auth/strava/')
 }

@@ -13,7 +13,7 @@ async function isUser(userSessionId) {
     console.log('User does not exist')
     return false
   } else {
-    console.log('User exists')
+    // console.log('User exists')
     return (doc.data())
   }
 }
