@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "next build",
     "start": "nodemon serverLocal.js -e js,html --ignore src",
     "pure": "nodemon server.js -e js,html --ignore src",
     "prod": "node serverProd.js",
