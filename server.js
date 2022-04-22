@@ -24,7 +24,7 @@ var StravaStrategy = require('passport-strava-oauth2').Strategy;
 
 const port = parseInt(process.env.PORT, 10) || 8000
 const dev = process.env.NODE_ENV !== 'production'
-const server = dev ? 'http://localhost:8000' : 'https://strava-story.vercel.app';
+// const server = dev ? 'http://localhost:8000' : 'https://strava-story.vercel.app';
 // const app = next({ dev })
 const app = require('express')()
 // const handle = app.getRequestHandler()
