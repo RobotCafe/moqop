@@ -16,10 +16,10 @@ initializeApp({
 const db = getFirestore();
 var StravaStrategy = require('passport-strava-oauth2').Strategy;
 
-const port = parseInt(process.env.PORT, 10) || 3000
+const port = parseInt(process.env.PORT, 10) || 8000
 const dev = process.env.NODE_ENV !== 'production'
-// const server = dev ? 'http://localhost:3000' : 'https://strava-story.vercel.app';
-const server = dev ? 'http://192.168.0.182:3000' : 'https://strava.moqop.com';
+// const server = dev ? 'http://localhost:8000' : 'https://strava-story.vercel.app';
+const server = dev ? 'http://192.168.0.182:8000' : 'http://strava.moqop.com';
 const app = next({ dev })
 const handle = app.getRequestHandler()
 var STRAVA_CLIENT_ID = '80214';
