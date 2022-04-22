@@ -274,8 +274,11 @@ exports.stravaOne = async function(req,res) {
 
   // res.send(output)
 
+  const puppeteer = { args: [ '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--no-first-run', '--headless', '--no-zygote', '--disable-gpu' ], headless: true, ignoreHTTPSErrors: true };
+
   const image = await nodeHtmlToImage({
     html: output,
+    puppeteerArgs: puppeteer,
     defaultViewport: {
       width: 1080,
       height: 1920
