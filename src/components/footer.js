@@ -9,7 +9,7 @@ export default function Footer() {
             Made with 
             <img className='inline w-16 m-4' src="./images/love.svg" alt="" />
             by </span>
-          <Link href="https://moqop.com">
+          <Link href="https://milangladis.com">
             <a target="_blank" className="opacity-50 mr-8 underline">Milan Gladis</a>
           </Link>
         </h1>
