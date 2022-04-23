@@ -41,7 +41,7 @@ exports.stravaOne = async function(req,res) {
     })
 
   
-    if (stravaData.photos.count === 0) {
+    if ((stravaData.photos.count === undefined) || (stravaData.photos.count === 0)) {
       var stravaPicture = false
       // return false
     } else {
