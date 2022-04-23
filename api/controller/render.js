@@ -140,14 +140,14 @@ exports.stravaOne = async function(req,res) {
         name: stravaData.type,
         value: distance
       }, 
-      {
-        name: 'Pace',
-        value: formatPace(stravaData.moving_time, stravaData.distance)
-      }, 
       // {
-      //   name: 'Elev Gain',
-      //   value: stravaData.total_elevation_gain + ' m'
+      //   name: 'Pace',
+      //   value: formatPace(stravaData.moving_time, stravaData.distance)
       // }, 
+      {
+        name: 'Elev Gain',
+        value: stravaData.total_elevation_gain + ' m'
+      }, 
       {
         name: 'Time',
         value: formatSeconds(stravaData.moving_time)
