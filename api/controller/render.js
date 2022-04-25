@@ -9,6 +9,7 @@ const {toFixedIfNecessary, formatSeconds, server, hdImage, formatPace} = require
 
 
 exports.stravaOne = async function(req,res) {
+
   if (req.isAuthenticated()) { 
     console.log('req.user: ' + req._passport.session.user)
     console.log('req.user.token: ' + req._passport.session.user.token)
@@ -38,6 +39,7 @@ exports.stravaOne = async function(req,res) {
       ).then(
         response => (response.json())
       ).then(dataActivity => {
+        console.log('Fetch - activity data')
         return dataActivity
       })
     
@@ -272,20 +274,24 @@ exports.stravaOne = async function(req,res) {
     
     `)
 
-    // res.send(output)
+    if (req.query.type === 'html') {
+      //Send just html content
+      res.send(output)
+    } else {
+      //Render image and send to front-end
+      const puppeteer = { args: [ '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--no-first-run', '--headless', '--no-zygote', '--disable-gpu' ], headless: true, ignoreHTTPSErrors: true };
+      const image = await nodeHtmlToImage({
+        html: output,
+        puppeteerArgs: puppeteer,
+        defaultViewport: {
+          width: 1080,
+          height: 1920
+        }
+      });
+      res.writeHead(200, { 'Content-Type': 'image/png' });
+      res.end(image, 'binary');
+    }
 
-    const puppeteer = { args: [ '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--no-first-run', '--headless', '--no-zygote', '--disable-gpu' ], headless: true, ignoreHTTPSErrors: true };
-
-    const image = await nodeHtmlToImage({
-      html: output,
-      puppeteerArgs: puppeteer,
-      defaultViewport: {
-        width: 1080,
-        height: 1920
-      }
-    });
-    res.writeHead(200, { 'Content-Type': 'image/png' });
-    res.end(image, 'binary');
   } else {
     return res.status(400).send({
       message: 'User is not logged in!'

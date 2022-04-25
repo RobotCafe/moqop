@@ -14,13 +14,26 @@ import e from 'connect-timeout'
 
 export default function Home(props) {
   
-  const [activityID, setactivityID] = useState(6871108204);
+  // const [activityID] = useState(6871108204);
   
   // Load initial state
   // const postsResponse = fetch(`${server}/data/activity.json`);
   // var initialActivityData = postsResponse.json();
-  const [activityData, setActivityData] = useState(undefined);
-  const [userData, setUserData] = useState(undefined);
+
+  var initialData = {
+    code: 101,
+    error: 'Loading',
+    message: 'Data are being fetched.'
+  }
+
+  // var initialData = {
+  //   code: 401,
+  //   error: 'Unauthorized',
+  //   message: 'User needs to be logged first.'
+  // }
+
+  const [activityData, setActivityData] = useState(initialData);
+  const [userData, setUserData] = useState(initialData);
 
   function formatSeconds(time) {
     var hrs = ~~(time / 3600);
@@ -140,37 +153,65 @@ export default function Home(props) {
     fetch(`/api/user`)
       .then(response => response.json())
       .then(userData => {
-        if (userData.message === undefined ) {
-          setUserData(userData)
-          console.log('userData in fetch')
-          console.log(userData)  
+        console.log('Fetch: User')
+        if (!userData.error) {
+          setUserData({
+            code: 200,
+            message: 'User does have some data.',
+            data: userData
+          })
+          // console.log(userData)  
           fetch(`/api/activity`)
           .then(response => response.json())
           .then(data => {
+            console.log('Fetch: Activity')
             if(data.length == 0) {
-              console.log('user logged in, but does have no data')
+              setActivityData({
+                code: 204,
+                error: 'No content',
+                message: 'User does not have any activities.'
+              })
+              console.log(userData)
             } else {
-              console.log('data')
-              console.log(data)
-              setActivityData(data)
+              setActivityData({
+                code: 200,
+                message: 'User does have some activities.',
+                data: data
+              })
+              // console.log(data)
+              // setActivityData(data)
+              // console.log(userData)
             }
           })
           .catch(rejected => {
-            console.log(rejected);
+            console.log(rejected)
+            setActivityData({
+              code: 404,
+              message: 'Activity response has been rejected.',
+            })
           });
         } else {
-          console.log('no user = no data')
+          setUserData({
+            code: 401,
+            error: 'Unauthorized',
+            message: 'User is not logged in.'
+          })
         }
       })
       .catch(rejected => {
-        console.log(rejected);
+        console.log(rejected)
+        setUserData({
+          code: 404,
+          message: 'User response has been rejected.',
+        })
       });
 
-}, [])
-
-  
-  console.log('userData in return')
+      
+    }, [])
+    
   console.log(userData)
+  console.log(activityData)
+
   return (
     <section>
       <Head>
@@ -178,7 +219,11 @@ export default function Home(props) {
         <meta name="description" content="Generated pretty image from your Strava activity" />
       </Head>
 
-      <Integration loginButton={userData ? false : true}/> 
+      {
+        (userData.code === 101) ?
+          '' :
+          <Integration loginButton={userData.error ? true : false}/> 
+      }
 
       {/* <Seturl onChildChange={changeActivityID} /> */}
       {/* <div className="text-center opacity-50 text-12 -mt-32 ">{activityID}</div> */}
@@ -191,29 +236,40 @@ export default function Home(props) {
         <div key={index} className=''>{key}</div>
       ))} */}
 
-      {userData ? 
-        (activityData) ? 
-          activityData.map(function(key, index){
-            var distance = `${+parseFloat(key.distance/1000).toFixed(2)} km`;
-            var time = formatSeconds(key.moving_time)
-            return (
-              <a className='flex border rounded-4 mb-8 border-grey py-4 px-8 hover:bg-grey' key={index} href={`${server()}/api/render/${key.id}`}>
-                {key.map ? 
-                  <img src={renderCanvas(key.map.summary_polyline)} className="w-48 h-48 mr-16" />
-                : ''}
-                <div>
-                  <span className='mt-4'>{key.name}</span>
-                  <span className='block text-12 opacity-50'>{distance} · {formatPace(key.moving_time, key.distance) } · {key.total_elevation_gain} m · {time}</span>
-                </div>
-              </a>
-            )
-          })
-        : 
-          <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey'>
-            You don't have any activity yet. <br />
-            Let's record some activity on Strava first.
-          </div>
-      : ''  
+      {
+        
+        (!userData.error) ? (
+
+          (activityData.code === 200) ?
+            activityData.data.map(function(key, index){
+              var distance = `${+parseFloat(key.distance/1000).toFixed(2)} km`;
+              var time = formatSeconds(key.moving_time)
+              return (
+                <a className='flex border rounded-4 mb-8 border-grey py-4 px-8 hover:bg-grey' key={index} href={`${server()}/api/render/${key.id}`}>
+                  {key.map ? 
+                    <img src={renderCanvas(key.map.summary_polyline)} className="w-48 h-48 mr-16" />
+                  : ''}
+                  <div>
+                    <span className='mt-4'>{key.name}</span>
+                    <span className='block text-12 opacity-50'>{distance} · {formatPace(key.moving_time, key.distance) } · {key.total_elevation_gain} m · {time}</span>
+                  </div>
+                </a>
+              )
+            })
+          : 
+
+          (activityData.code === 204) ? 
+            <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey'>
+              You don't have any activity yet. <br />
+              Let's record some activity on Strava first.
+            </div>
+          : 
+          (userData && activityData.code === 101) ? 
+            <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey'>    
+              Loading data...
+            </div>
+          : ''
+        ) : ''
       }
 
     </section>

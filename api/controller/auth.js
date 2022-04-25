@@ -15,6 +15,7 @@ exports.user = async function(req, res) {
     res.send(req._passport.session.user._json);
   } else {
     return res.status(400).send({
+      error: 'Unauthorised',
       message: 'User is not logged in!'
     });
   }
