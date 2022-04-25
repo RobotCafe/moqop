@@ -15,7 +15,7 @@ export default function Button(props) {
   if (Boolean(props.href)) {
     return (
       <Link href={props.href ? props.href : '#'}>
-        <a className={classname}>
+        <a className={classname} target={props.target === "_blank" ? '_blank' : ''}>
           {props.text}
         </a>
       </Link>

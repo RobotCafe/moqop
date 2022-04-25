@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Header from 'components/header'
 import Integration from 'components/integration'
 // var polyline = require('@mapbox/polyline');
 // var Canvas = require('canvas');
@@ -22,13 +23,13 @@ export default function Home(props) {
 
   var initialData = {
     code: 101,
-    error: 'Loading',
+    errors: 'Loading',
     message: 'Data are being fetched.'
   }
 
   // var initialData = {
   //   code: 401,
-  //   error: 'Unauthorized',
+  //   errors: 'Unauthorized',
   //   message: 'User needs to be logged first.'
   // }
 
@@ -66,7 +67,7 @@ export default function Home(props) {
       return
     }
     var Image = Canvas.Image;
-    var canvas = Canvas.createCanvas(200, 200);
+    var canvas = Canvas.createCanvas(96, 96);
     var context = canvas.getContext('2d');
     let arr = polyline.decode(data);
 
@@ -117,8 +118,8 @@ export default function Home(props) {
     // TODO - make it rounded
     // https://stackoverflow.com/questions/29074956/in-mapbox-js-how-to-smooth-a-polyline
 
-    context.lineWidth = 8;
-    context.strokeStyle = '#cccccc';
+    context.lineWidth = 2;
+    context.strokeStyle = '#38424b';
     context.lineJoin = "round";
     context.lineCap = 'round',
     context.stroke();
@@ -130,18 +131,18 @@ export default function Home(props) {
     // console.log('radius: ' + radius)
    
     // Clearing circle
-    context.arc(x, y, radius, 0, 2 * Math.PI, false);
-    context.clip()
-    context.clearRect(x - radius, y-radius, x + radius*2, y + radius*2);
+    // context.arc(x, y, radius, 0, 2 * Math.PI, false);
+    // context.clip()
+    // context.clearRect(x - radius, y-radius, x + radius*2, y + radius*2);
     // console.log('firstPoint: ' + firstPoint)
     
     // Starting point circle
     context.beginPath();
-    context.lineWidth = 16;
-    context.strokeStyle = 'white';
+    context.lineWidth = 4;
+    context.strokeStyle = '#38424b';
     context.arc(x, y, radius, 0, 2 * Math.PI, false);
     // console.log('radius: ' + radius)
-    context.stroke();
+    context.fill();
 
     // save canvas image as data url (png format by default)
     return canvas.toDataURL();
@@ -153,29 +154,31 @@ export default function Home(props) {
     fetch(`/api/user`)
       .then(response => response.json())
       .then(userData => {
-        console.log('Fetch: User')
-        if (!userData.error) {
+        // console.log('Fetch: User')
+        if (!userData.errors) {
           setUserData({
             code: 200,
-            message: 'User does have some data.',
+            message: 'User logged in',
             data: userData
           })
           // console.log(userData)  
           fetch(`/api/activity`)
           .then(response => response.json())
           .then(data => {
-            console.log('Fetch: Activity')
+            // console.log('Fetch: Activity')
             if(data.length == 0) {
               setActivityData({
                 code: 204,
-                error: 'No content',
-                message: 'User does not have any activities.'
+                errors: 'No content',
+                message: 'User does not have any activities to show.'
               })
               console.log(userData)
+            } else if(data.errors) {
+
             } else {
               setActivityData({
                 code: 200,
-                message: 'User does have some activities.',
+                message: 'Activities are available to show.',
                 data: data
               })
               // console.log(data)
@@ -193,7 +196,7 @@ export default function Home(props) {
         } else {
           setUserData({
             code: 401,
-            error: 'Unauthorized',
+            errors: 'Unauthorized',
             message: 'User is not logged in.'
           })
         }
@@ -209,8 +212,8 @@ export default function Home(props) {
       
     }, [])
     
-  console.log(userData)
-  console.log(activityData)
+  // console.log(userData)
+  // console.log(activityData)
 
   return (
     <section>
@@ -219,10 +222,12 @@ export default function Home(props) {
         <meta name="description" content="Generated pretty image from your Strava activity" />
       </Head>
 
+      <Header />
+
       {
         (userData.code === 101) ?
           '' :
-          <Integration loginButton={userData.error ? true : false}/> 
+          <Integration loginButton={userData.errors ? true : false}/> 
       }
 
       {/* <Seturl onChildChange={changeActivityID} /> */}
@@ -237,21 +242,19 @@ export default function Home(props) {
       ))} */}
 
       {
-        
-        (!userData.error) ? (
-
+        (!userData.errors) ? (
           (activityData.code === 200) ?
             activityData.data.map(function(key, index){
               var distance = `${+parseFloat(key.distance/1000).toFixed(2)} km`;
               var time = formatSeconds(key.moving_time)
               return (
-                <a className='flex border rounded-4 mb-8 border-grey py-4 px-8 hover:bg-grey' key={index} href={`${server()}/api/render/${key.id}`}>
+                <a className='flex rounded-4 mb-8  py-8 px-8 bg-grey hover:bg-grey-darken' key={index} href={`${server()}/api/render/${key.id}`}>
                   {key.map ? 
                     <img src={renderCanvas(key.map.summary_polyline)} className="w-48 h-48 mr-16" />
                   : ''}
-                  <div>
-                    <span className='mt-4'>{key.name}</span>
-                    <span className='block text-12 opacity-50'>{distance} · {formatPace(key.moving_time, key.distance) } · {key.total_elevation_gain} m · {time}</span>
+                  <div className='flex flex-col justify-center'>
+                    <span className='mt-4 leading-7'>{key.name}</span>
+                    <span className='block text-12 opacity-50 leading-7'>{distance} · {formatPace(key.moving_time, key.distance) } · {key.total_elevation_gain} m · {time}</span>
                   </div>
                 </a>
               )
@@ -265,8 +268,10 @@ export default function Home(props) {
             </div>
           : 
           (userData && activityData.code === 101) ? 
-            <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey'>    
-              Loading data...
+            <div>
+              <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey text-black/50'>Loading data...</div>
+              <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey/50'>&nbsp;</div>
+              <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey/20'>&nbsp;</div>
             </div>
           : ''
         ) : ''
