@@ -147,9 +147,13 @@ export default function Home(props) {
           fetch(`/api/activity`)
           .then(response => response.json())
           .then(data => {
-            setActivityData(data)
-            console.log('data')
-            console.log(data)
+            if(data.length == 0) {
+              console.log('user logged in, but does have no data')
+            } else {
+              console.log('data')
+              console.log(data)
+              setActivityData(data)
+            }
           })
           .catch(rejected => {
             console.log(rejected);
@@ -187,23 +191,30 @@ export default function Home(props) {
         <div key={index} className=''>{key}</div>
       ))} */}
 
-      {activityData ? 
-        activityData.map(function(key, index){
-          var distance = `${+parseFloat(key.distance/1000).toFixed(2)} km`;
-          var time = formatSeconds(key.moving_time)
-          return (
-            <a className='flex border rounded-4 mb-8 border-grey py-4 px-8 hover:bg-grey' key={index} href={`${server()}/api/render/${key.id}`}>
-              {key.map ? 
-                <img src={renderCanvas(key.map.summary_polyline)} className="w-48 h-48 mr-16" />
-              : ''}
-              <div>
-                <span className='mt-4'>{key.name}</span>
-                <span className='block text-12 opacity-50'>{distance} · {formatPace(key.moving_time, key.distance) } · {key.total_elevation_gain} m · {time}</span>
-              </div>
-            </a>
-          )
-        })
-      : '' }
+      {userData ? 
+        (activityData) ? 
+          activityData.map(function(key, index){
+            var distance = `${+parseFloat(key.distance/1000).toFixed(2)} km`;
+            var time = formatSeconds(key.moving_time)
+            return (
+              <a className='flex border rounded-4 mb-8 border-grey py-4 px-8 hover:bg-grey' key={index} href={`${server()}/api/render/${key.id}`}>
+                {key.map ? 
+                  <img src={renderCanvas(key.map.summary_polyline)} className="w-48 h-48 mr-16" />
+                : ''}
+                <div>
+                  <span className='mt-4'>{key.name}</span>
+                  <span className='block text-12 opacity-50'>{distance} · {formatPace(key.moving_time, key.distance) } · {key.total_elevation_gain} m · {time}</span>
+                </div>
+              </a>
+            )
+          })
+        : 
+          <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey'>
+            You don't have any activity yet. <br />
+            Let's record some activity on Strava first.
+          </div>
+      : ''  
+      }
 
     </section>
   )
