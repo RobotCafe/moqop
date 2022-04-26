@@ -255,7 +255,7 @@ exports.stravaOne = async function(req,res) {
         </head>
         <body>
           <div style="position:relative; width: 100%; height: 100%;">
-            <div class="watermark">strava · mokop</div>
+            <div class="watermark">moqop</div>
             <div class="stats">
               ${stats()}
             </div>
