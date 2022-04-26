@@ -299,14 +299,6 @@ export default function Home(props) {
                 </a>
               )
             })
-          : 
-          (activityData.code === 200) ?
-
-            /* {(itemsToShow === 3) ? <button onClick={showmore}>Show More</button>: <button onClick={showless}>Show Less</button>} */
-            <div className="">
-              <button onClick={showmore}>Show More</button>
-              <button onClick={showless}>Show Less</button>
-            </div>
           :
           (activityData.code === 204) ? 
             <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey'>
@@ -326,7 +318,7 @@ export default function Home(props) {
 
       {!userData.errors && activityData.code === 200 && (activityData.data.length > itemsToShow) ?
         <div className="">
-          <button onClick={showmore} className="flex rounded-4 mt-16 mb-8 leading-7 text-12 py-4 px-8 bg-grey hover:bg-grey-darken m-auto">Show More</button>
+          <button onClick={showmore} className="w-full rounded-4 mb-8 leading-7 py-16 bg-grey/50 hover:bg-grey m-auto text-center text-black/70">Show More</button>
           {/* <button onClick={showless}>Show Less</button> */}
         </div>
       : ''}

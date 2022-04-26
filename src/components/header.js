@@ -23,7 +23,11 @@ export default function Header() {
       <Link href="/updates">
         <a className="ml-auto mr-16 text-12 text-black/50">Updates</a>
       </Link>
-      <Button href="mailto:hello@milangladis.com" target="_blank" text="Send feedback" size="small" type="secondary" className="" />
+      ·
+      <Link href="/mailto:hello@milangladis.com">
+        <a className="ml-16 text-12 text-black/50" target="_blank">Feedback</a>
+      </Link>
+      {/* <Button href="mailto:hello@milangladis.com" target="_blank" text="Send feedback" size="small" type="secondary" className="" /> */}
     </div>
   )
 }
