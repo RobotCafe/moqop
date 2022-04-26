@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Image from 'next/image'
 import Button from 'components/button'
 export default function Header() {
 
@@ -15,7 +16,9 @@ export default function Header() {
     <div className="flex items-center wrapper h-64 mb-24">
       <h1 className="font-medium">
         <Link href="/" as={`/`}>
-          <a className="mr-8"   >moqop</a>
+          <a className="mr-8 flex">
+            <Image src="/images/logo.svg" width="92" height="24" className='block' />
+          </a>
         </Link>
         {/* <span className="opacity-50 mr-8">/</span> */}
       </h1>
