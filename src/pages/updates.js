@@ -1,4 +1,5 @@
 import Header from 'components/header'
+import Footer from 'components/footer'
 
 export default function Changelog() {
 
@@ -9,7 +10,8 @@ export default function Changelog() {
         'Fixed pace calculations', 
         'Fixed not-logged state', 
         'List of generated examples',
-        'Pagination'
+        'Pagination',
+        'Dynamic pace vs elevation gain'
       ]
     },
     {
@@ -44,8 +46,10 @@ export default function Changelog() {
   return(
     <section>
       <Header />
-      <h2 className="text-18 font-bold">Updates</h2>
-      <p>Thanks for checking recent updates of the Moqop product.</p>
+      <div className="border-b border-grey-darken text-center pb-16 mb-24">
+        <h2 className="text-18 font-bold">Updates</h2>
+        <p className='text-12'>Check out latest release notes.</p>
+      </div>
 
       {/* var result = objArray.map(function(a) {return a.foo;}); */}
       {
@@ -75,6 +79,7 @@ export default function Changelog() {
           )
         })
       }
+      <Footer />
     </section>
   )
 }

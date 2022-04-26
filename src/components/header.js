@@ -12,7 +12,7 @@ export default function Header() {
   // }
 
   return (
-    <div className="flex items-center wrapper border-b border-solid border-grey h-48 mb-48">
+    <div className="flex items-center wrapper h-64 mb-24">
       <h1 className="font-medium">
         <Link href="/" as={`/`}>
           <a className="mr-8"   >moqop</a>
@@ -20,13 +20,12 @@ export default function Header() {
         {/* <span className="opacity-50 mr-8">/</span> */}
       </h1>
       {/* <Button text="Send feedback" size="small" type="secondary" className="ml-auto" /> */}
-      <Link href="/updates">
-        <a className="ml-auto mr-16 text-12 text-black/50">Updates</a>
-      </Link>
-      ·
-      <Link href="/mailto:hello@milangladis.com">
-        <a className="ml-16 text-12 text-black/50" target="_blank">Feedback</a>
-      </Link>
+      
+      <div className="ml-auto">
+        <Link href="/about">
+          <a className="ml-auto">About</a>
+        </Link>
+      </div>
       {/* <Button href="mailto:hello@milangladis.com" target="_blank" text="Send feedback" size="small" type="secondary" className="" /> */}
     </div>
   )

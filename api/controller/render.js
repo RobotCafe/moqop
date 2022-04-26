@@ -137,37 +137,29 @@ exports.stravaOne = async function(req,res) {
 
     function stats() {
       var distance = `${toFixedIfNecessary(stravaData.distance/1000, 2)} km`
-      const data = [
-        {
-          name: stravaData.type,
-          value: distance
-        }, 
-        {
-          name: 'Pace',
-          value: formatPace(stravaData.moving_time, stravaData.distance)
-        }, 
-        // {
-        //   name: 'Elev Gain',
-        //   value: stravaData.total_elevation_gain + ' m'
-        // }, 
-        {
-          name: 'Time',
-          value: formatSeconds(stravaData.moving_time)
-        }
-      ]
-
-      var content = "";
-      const asdf = data.forEach((value, index) => {
-        // console.log(index)
-        // console.log('Index: ' + index + ' Value: ' + value);
-        var item = `
+      var content = `
         <div>
-          <div class="title">${value.name}</div>
-          <div class="value">${value.value}</div>
+          <div class="title">${stravaData.type}</div>
+          <div class="value">${distance}</div>
         </div>
-        `
-        content += item
-      }); 
+        ${
+          stravaData.total_elevation_gain > 100 ? 
+            `<div>
+              <div class="title">Elev Gain</div>
+              <div class="value">${stravaData.total_elevation_gain} m</div>
+            </div>`
+           : 
+            `<div>
+              <div class="title">Pace</div>
+              <div class="value">${formatPace(stravaData.moving_time, stravaData.distance)}</div>
+            </div>`
+          
+        }
+        <div>
+          <div class="title">Time</div>
+          <div class="value">${formatSeconds(stravaData.moving_time)}</div>
+        </div>
+      `
       return content
     }
 

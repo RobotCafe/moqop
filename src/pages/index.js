@@ -1,6 +1,9 @@
 import Head from 'next/head'
 import Image from 'next/image'
+
 import Header from 'components/header'
+import Footer from 'components/footer'
+
 import Integration from 'components/integration'
 // var polyline = require('@mapbox/polyline');
 // var Canvas = require('canvas');
@@ -72,7 +75,7 @@ export default function Home(props) {
       return
     }
     var Image = Canvas.Image;
-    var canvas = Canvas.createCanvas(96, 96);
+    var canvas = Canvas.createCanvas(64, 64);
     var context = canvas.getContext('2d');
     let arr = polyline.decode(data);
 
@@ -288,15 +291,18 @@ export default function Home(props) {
               var distance = `${+parseFloat(key.distance/1000).toFixed(2)} km`;
               var time = formatSeconds(key.moving_time)
               return (
-                <a className='flex rounded-4 mb-8  py-8 px-8 bg-grey hover:bg-grey-darken' key={index} href={`${server()}/api/render/${key.id}`}>
-                  {key.map ? 
-                    <img src={renderCanvas(key.map.summary_polyline)} className="w-48 h-48 mr-16 opacity-50" />
-                  : ''}
-                  <div className='flex flex-col justify-center'>
-                    <span className='mt-4 leading-7'>{key.name}</span>
-                    <span className='block text-12 opacity-50 leading-7'>{distance} · {formatPace(key.moving_time, key.distance) } · {key.total_elevation_gain} m · {time}</span>
-                  </div>
-                </a>
+                <div>
+                  <a className='flex items-center rounded-4 mb-4  py-8 px-8 hover:bg-grey' key={index} href={`${server()}/api/render/${key.id}`}>
+                    {key.map ? 
+                      <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
+                    : ''}
+                    <div className='flex flex-col justify-center'>
+                      <span className='mt-4 leading-7'>{key.name}</span>
+                      <span className='block text-12 opacity-50 leading-7'>{key.type} · {distance} · {key.total_elevation_gain > 100 ? `${key.total_elevation_gain} m` : formatPace(key.moving_time, key.distance) } · {time}</span>
+                    </div>
+                  </a>
+                  <div className="border-b border-grey mb-4"></div>
+                </div>
               )
             })
           :
@@ -318,7 +324,7 @@ export default function Home(props) {
 
       {!userData.errors && activityData.code === 200 && (activityData.data.length > itemsToShow) ?
         <div className="">
-          <button onClick={showmore} className="w-full rounded-4 mb-8 leading-7 py-16 bg-grey/50 hover:bg-grey m-auto text-center text-black/70">Show More</button>
+          <button onClick={showmore} className="w-full rounded-4 mb-8 leading-7 py-8 bg-grey/50 hover:bg-grey mt-8 m-auto text-center text-black/70">Show more</button>
           {/* <button onClick={showless}>Show Less</button> */}
         </div>
       : ''}
@@ -326,8 +332,8 @@ export default function Home(props) {
 
       { (userData.code === 401) ?
         <div className="mt-48">
-          <h2 className="text-18 font-bold">Let the moqop visualise your data</h2>
-          <p>Check out the examples of generated Instagram Stories based on Strava activity.</p>
+          <h2 className="text-16 font-semibold">Generated examples</h2>
+          <p>Check out generated Instagram Stories based on moqop user's Strava activity.</p>
           <div className="relative overflow-auto no-scrollbar">
             <div className="flex w-[1157px] gap-8 mt-8">
               <Image src="/images/examples/1.jpg" width="225" height="400" className="rounded"></Image>
@@ -340,6 +346,8 @@ export default function Home(props) {
         </div>
         : '' }
 
+
+      <Footer />
     </section>
   )
 }
