@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import Header from 'components/header'
 import Integration from 'components/integration'
 // var polyline = require('@mapbox/polyline');
@@ -241,6 +242,8 @@ export default function Home(props) {
           <Integration loginButton={userData.errors ? true : false}/> 
       }
 
+
+
       {/* <Seturl onChildChange={changeActivityID} /> */}
       {/* <div className="text-center opacity-50 text-12 -mt-32 ">{activityID}</div> */}
       {/* <Theme {...activityData} /> */}
@@ -287,6 +290,22 @@ export default function Home(props) {
           : ''
         ) : ''
       }
+
+      { userData.errors ? 
+        <div className="mt-48 text-center">
+          <h2 className="text-18 font-bold">Let the moqop visualise your data</h2>
+          <p>Check out the examples of generated Instagram Stories based on Strava activity.</p>
+          <div className="relative overflow-auto no-scrollbar -mx-24">
+            <div className="flex w-[1157px] gap-8 mt-8">
+              <Image src="/images/examples/1.jpg" width="225" height="400" className="rounded"></Image>
+              <Image src="/images/examples/2.jpg" width="225" height="400" className="rounded"></Image>
+              <Image src="/images/examples/3.jpg" width="225" height="400" className="rounded"></Image>
+              <Image src="/images/examples/4.jpg" width="225" height="400" className="rounded"></Image>
+              <Image src="/images/examples/5.jpg" width="225" height="400" className="rounded"></Image>
+            </div>
+          </div>
+        </div>
+      : ''}
 
     </section>
   )
