@@ -243,10 +243,19 @@ exports.stravaOne = async function(req,res) {
               height: 1300px;
               transform: translate(-50%, -55%);
             }
+            .watermark {
+              position: absolute;
+              top: 2.9rem;
+              right: 5.5rem;
+              font-size: 2rem;
+              z-index: 1000;
+              opacity: 0.5;
+            }
           </style>
         </head>
         <body>
           <div style="position:relative; width: 100%; height: 100%;">
+            <div class="watermark">strava · mokop</div>
             <div class="stats">
               ${stats()}
             </div>

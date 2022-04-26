@@ -27,19 +27,18 @@ exports.formatSeconds = function(time) {
 
 exports.formatPace = function(timeInSeconds, distanceInMetres) {
   var pace = (timeInSeconds/distanceInMetres)/60*1000;
-  console.log('pace ' + pace)
+  // console.log('pace ' + pace)
   var leftover = pace % 1;
-  console.log('leftover ' + leftover)
+  // console.log('leftover ' + leftover)
   var minutes = pace - leftover;
-  console.log('minutes ' + minutes)
+  // console.log('minutes ' + minutes)
   var seconds = Math.round(leftover * 60);
-  console.log('seconds ' + seconds)
+  // console.log('seconds ' + seconds)
   if (seconds < 10) {
     seconds = `0${seconds}`
   }
   var finalPace = minutes+":"+seconds
-  console.log(finalPace)
-  
+  // console.log(finalPace)
   return finalPace
 }
 
@@ -51,7 +50,7 @@ exports.server = function() {
 
 exports.hdImage = function(url) {
   const path = url.split('-')
-  console.log(path)
+  // console.log(path)
   var size = path[path.length - 1];
   size = size.split('.')
   size = size[0].split('x')
@@ -61,10 +60,10 @@ exports.hdImage = function(url) {
   var newSize = Math.ceil(2048*ratio);
 
   if (x < y) {
-    console.log('portrait')
+    // console.log('portrait')
     newSize = [newSize, 2048]
   } else {
-    console.log('landscape')
+    // console.log('landscape')
     newSize = [2048, newSize]
   }
 
