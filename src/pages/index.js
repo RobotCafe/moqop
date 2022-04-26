@@ -129,7 +129,7 @@ export default function Home(props) {
     context.lineCap = 'round',
     context.stroke();
 
-    const radius = 4;
+    const radius = 3;
     const x = firstPoint[0]
     const y = firstPoint[1]
     context.beginPath();
@@ -290,7 +290,7 @@ export default function Home(props) {
               return (
                 <a className='flex rounded-4 mb-8  py-8 px-8 bg-grey hover:bg-grey-darken' key={index} href={`${server()}/api/render/${key.id}`}>
                   {key.map ? 
-                    <img src={renderCanvas(key.map.summary_polyline)} className="w-48 h-48 mr-16" />
+                    <img src={renderCanvas(key.map.summary_polyline)} className="w-48 h-48 mr-16 opacity-50" />
                   : ''}
                   <div className='flex flex-col justify-center'>
                     <span className='mt-4 leading-7'>{key.name}</span>
