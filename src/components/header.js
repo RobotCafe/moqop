@@ -12,7 +12,7 @@ export default function Header() {
   // }
 
   return (
-    <div className="flex items-center wrapper border-b border-solid border-grey h-48">
+    <div className="flex items-center wrapper border-b border-solid border-grey h-48 mb-48">
       <h1 className="font-medium">
         <Link href="/" as={`/`}>
           <a className="mr-8"   >moqop</a>

@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function Integration(props) {
   // console.log(props.loginButton)
   return(
-    <div className="bg-black rounded p-24 flex justify-center text-white flex-col mt-48 mb-24 text-center">
+    <div className="bg-black rounded p-24 flex justify-center text-white flex-col mb-24 text-center">
       <div className="flex gap-16 justify-center items-center">
         {/* <Image src="/images/strava.svg" width="70" height="15" alt="Strava" /> */}
         <svg width="70" height="16" viewBox="0 0 70 16" fill="none" xmlns="http://www.w3.org/2000/svg">

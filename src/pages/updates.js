@@ -5,13 +5,17 @@ export default function Changelog() {
   var updates = [
     {
       date: '04/26/2022',
-      log: 'Fixed pace calculations, fixed not-logged state'
+      log: [
+        'Fixed pace calculations', 
+        'Fixed not-logged state', 
+        'List of generated examples',
+        'Pagination'
+      ]
     },
     {
       date: '04/25/2022',
       log: [
-        'Loading state, Updates log, Improved data structure',
-        ''
+        'Loading state, Updates log, Improved data structure'
       ]
     },
     {
@@ -23,6 +27,15 @@ export default function Changelog() {
       log: 'Released first MVP version to strava.moqop.com 🎉'
     },
     {
+      date: '04/21/2022',
+      log: [
+        'Finished Strava OAuth', 
+        'Rendering images with pace instead of elevation gain', 
+        'List with activities on homepage', 
+        'Rendered polylines'
+      ]
+    },
+    {
       date: '04/15/2022',
       log: 'Finished Strava OAuth'
     }
@@ -31,17 +44,33 @@ export default function Changelog() {
   return(
     <section>
       <Header />
-      <div className="bg-black rounded p-24 flex justify-center text-white flex-col mt-48 mb-24 text-center">
-        Updates
-      </div>
+      <h2 className="text-18 font-bold">Updates</h2>
+      <p>Thanks for checking recent updates of the Moqop product.</p>
+
       {/* var result = objArray.map(function(a) {return a.foo;}); */}
       {
         updates.map(function(key, index){
           // console.log(key)
           return (
             <div className="flex flex-col border-b border-grey py-16 leading-8" key={index}>
-              <div className="text-12 text-black/70">{key.date}</div>
-              <div>· {key.log}</div>
+              {/* <div className="text-12 text-black/70">{key.date}</div> */}
+              <div>
+                {Array.isArray(key.log) ? (
+                  // key.log.forEach(function(element, indexx){
+                  key.log.map(function(element, index){
+                  // key.log.forEach(element => (
+                    console.log(element, index)
+                    return (
+                      <div className="" key={index} >– {element}</div>
+                    )
+                  })
+
+                ) : (
+                  `- ${key.log}`
+                )
+                
+                }
+              </div>
             </div>
           )
         })

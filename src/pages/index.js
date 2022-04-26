@@ -36,6 +36,8 @@ export default function Home(props) {
 
   const [activityData, setActivityData] = useState(initialData);
   const [userData, setUserData] = useState(initialData);
+  const [itemsToShow, setItemsToShow] = useState(5);
+
 
   function formatSeconds(time) {
     var hrs = ~~(time / 3600);
@@ -227,6 +229,30 @@ export default function Home(props) {
   console.log(userData)
   console.log(activityData)
 
+  const numberPerPage = 5
+  const showmore = () => {
+
+    const showItem = itemsToShow + numberPerPage
+    // if (showItem <= activityData.data.length) {
+      setItemsToShow(showItem)
+    // }
+    console.log('showItem ' + showItem)
+    console.log('activityData.data.length '+activityData.data.length)
+    console.log('itemsToShow' + itemsToShow)
+    // setItemsToShow(activityData.data.length)
+  }
+  
+  const showless = () => {
+    const showItem = itemsToShow - numberPerPage
+    if (showItem >= numberPerPage) {
+      setItemsToShow(showItem)
+    }
+    console.log(showItem)
+    // setItemsToShow(3)
+  }
+
+
+
   return (
     <section>
       <Head>
@@ -254,11 +280,11 @@ export default function Home(props) {
         // <Button key={index} text={key} bg="grey" size="small" className="mr-8" />
         <div key={index} className=''>{key}</div>
       ))} */}
-
+      
       {
         (!userData.errors) ? (
-          (activityData.code === 200) ?
-            activityData.data.map(function(key, index){
+          (activityData.code === 200) ? 
+            activityData.data.slice(0, itemsToShow).map(function(key, index){
               var distance = `${+parseFloat(key.distance/1000).toFixed(2)} km`;
               var time = formatSeconds(key.moving_time)
               return (
@@ -274,7 +300,14 @@ export default function Home(props) {
               )
             })
           : 
+          (activityData.code === 200) ?
 
+            /* {(itemsToShow === 3) ? <button onClick={showmore}>Show More</button>: <button onClick={showless}>Show Less</button>} */
+            <div className="">
+              <button onClick={showmore}>Show More</button>
+              <button onClick={showless}>Show Less</button>
+            </div>
+          :
           (activityData.code === 204) ? 
             <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey'>
               You don't have any activity yet. <br />
@@ -291,11 +324,19 @@ export default function Home(props) {
         ) : ''
       }
 
-      { userData.errors ? 
-        <div className="mt-48 text-center">
+      {!userData.errors && activityData.code === 200 && (activityData.data.length > itemsToShow) ?
+        <div className="">
+          <button onClick={showmore} className="flex rounded-4 mt-16 mb-8 leading-7 text-12 py-4 px-8 bg-grey hover:bg-grey-darken m-auto">Show More</button>
+          {/* <button onClick={showless}>Show Less</button> */}
+        </div>
+      : ''}
+
+
+      { (userData.code === 401) ?
+        <div className="mt-48">
           <h2 className="text-18 font-bold">Let the moqop visualise your data</h2>
           <p>Check out the examples of generated Instagram Stories based on Strava activity.</p>
-          <div className="relative overflow-auto no-scrollbar -mx-24">
+          <div className="relative overflow-auto no-scrollbar">
             <div className="flex w-[1157px] gap-8 mt-8">
               <Image src="/images/examples/1.jpg" width="225" height="400" className="rounded"></Image>
               <Image src="/images/examples/2.jpg" width="225" height="400" className="rounded"></Image>
@@ -305,7 +346,7 @@ export default function Home(props) {
             </div>
           </div>
         </div>
-      : ''}
+        : '' }
 
     </section>
   )
