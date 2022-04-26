@@ -4,6 +4,10 @@ export default function Changelog() {
 
   var updates = [
     {
+      date: '04/26/2022',
+      log: 'Fixed pace calculations, fixed not-logged state'
+    },
+    {
       date: '04/25/2022',
       log: [
         'Loading state, Updates log, Improved data structure',

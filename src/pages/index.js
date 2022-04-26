@@ -56,8 +56,10 @@ export default function Home(props) {
     var leftover = pace % 1;
     var minutes = pace - leftover;
     var seconds = Math.round(leftover * 60);
+    if (seconds < 10) {
+      seconds = `0${seconds}`
+    }
     var finalPace = minutes+":"+seconds
-    // console.log(finalPace)
     return finalPace
   }
 
@@ -174,7 +176,16 @@ export default function Home(props) {
               })
               console.log(userData)
             } else if(data.errors) {
-
+              setActivityData({
+                code: 401,
+                errors: 'No activity because unauthorised user',
+                data: data.errors[0]
+              })
+              setUserData({
+                code: 401,
+                errors: 'User is not logged in',
+                data: userData
+              })
             } else {
               setActivityData({
                 code: 200,
@@ -212,8 +223,8 @@ export default function Home(props) {
       
     }, [])
     
-  // console.log(userData)
-  // console.log(activityData)
+  console.log(userData)
+  console.log(activityData)
 
   return (
     <section>
@@ -225,7 +236,7 @@ export default function Home(props) {
       <Header />
 
       {
-        (userData.code === 101) ?
+        (userData.code == 101) ?
           '' :
           <Integration loginButton={userData.errors ? true : false}/> 
       }

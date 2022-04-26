@@ -27,11 +27,19 @@ exports.formatSeconds = function(time) {
 
 exports.formatPace = function(timeInSeconds, distanceInMetres) {
   var pace = (timeInSeconds/distanceInMetres)/60*1000;
+  console.log('pace ' + pace)
   var leftover = pace % 1;
+  console.log('leftover ' + leftover)
   var minutes = pace - leftover;
+  console.log('minutes ' + minutes)
   var seconds = Math.round(leftover * 60);
+  console.log('seconds ' + seconds)
+  if (seconds < 10) {
+    seconds = `0${seconds}`
+  }
   var finalPace = minutes+":"+seconds
   console.log(finalPace)
+  
   return finalPace
 }
 

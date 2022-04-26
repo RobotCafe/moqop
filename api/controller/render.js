@@ -275,7 +275,7 @@ exports.stravaOne = async function(req,res) {
     `)
 
     if (req.query.type === 'html') {
-      //Send just html content
+      console.log(stravaData)
       res.send(output)
     } else {
       //Render image and send to front-end
