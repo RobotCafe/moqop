@@ -18,7 +18,7 @@ export default function Header(props) {
       <h1 className="font-medium">
         <Link href="/" as={`/`}>
           <a className="mr-8 flex">
-            <Image src="/images/logo.svg" width="92" height="24" className='block' />
+            <Image src="/images/logo.svg" width="77" height="24" className='block' />
           </a>
         </Link>
         {/* <span className="opacity-50 mr-8">/</span> */}

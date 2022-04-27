@@ -291,8 +291,8 @@ export default function Home(props) {
               var distance = `${+parseFloat(key.distance/1000).toFixed(2)} km`;
               var time = formatSeconds(key.moving_time)
               return (
-                <div>
-                  <a className='flex items-center rounded-4 mb-4  py-8 px-8 hover:bg-grey' key={index} href={`${server()}/api/render/${key.id}`}>
+                <div key={index}>
+                  <a className='flex items-center rounded-4 mb-4  py-8 px-8 hover:bg-grey' href={`${server()}/api/render/${key.id}`}>
                     {key.map ? 
                       <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
                     : ''}
