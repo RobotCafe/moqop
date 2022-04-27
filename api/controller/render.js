@@ -279,8 +279,8 @@ exports.stravaOne = async function(req,res) {
       console.log(stravaData)
       res.send(output)
     } else {
-      //Render image and send to front-endf
-      const puppeteer = { args: ['--disable-extensions', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--no-first-run', '--headless', '--no-zygote', '--disable-gpu' ], headless: true, ignoreHTTPSErrors: true };
+      //Render image and send to front-end
+      const puppeteer = { args: [ '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--no-first-run', '--headless', '--no-zygote', '--disable-gpu' ], headless: true, ignoreHTTPSErrors: true };
       const image = await nodeHtmlToImage({
         html: output,
         puppeteerArgs: puppeteer,

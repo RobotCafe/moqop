@@ -44,7 +44,7 @@ exports.formatPace = function(timeInSeconds, distanceInMetres) {
 
 exports.server = function() {
   const dev = process.env.NODE_ENV !== 'production';
-  const server = dev ? 'http://localhost:8000' : 'https://hidden-island-38858.herokuapp.com/';
+  const server = dev ? 'http://localhost:8000' : 'https://strava.moqop.com';
   return server
 }
 
