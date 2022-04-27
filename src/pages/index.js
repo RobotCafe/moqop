@@ -237,7 +237,14 @@ export default function Home(props) {
   const showLoading = () => {
     setLoadingState(true)
     const interval = setInterval(() => {
-      setLoadingSecondsState(loadingSecondsState => loadingSecondsState !== 0 ? loadingSecondsState - 1 : 0);
+      if (loadingSecondsState => loadingSecondsState !== 0) {
+        loadingSecondsState - 1
+        var secondsLeft = loadingSecondsState
+      } else {
+        var secondsLeft = loadingSecondsState
+        setLoadingState(false)
+      }
+      setLoadingSecondsState(secondsLeft);
     }, 1000);
   }
 
