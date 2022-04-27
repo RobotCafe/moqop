@@ -19,24 +19,14 @@ import e from 'connect-timeout'
 
 export default function Home(props) {
   
-  // const [activityID] = useState(6871108204);
-  
-  // Load initial state
-  // const postsResponse = fetch(`${server}/data/activity.json`);
-  // var initialActivityData = postsResponse.json();
-
   var initialData = {
     code: 101,
     errors: 'Loading',
     message: 'Data are being fetched.'
   }
 
-  // var initialData = {
-  //   code: 401,
-  //   errors: 'Unauthorized',
-  //   message: 'User needs to be logged first.'
-  // }
-
+  const [loadingState, setLoadingState] = useState(false);
+  const [loadingSecondsState, setLoadingSecondsState] = useState(5);
   const [activityData, setActivityData] = useState(initialData);
   const [userData, setUserData] = useState(initialData);
   const [itemsToShow, setItemsToShow] = useState(5);
@@ -225,12 +215,32 @@ export default function Home(props) {
           message: 'User response has been rejected.',
         })
       });
-
+      
       
     }, [])
-    
+
+
   console.log(userData)
   console.log(activityData)
+
+  // Countdown for loading state
+
+  // // Countdown for loading state
+  // if (loadingState) {
+  //   console.log('asfd')
+  //   const interval = setInterval(() => {
+  //     setLoadingSecondsState(loadingSecondsState => loadingSecondsState !== 0 ? loadingSecondsState - 1 : 0);
+  //   }, 1000);
+  // }
+
+
+  const showLoading = () => {
+    setLoadingState(true)
+    const interval = setInterval(() => {
+      setLoadingSecondsState(loadingSecondsState => loadingSecondsState !== 0 ? loadingSecondsState - 1 : 0);
+    }, 1000);
+  }
+
 
   const numberPerPage = 5
   const showmore = () => {
@@ -292,7 +302,7 @@ export default function Home(props) {
               var time = formatSeconds(key.moving_time)
               return (
                 <div key={index}>
-                  <a className='flex items-center rounded-4 mb-4  py-8 px-8 hover:bg-grey' href={`${server()}/api/render/${key.id}`}>
+                  <a className='flex items-center rounded-4 mb-4  py-8 px-8 hover:bg-grey' href={`${server()}/api/render/${key.id}`} onClick={showLoading}>
                     {key.map ? 
                       <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
                     : ''}
@@ -345,6 +355,19 @@ export default function Home(props) {
           </div>
         </div>
         : '' }
+
+
+      {
+        // !loadingState ? (
+          <div className={`absolute transition top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center text-center  bg-grey-darken/90 ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
+            <div className="rounded drop-shadow-md p-32 bg-white">
+              Your image is ready in {loadingSecondsState} seconds. <br /> 
+              Our designers are super fast :)
+            </div>
+
+          </div>
+        // ) : ''
+      }
 
 
       <Footer />

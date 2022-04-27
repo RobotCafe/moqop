@@ -47,6 +47,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Production process
 `npm run start:prod`
 
+
+## Helpers
+Switch node version
+https://github.com/tj/n
+
 ---
 ## Problems
 issues with canvas on arm64
