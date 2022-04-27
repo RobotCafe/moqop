@@ -44,7 +44,7 @@ exports.formatPace = function(timeInSeconds, distanceInMetres) {
 
 exports.server = function() {
   const dev = process.env.NODE_ENV !== 'production';
-  const server = dev ? 'http://localhost:8000' : 'https://strava.moqop.com';
+  const server = dev ? 'http://localhost:8000' : 'https://moqop.com';
   return server
 }
 
