@@ -2,7 +2,8 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
 import Button from 'components/button'
-export default function Header() {
+export default function Header(props) {
+
 
   // const router = useRouter()
   // const handleClick = (e) => {
@@ -24,10 +25,23 @@ export default function Header() {
       </h1>
       {/* <Button text="Send feedback" size="small" type="secondary" className="ml-auto" /> */}
       
-      <div className="ml-auto">
-        <Link href="/about">
-          <a className="ml-auto">About</a>
-        </Link>
+      <div className="ml-auto text-12">
+        {props.user && props.user.code !== 101 ?
+          <Link href="/about">
+            <a className="">About</a>
+          </Link>
+          : ''
+        }
+        {
+          props.user && props.user.code === 200 ? 
+            <div className="inline ml-8">
+              ·
+              <Link href="/logout">
+                <a className="ml-8">Log out</a>
+              </Link> 
+            </div>
+            : ''
+        }
       </div>
       {/* <Button href="mailto:hello@milangladis.com" target="_blank" text="Send feedback" size="small" type="secondary" className="" /> */}
     </div>

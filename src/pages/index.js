@@ -263,7 +263,7 @@ export default function Home(props) {
         <meta name="description" content="Generated pretty image from your Strava activity" />
       </Head>
 
-      <Header />
+      <Header user={userData} />
 
       {
         (userData.code == 101) ?
