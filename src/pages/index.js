@@ -332,8 +332,8 @@ export default function Home(props) {
 
       { (userData.code === 401) ?
         <div className="mt-48">
-          <h2 className="text-16 font-semibold">Generated examples</h2>
-          <p>Check out generated Instagram Stories based on moqop user's Strava activity.</p>
+          <h2 className="text-16 font-semibold mb-4">Generated examples</h2>
+          <p className='leading-8'>Check out generated Instagram Stories based on moqop user's Strava activity.</p>
           <div className="relative overflow-auto no-scrollbar">
             <div className="flex w-[1157px] gap-8 mt-8">
               <Image src="/images/examples/1.jpg" width="225" height="400" className="rounded"></Image>

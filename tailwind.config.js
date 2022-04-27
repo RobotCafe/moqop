@@ -48,7 +48,11 @@ module.exports = {
       '4/3': '4 / 3',
     },
     screens: {
-      'xs': '380px'
+      'xs': '380px',
+      'sm': '480px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1200px'
     },
     extend: {},
   },

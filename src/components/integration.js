@@ -6,7 +6,7 @@ export default function Integration(props) {
   return(
     <div className="flex flex-col border border-grey-darken rounded p-16 mb-24 text-center">
       <div className="flex gap-16 justify-center items-center">
-        <div className="flex flex-1 items-center justify-center gap-8">
+        <div className="flex flex-1 flex-col sm:flex-row items-center justify-center gap-8">
           <Image src="/images/services/strava.svg" width="24" height="24" alt="Strava" />
           Strava Activity
         </div>
@@ -15,7 +15,7 @@ export default function Integration(props) {
             <path opacity="0.5" d="M4.5 12H19.5M19.5 12L15.5 8M19.5 12L15.5 16" stroke="#38424B" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </span>
-        <div className="flex flex-1 items-center justify-center gap-8">
+        <div className="flex flex-1 flex-col sm:flex-row  items-center justify-center gap-8">
           <Image src="/images/services/instagram.svg" width="24" height="24" alt="Instagram" />
           Instagram Story
         </div>
