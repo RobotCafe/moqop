@@ -22,7 +22,7 @@ export default function Integration(props) {
       </div>
       {props.loginButton ? 
         <div className='mt-16 pt-8 border-t border-grey'>
-          <p className="mt-8">Visualise your strava activity to Instagram story with a decent polyline above the picture you made during the workout.</p>
+          <p className="mt-8">Visualise your strava activity to Instagram story with a decent polyline over the picture you made during the workout.</p>
           <Button text="Log in with Strava" href="/auth/strava" className="mt-8 bg-orange w-full" />
         </div>
       : 

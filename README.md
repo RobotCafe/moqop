@@ -42,6 +42,16 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+---
+
+## Heroku installation
+
+`git push heroku master`
+
+---
+
+## Production process
+`npm run start:prod`
 
 ---
 ## Problems
