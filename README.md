@@ -47,6 +47,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Heroku installation
 
 `git push heroku master`
+`heroku logs --tail^C`
 
 ---
 
