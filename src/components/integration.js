@@ -12,7 +12,7 @@ export default function Integration(props) {
         </div>
         <span className='text-white/50'>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6.5 12H17.5M17.5 12L13.5 8M17.5 12L13.5 16" stroke="#38424B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6.5 12H17.5M17.5 12L13.5 8M17.5 12L13.5 16" stroke="#38424B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </span>
         <div className="flex flex-1 flex-col sm:flex-row  items-center justify-center gap-8">
