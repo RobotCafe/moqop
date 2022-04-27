@@ -237,14 +237,15 @@ export default function Home(props) {
   const showLoading = () => {
     setLoadingState(true)
     const interval = setInterval(() => {
-      if (loadingSecondsState => loadingSecondsState !== 0) {
-        loadingSecondsState - 1
-        var secondsLeft = loadingSecondsState
+      console.log(loadingSecondsState)
+      if (loadingSecondsState > 0) {
+        console.log(loadingSecondsState)
+        setLoadingSecondsState(loadingSecondsState - 1)
       } else {
-        var secondsLeft = loadingSecondsState
+        setLoadingSecondsState(0)
         setLoadingState(false)
+        clearInterval(interval);
       }
-      setLoadingSecondsState(secondsLeft);
     }, 1000);
   }
 
@@ -366,13 +367,12 @@ export default function Home(props) {
 
       {
         // !loadingState ? (
-          <div className={`absolute transition top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center text-center  bg-grey-darken/90 ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
-            <div className="rounded drop-shadow-md p-32 bg-white">
-              Your image is ready in {loadingSecondsState} seconds. <br /> 
-              Our designers are super fast :)
-            </div>
-
-          </div>
+          // <div className={`absolute transition top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center text-center  bg-grey-darken/90 ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
+          //   <div className="rounded drop-shadow-md p-32 bg-white">
+          //     Your image is ready in {loadingSecondsState} seconds. <br /> 
+          //     Our designers are super fast :)
+          //   </div>
+          // </div>
         // ) : ''
       }
 
