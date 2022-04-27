@@ -31,6 +31,7 @@ module.exports = {
       '4': '.4rem',
     },
     spacing: {
+      0: '0px',
       4: '4px',
       8: '8px',
       16: '16px',

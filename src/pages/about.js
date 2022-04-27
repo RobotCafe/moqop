@@ -8,9 +8,9 @@ export default function About() {
   return(
     <section>
       <Header />
-      <div className="border-b border-grey-darken pb-16 mb-24 text-center">
+      <div className="rounded border-2 border-grey-darken p-16 mb-24 text-center">
         <h2 className="text-18 font-bold">What is Moqop?</h2>
-        <p >Learn more about how Moqop can help you.</p>
+        <p className="mb-0">Learn more about how Moqop can help you.</p>
       </div>
 
       <ul className='flex flex-col gap-16'>
@@ -30,28 +30,28 @@ export default function About() {
           <span className='block font-semibold mb-4 text-16'>Pricing</span>
           <p className=''>Pricing depends on your usage of the social media. If your presence on social media brings you any value, you have to use Influencer package.</p>
           <div className="flex flex-col sm:flex-row gap-16 mt-24">
-            <div className='flex-1 rounded border border-grey p-16'>
-              <div className='flex border-b border-grey pb-8 mb-8 font-semibold'>
+            <div className='flex-1 bg-black text-white rounded border border-grey p-16'>
+              <div className='flex border-b border-grey/30 pb-8 mb-8 font-semibold'>
                 Individual 🏃
-                <div className='ml-auto opacity-50'>Free</div>
+                <div className='ml-auto text-12 opacity-50'>Free</div>
               </div>
               <ul>
                 <li>- Watermark</li>
                 <li>- 15 each month</li>
               </ul>
             </div>
-            <div className='flex-1 rounded border border-grey p-16'>
-              <div className='flex border-b border-grey pb-8 mb-8 font-semibold'>
+            <div className='flex-1 bg-blue text-white rounded border border-grey p-16'>
+              <div className='flex border-b border-grey/30 pb-8 mb-8 font-semibold'>
                 Influencer 🏃‍♀️
-                <div className='ml-auto opacity-50'>Paid</div>
+                <div className='ml-auto text-12 opacity-50'>Paid</div>
               </div>
               <ul>
                 <li>- No branding</li>
                 <li>- Unlimited</li>
               </ul>
-              <Button text="Request License" type="secondary" href="mailto:hello@milangladis.com" className="mt-16 w-full" />
             </div>
           </div>
+          <Button text="Request Influencer License" type="" href="mailto:hello@milangladis.com" className="mt-16 w-full" />
         </li>
         <li className='mb-16'>
           <span className='block font-semibold mb-4 text-16'>Team</span>

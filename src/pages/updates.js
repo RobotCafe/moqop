@@ -46,9 +46,9 @@ export default function Changelog() {
   return(
     <section>
       <Header />
-      <div className="border-b border-grey-darken text-center pb-16 mb-24">
+      <div className="rounded border-2 border-grey-darken p-16 mb-24 text-center">
         <h2 className="text-18 font-bold">Updates</h2>
-        <p>Check out latest release notes.</p>
+        <p className='mb-0'>Check out latest release notes.</p>
       </div>
 
       {/* var result = objArray.map(function(a) {return a.foo;}); */}
