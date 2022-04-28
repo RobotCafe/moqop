@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import Header from 'components/header'
 import Footer from 'components/footer'
@@ -223,29 +224,23 @@ export default function Home(props) {
   console.log(userData)
   console.log(activityData)
 
+  
   // Countdown for loading state
-
-  // // Countdown for loading state
-  // if (loadingState) {
-  //   console.log('asfd')
-  //   const interval = setInterval(() => {
-  //     setLoadingSecondsState(loadingSecondsState => loadingSecondsState !== 0 ? loadingSecondsState - 1 : 0);
-  //   }, 1000);
-  // }
-
-
+  var test = loadingSecondsState
   const showLoading = () => {
+    // setLoadingSecondsState(5)
     setLoadingState(true)
-    const interval = setInterval(() => {
-      console.log(loadingSecondsState)
-      if (loadingSecondsState > 0) {
-        console.log(loadingSecondsState)
-        setLoadingSecondsState(loadingSecondsState - 1)
+    var interval = setInterval(() => {
+      // test = test => test !== 0 ? test - 1 : 0
+      test = test - 1
+      console.log(test)
+      if (test >= 1) {
+        setLoadingSecondsState(test)
       } else {
-        setLoadingSecondsState(0)
         setLoadingState(false)
         clearInterval(interval);
       }
+      // setLoadingSecondsState(loadingSecondsState => loadingSecondsState !== 0 ? loadingSecondsState - 1 : 0);
     }, 1000);
   }
 
@@ -310,15 +305,17 @@ export default function Home(props) {
               var time = formatSeconds(key.moving_time)
               return (
                 <div key={index}>
-                  <a className='flex items-center rounded-4 mb-4  py-8 px-8 hover:bg-grey' href={`${server()}/api/render/${key.id}`} onClick={showLoading}>
-                    {key.map ? 
-                      <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
-                    : ''}
-                    <div className='flex flex-col justify-center'>
-                      <span className='mt-4 leading-7'>{key.name}</span>
-                      <span className='block text-12 opacity-50 leading-7'>{key.type} · {distance} · {key.total_elevation_gain > 100 ? `${key.total_elevation_gain} m` : formatPace(key.moving_time, key.distance) } · {time}</span>
-                    </div>
-                  </a>
+                  <Link href={`${server()}/api/render/${key.id}`}>
+                    <a className='flex items-center rounded-4 mb-4  py-8 px-8 hover:bg-grey' onClick={showLoading}>
+                      {key.map ? 
+                        <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
+                      : ''}
+                      <div className='flex flex-col justify-center'>
+                        <span className='mt-4 leading-7'>{key.name}</span>
+                        <span className='block text-12 opacity-50 leading-7'>{key.type} · {distance} · {key.total_elevation_gain > 100 ? `${key.total_elevation_gain} m` : formatPace(key.moving_time, key.distance) } · {time}</span>
+                      </div>
+                    </a>
+                  </Link>
                   <div className="border-b border-grey mb-4"></div>
                 </div>
               )
@@ -366,14 +363,12 @@ export default function Home(props) {
 
 
       {
-        // !loadingState ? (
-          // <div className={`absolute transition top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center text-center  bg-grey-darken/90 ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
-          //   <div className="rounded drop-shadow-md p-32 bg-white">
-          //     Your image is ready in {loadingSecondsState} seconds. <br /> 
-          //     Our designers are super fast :)
-          //   </div>
-          // </div>
-        // ) : ''
+        <div className={`absolute transition top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center text-center  bg-grey-darken/90 ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
+          <div className="rounded drop-shadow-md p-32 bg-white">
+            Your image is ready in {loadingSecondsState} seconds. <br /> 
+            Our designers are super fast :)
+          </div>
+        </div>
       }
 
 
