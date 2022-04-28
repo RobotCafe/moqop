@@ -316,7 +316,7 @@ export default function Home(props) {
                       </div>
                     </a>
                   </Link>
-                  <div className="border-b border-grey mb-4"></div>
+                  <div className="border-b border-grey mb-4 mx-4"></div>
                 </div>
               )
             })
