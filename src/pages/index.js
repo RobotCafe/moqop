@@ -4,19 +4,17 @@ import Link from 'next/link'
 
 import Header from 'components/header'
 import Footer from 'components/footer'
-
 import Integration from 'components/integration'
-// var polyline = require('@mapbox/polyline');
-// var Canvas = require('canvas');
+
 import polyline from '@mapbox/polyline'
 import Canvas from 'canvas'
+
 import Button from 'components/button'
 import Theme from 'themes/strava/strava1'
 import Seturl from 'components/seturl'
-// import db from 'utils/firebase'
+
 import { useEffect, useState } from 'react'
 import {server} from '../../api/utils/functions'
-import e from 'connect-timeout'
 
 export default function Home(props) {
   
@@ -189,9 +187,6 @@ export default function Home(props) {
                 message: 'Activities are available to show.',
                 data: data
               })
-              // console.log(data)
-              // setActivityData(data)
-              // console.log(userData)
             }
           })
           .catch(rejected => {
@@ -216,8 +211,6 @@ export default function Home(props) {
           message: 'User response has been rejected.',
         })
       });
-      
-      
     }, [])
 
 
@@ -228,10 +221,8 @@ export default function Home(props) {
   // Countdown for loading state
   var test = loadingSecondsState
   const showLoading = () => {
-    // setLoadingSecondsState(5)
     setLoadingState(true)
     var interval = setInterval(() => {
-      // test = test => test !== 0 ? test - 1 : 0
       test = test - 1
       console.log(test)
       if (test >= 1) {
@@ -240,67 +231,41 @@ export default function Home(props) {
         setLoadingState(false)
         clearInterval(interval);
       }
-      // setLoadingSecondsState(loadingSecondsState => loadingSecondsState !== 0 ? loadingSecondsState - 1 : 0);
     }, 1000);
   }
 
 
   const numberPerPage = 5
   const showmore = () => {
-
     const showItem = itemsToShow + numberPerPage
-    // if (showItem <= activityData.data.length) {
-      setItemsToShow(showItem)
-    // }
-    console.log('showItem ' + showItem)
-    console.log('activityData.data.length '+activityData.data.length)
-    console.log('itemsToShow' + itemsToShow)
-    // setItemsToShow(activityData.data.length)
+    setItemsToShow(showItem)
   }
-  
-  const showless = () => {
-    const showItem = itemsToShow - numberPerPage
-    if (showItem >= numberPerPage) {
-      setItemsToShow(showItem)
-    }
-    console.log(showItem)
-    // setItemsToShow(3)
-  }
-
-
 
   return (
-    <section>
-      <Head>
-        <title>Strava activity image</title>
-        <meta name="description" content="Generated pretty image from your Strava activity" />
-      </Head>
+    <div className="">
+      <section>
+        <Head>
+          <title>Strava activity image</title>
+          <meta name="description" content="Generated pretty image from your Strava activity" />
+        </Head>
 
-      <Header user={userData} />
+        <Header user={userData} />
 
-      {
-        (userData.code == 101) ?
-          '' :
-          <Integration loginButton={userData.errors ? true : false}/> 
-      }
+        { (userData.code === 401) ?
+          <>
+            <h1 className="title text-48 font-black text-center">
+              <div>Generate Instagram story </div>
+              <div className='titleColor inline'>from Strava activity</div>
+            </h1>
+            <div className='text-18 w-2/3 text-center mt-24 mx-auto mb-32 font-semibold'>Visualise your excercise activity for Instagram story with a decent polyline over the picture you made during the workout.</div>
+          </>
+        : ''}
 
-
-
-      {/* <Seturl onChildChange={changeActivityID} /> */}
-      {/* <div className="text-center opacity-50 text-12 -mt-32 ">{activityID}</div> */}
-      {/* <Theme {...activityData} /> */}
-      
-      {/* <Button onChildClick={downloadImage} text="Download image" className='w-full mt-16' /> */}
-
-      {/* {activityData[0].map((key, index) => (
-        // <Button key={index} text={key} bg="grey" size="small" className="mr-8" />
-        <div key={index} className=''>{key}</div>
-      ))} */}
-      
-      {
-        (!userData.errors) ? (
-          (activityData.code === 200) ? 
-            activityData.data.slice(0, itemsToShow).map(function(key, index){
+        { userData.code == 101 ? '' : <Integration loginButton={userData.errors ? true : false}/>}
+        
+        { (!userData.errors && activityData.code === 200) ? 
+          <div className="sectionBlock">
+            { activityData.data.slice(0, itemsToShow).map(function(key, index){
               var distance = `${+parseFloat(key.distance/1000).toFixed(2)} km`;
               var time = formatSeconds(key.moving_time)
               return (
@@ -319,60 +284,85 @@ export default function Home(props) {
                   <div className="border-b border-grey mb-4 mx-4"></div>
                 </div>
               )
-            })
-          :
-          (activityData.code === 204) ? 
-            <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey'>
-              You don't have any activity yet. <br />
-              Let's record some activity on Strava first.
-            </div>
-          : 
-          (userData && activityData.code === 101) ? 
-            <div>
-              <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey text-black/50'>Loading data...</div>
-              <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey/50'>&nbsp;</div>
-              <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey/20'>&nbsp;</div>
-            </div>
-          : ''
-        ) : ''
-      }
+            }) }
+          </div>
+        : '' }
 
-      {!userData.errors && activityData.code === 200 && (activityData.data.length > itemsToShow) ?
-        <div className="">
-          <button onClick={showmore} className="w-full rounded-4 mb-8 leading-7 py-8 bg-grey/50 hover:bg-grey mt-8 m-auto text-center text-black/70">Show more</button>
-          {/* <button onClick={showless}>Show Less</button> */}
-        </div>
-      : ''}
+        { (!userData.errors && activityData.code === 204) ? 
+          <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey'>
+            You don't have any activity yet. <br />
+            Let's record some activity on Strava first.
+          </div> : '' }
+
+        { (!userData.errors && activityData.code === 101) ? 
+          <div className='sectionBlock'>
+            <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey text-black/50'>Loading data...</div>
+            <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey/50'>&nbsp;</div>
+            <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey/20'>&nbsp;</div>
+          </div> : '' }
+
+        { !userData.errors && activityData.code === 200 && (activityData.data.length > itemsToShow) ?
+          <div className="sectionBlock">
+            <button onClick={showmore} className="w-full rounded-4 mb-8 leading-7 py-8 bg-grey/50 hover:bg-grey mt-8 m-auto text-center text-black/70">Show more</button>
+          </div> : ''}
+
+
+
+
+        { <div className={`absolute transition top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center text-center  bg-grey-darken/90 ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
+            <div className="rounded drop-shadow-md p-32 bg-white">
+              Your image is ready in {loadingSecondsState} seconds. <br /> 
+              Our designers are super fast :)
+            </div>
+          </div> }
+
+      </section>
 
 
       { (userData.code === 401) ?
+        // Examples
         <div className="mt-48">
-          <h2 className="text-16 font-semibold mb-4">Generated examples</h2>
-          <p className='leading-8'>Check out generated Instagram Stories based on moqop user's Strava activity.</p>
           <div className="relative overflow-auto no-scrollbar">
-            <div className="flex w-[1157px] gap-8 mt-8">
+            <div className="flex  gap-8 mt-8">
               <Image src="/images/examples/1.jpg" width="225" height="400" className="rounded"></Image>
               <Image src="/images/examples/2.jpg" width="225" height="400" className="rounded"></Image>
               <Image src="/images/examples/3.jpg" width="225" height="400" className="rounded"></Image>
               <Image src="/images/examples/4.jpg" width="225" height="400" className="rounded"></Image>
               <Image src="/images/examples/5.jpg" width="225" height="400" className="rounded"></Image>
+              <Image src="/images/examples/2.jpg" width="225" height="400" className="rounded"></Image>
+              <Image src="/images/examples/3.jpg" width="225" height="400" className="rounded"></Image>
             </div>
           </div>
-        </div>
+        </div> : '' }
+
+        { (userData.code === 401) ?
+          <section className='my-64'>
+            <div className="flex flex-col-reverse md:flex-row gap-64">
+              <div className='flex flex-1 flex-col justify-center'>
+                <div className="uppercase font-bold opacity-50">Output in seconds</div>
+                <h2 className='text-40 font-black mb-16'>Design <span className='text-orange'>100x faster</span> <br className='hidden sm:block' /> than Graphic Designer</h2>
+                <div className="text-18">Spend more time on pushing your data and less on the designing <strong>social media content</strong>. Time to get result is less than you need to lace your running shoes laces.</div>
+              </div>
+              <div className="flex-1">
+                <Image src="/images/content/generation.jpg" width="427" height="339" />
+              </div>
+            </div>
+
+            <div className="grid md:flex grid-flow-row-dense gap-64 mt-64">
+              <div className="flex-1 ">
+                <Image src="/images/content/posts.jpg" width="403" height="363" />
+              </div>
+              <div className='flex flex-1 flex-col justify-center'>
+                <div className="uppercase font-bold opacity-50">Output in seconds</div>
+                <h2 className='text-40 font-black k mb-16'>Share immersive <br className='hidden sm:block' /> <span className='text-blue'>social media</span> posts</h2>
+                <div className="text-18"><strong>Predefined template</strong> keep your feed consistent and future features will allow you to personalize posts by using <strong>custom modifications</strong>.</div>
+              </div>
+            </div>
+          </section>
         : '' }
-
-
-      {
-        <div className={`absolute transition top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center text-center  bg-grey-darken/90 ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
-          <div className="rounded drop-shadow-md p-32 bg-white">
-            Your image is ready in {loadingSecondsState} seconds. <br /> 
-            Our designers are super fast :)
-          </div>
-        </div>
-      }
-
-
-      <Footer />
-    </section>
+      <section>
+        <Footer />
+      </section>
+    </div>
   )
 }

@@ -35,10 +35,25 @@ a {
 
 
 section {
-  max-width: 49.2rem;
+  max-width: 100rem;
   padding: 0 3.2rem;
   margin: auto;
 }
+
+.sectionBlock {
+  max-width: 49.2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.titleColor {
+  background: linear-gradient(90deg, #6378EC 0%, #E95A29 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
