@@ -5,10 +5,10 @@ export default function Integration(props) {
   // console.log(props.loginButton)
   return(
     <div className="sectionBlock flex flex-col border-2 border-grey rounded p-16 mb-24 text-center font-semibold">
-      <div className="flex gap-16 justify-center items-center">
+      <div className="flex gap-16 justify-center items-center p-8">
         <div className="flex flex-1 flex-col sm:flex-row items-center justify-center gap-8">
           <Image src="/images/services/strava.svg" width="24" height="24" alt="Strava" />
-          Strava Activity
+          Strava <br className='block sm:hidden' /> Activity
         </div>
         <span className='text-white/50'>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -17,12 +17,12 @@ export default function Integration(props) {
         </span>
         <div className="flex flex-1 flex-col sm:flex-row  items-center justify-center gap-8">
           <Image src="/images/services/instagram.svg" width="24" height="24" alt="Instagram" />
-          Instagram Story
+          Instagram <br className='block sm:hidden' /> Story
         </div>
       </div>
       {props.loginButton ? 
-        <div className='mt-16 pt-8 border-t-2 border-grey'>
-          <Button text="Log in with Strava" href="/auth/strava" className="mt-8 bg-orange w-full" />
+        <div className='mt-8 border-grey'>
+          <Button text="Connect with Strava" href="/auth/strava" className="mt-8 bg-orange w-full" />
         </div>
       : 
       '' }

@@ -9,6 +9,8 @@ import Integration from 'components/integration'
 import polyline from '@mapbox/polyline'
 import Canvas from 'canvas'
 
+// import User from 'components/user'
+
 import Button from 'components/button'
 import Theme from 'themes/strava/strava1'
 import Seturl from 'components/seturl'
@@ -59,7 +61,7 @@ export default function Home(props) {
   }
 
   function renderCanvas(data) {
-    // console.log(data)
+
     if (data === null) {
       return
     }
@@ -241,6 +243,11 @@ export default function Home(props) {
     setItemsToShow(showItem)
   }
 
+
+    //   console.log('User components:')
+    // console.log(User)
+
+
   return (
     <div className="">
       <section>
@@ -253,16 +260,17 @@ export default function Home(props) {
 
         { (userData.code === 401) ?
           <>
-            <h1 className="title text-48 font-black text-center">
-              <div>Generate Instagram story </div>
-              <div className='titleColor inline'>from Strava activity</div>
+            <h1 className="title text-32 sm:text-40 md:text-48 font-black text-center">
+              Generate Instagram story <br className='hidden md:block' /> 
+              <span className='titleColor inline'>from Strava activity</span>
             </h1>
-            <div className='text-18 w-2/3 text-center mt-24 mx-auto mb-32 font-semibold'>Visualise your excercise activity for Instagram story with a decent polyline over the picture you made during the workout.</div>
+            <div className='text-18 md:w-2/3 text-center mt-24 mx-auto mb-32 font-semibold'>Visualise your excercise activity for Instagram story with a decent polyline over the picture you made during the workout.</div>
           </>
         : ''}
 
         { userData.code == 101 ? '' : <Integration loginButton={userData.errors ? true : false}/>}
         
+
         { (!userData.errors && activityData.code === 200) ? 
           <div className="sectionBlock">
             { activityData.data.slice(0, itemsToShow).map(function(key, index){
@@ -323,33 +331,31 @@ export default function Home(props) {
         // Examples
         <div className="mt-48">
           <div className="relative overflow-auto no-scrollbar">
-            <div className="flex  gap-8 mt-8">
-              <Image src="/images/examples/1.jpg" width="225" height="400" className="rounded"></Image>
-              <Image src="/images/examples/2.jpg" width="225" height="400" className="rounded"></Image>
-              <Image src="/images/examples/3.jpg" width="225" height="400" className="rounded"></Image>
-              <Image src="/images/examples/4.jpg" width="225" height="400" className="rounded"></Image>
-              <Image src="/images/examples/5.jpg" width="225" height="400" className="rounded"></Image>
-              <Image src="/images/examples/2.jpg" width="225" height="400" className="rounded"></Image>
-              <Image src="/images/examples/3.jpg" width="225" height="400" className="rounded"></Image>
+            <div className="flex justify-center gap-8 md:gap-16 p-8">
+              <div><Image src="/images/examples/1.jpg" width="225" height="400" className="rounded flex-1" /></div>
+              <div><Image src="/images/examples/2.jpg" width="225" height="400" className="rounded flex-1" /></div>
+              <div className='hidden sm:block'><Image src="/images/examples/3.jpg" width="225" height="400" className="rounded flex-1" /></div>
+              <div className='hidden md:block'><Image src="/images/examples/4.jpg" width="225" height="400" className="rounded flex-1" /></div>
+              <div className='hidden lg:block'><Image src="/images/examples/5.jpg" width="225" height="400" className="rounded flex-1" /></div>
             </div>
           </div>
         </div> : '' }
 
         { (userData.code === 401) ?
-          <section className='my-64'>
-            <div className="flex flex-col-reverse md:flex-row gap-64">
+          <section className='my-64 text-center md:text-left'>
+            <div className="flex flex-col md:flex-row gap-64">
               <div className='flex flex-1 flex-col justify-center'>
                 <div className="uppercase font-bold opacity-50">Output in seconds</div>
                 <h2 className='text-40 font-black mb-16'>Design <span className='text-orange'>100x faster</span> <br className='hidden sm:block' /> than Graphic Designer</h2>
                 <div className="text-18">Spend more time on pushing your data and less on the designing <strong>social media content</strong>. Time to get result is less than you need to lace your running shoes laces.</div>
               </div>
-              <div className="flex-1">
+              <div className="flex-1 flex justify-center">
                 <Image src="/images/content/generation.jpg" width="427" height="339" />
               </div>
             </div>
 
-            <div className="grid md:flex grid-flow-row-dense gap-64 mt-64">
-              <div className="flex-1 ">
+            <div className="flex flex-col-reverse md:flex-row gap-64 mt-64">
+              <div className="flex-1 flex justify-center">
                 <Image src="/images/content/posts.jpg" width="403" height="363" />
               </div>
               <div className='flex flex-1 flex-col justify-center'>

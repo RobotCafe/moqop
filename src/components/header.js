@@ -25,7 +25,7 @@ export default function Header(props) {
       </h1>
       {/* <Button text="Send feedback" size="small" type="secondary" className="ml-auto" /> */}
       
-      <div className="ml-auto text-12">
+      <div className="ml-auto">
         {props.user && props.user.code !== 101 ?
           <Link href="/about">
             <a className="">About</a>

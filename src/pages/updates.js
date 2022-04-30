@@ -5,6 +5,12 @@ export default function Changelog() {
 
   var updates = [
     {
+      date: '04/30/2022',
+      log: [
+        'New homepage & responsivity',
+      ]
+    },
+    {
       date: '04/26/2022',
       log: [
         'Fixed pace calculations', 
@@ -46,10 +52,17 @@ export default function Changelog() {
   return(
     <section>
       <Header />
+
+      <h1 className="title text-24 sm:text-32 md:text-40 font-black text-center">
+        <span className='titleColor inline'>Updates</span>
+      </h1>
+      <div className='text-16 md:text-18 md:w-2/3 text-center mt-8 mx-auto mb-32 font-semibold'>Check out latest release notes</div>
+      
+{/* 
       <div className="rounded border-2 border-grey-darken p-16 mb-24 text-center">
         <h2 className="text-18 font-bold">Updates</h2>
         <p className='mb-0'>Check out latest release notes.</p>
-      </div>
+      </div> */}
 
       {/* var result = objArray.map(function(a) {return a.foo;}); */}
       {

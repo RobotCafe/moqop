@@ -8,10 +8,15 @@ export default function About() {
   return(
     <section>
       <Header />
-      <div className="rounded border-2 border-grey-darken p-16 mb-24 text-center">
+      <h1 className="title text-24 sm:text-32 md:text-40 font-black text-center">
+        <span className='titleColor inline'>What is Moqop?</span>
+      </h1>
+      <div className='text-16 md:text-18 md:w-2/3 text-center mt-8 mx-auto mb-32 font-semibold'>Learn more about how Moqop can help you.</div>
+      
+      {/* <div className="rounded border-2 border-grey-darken p-16 mb-24 text-center">
         <h2 className="text-18 font-bold">What is Moqop?</h2>
         <p className="mb-0">Learn more about how Moqop can help you.</p>
-      </div>
+      </div> */}
 
       <ul className='flex flex-col gap-16'>
         <li className='mb-16'>
