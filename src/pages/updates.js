@@ -8,6 +8,7 @@ export default function Changelog() {
       date: '05/02/2022',
       log: [
         'Added open startup section',
+        'Video on the homepage',
       ]
     },
     {
@@ -70,34 +71,36 @@ export default function Changelog() {
         <p className='mb-0'>Check out latest release notes.</p>
       </div> */}
 
-      {/* var result = objArray.map(function(a) {return a.foo;}); */}
-      {
-        updates.map(function(key, index){
-          // console.log(key)
-          return (
-            <div className="flex flex-col border-b border-grey py-16 leading-8" key={index}>
-              {/* <div className="text-12 text-black/70">{key.date}</div> */}
-              <div>
-                {Array.isArray(key.log) ? (
-                  // key.log.forEach(function(element, indexx){
-                  key.log.map(function(element, index){
-                  // key.log.forEach(element => (
-                    console.log(element, index)
-                    return (
-                      <div className="" key={index} >– {element}</div>
-                    )
-                  })
+      
+      <div className="sectionBlock">
+        {
+          updates.map(function(key, index){
+            // console.log(key)
+            return (
+              <div className="flex flex-col border-b border-grey py-16 leading-8" key={index}>
+                {/* <div className="text-12 text-black/70">{key.date}</div> */}
+                <div>
+                  {Array.isArray(key.log) ? (
+                    // key.log.forEach(function(element, indexx){
+                    key.log.map(function(element, index){
+                    // key.log.forEach(element => (
+                      console.log(element, index)
+                      return (
+                        <div className="" key={index} >· {element}</div>
+                      )
+                    })
 
-                ) : (
-                  `- ${key.log}`
-                )
-                
-                }
+                  ) : (
+                    `- ${key.log}`
+                  )
+                  
+                  }
+                </div>
               </div>
-            </div>
-          )
-        })
-      }
+            )
+          })
+        }
+      </div>
       <Footer />
     </section>
   )

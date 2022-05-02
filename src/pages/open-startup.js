@@ -71,35 +71,33 @@ export default function OpenStartup() {
   return(
     <section>
       <Header />
-
-      <h1 className="title text-24 sm:text-32 md:text-40 font-black text-center">
-        <span className='titleColor inline'>Open startup</span>
-      </h1>
-      <div className='text-16 md:text-18 md:w-2/3 text-center mt-8 mx-auto mb-32 font-semibold'>Moqop is a part of Open startup movement. <br className='hidden sm:block' />All of the metrics will publicly available.</div>
-      
-      <div className="flex w-full items-center">
-        {/* <div className="flex-0">
-          <div className="text-32 font-semibold">{usersData[usersData.length - 1].counts}</div>
-          <span>People signups</span>
-        </div> */}
-        <div className="h-[100px] w-full flex-1 mt-64 mb-32">
-          <ResponsiveContainer>
-            <LineChart data={usersData} >
-              {/* <CartesianGrid strokeDasharray="5 3" /> */}
-              <XAxis dataKey="epoch" domain={['dataMin', 'dataMax']} tick={false} axisLine={true} stroke="#ccc" />
-              <YAxis width={20}  dataKey="counts" domain={[0, 'dataMax']} tick={{ fill: '#ccc' }} tickLine={false} axisLine={false}  />
-              <Tooltip content={<CustomTooltip />}  />
-              {/* <Legend /> */}
-              <Line type="monotone" dataKey="date" stroke="#6378EC" strokeWidth="2" isAnimationActive={false} />
-              <Line type="monotone" dataKey="counts" stroke="#6378EC" strokeWidth="2" isAnimationActive={false} />
-            </LineChart>
-          </ResponsiveContainer>
-          <div className="-mt-24 text-center text-12 text-bold opacity-40">Number of new signups in Moqop</div>
-        </div>
+      <div className="page">
+        <h1 className="title text-24 sm:text-32 md:text-40 font-black text-center">
+          <span className='titleColor inline'>Open startup</span>
+        </h1>
+        <div className='text-16 md:text-18 md:w-2/3 text-center mt-8 mx-auto mb-32 font-semibold'>Moqop is a part of open-startup movement. <br className='hidden sm:block' />All of the metrics will be publicly available.</div>
         
-
-      </div>
-      
+        <div className="flex w-full items-center">
+          {/* <div className="flex-0">
+            <div className="text-32 font-semibold">{usersData[usersData.length - 1].counts}</div>
+            <span>People signups</span>
+          </div> */}
+          <div className="h-[100px] w-full flex-1 mt-64 mb-32">
+            <ResponsiveContainer>
+              <LineChart data={usersData} >
+                {/* <CartesianGrid strokeDasharray="5 3" /> */}
+                <XAxis dataKey="epoch" domain={['dataMin', 'dataMax']} tick={false} axisLine={true} stroke="#ccc" />
+                <YAxis width={20}  dataKey="counts" domain={[0, 'dataMax']} tick={{ fill: '#ccc' }} tickLine={false} axisLine={false}  />
+                <Tooltip content={<CustomTooltip />}  />
+                {/* <Legend /> */}
+                <Line type="monotone" dataKey="date" stroke="#6378EC" strokeWidth="2" isAnimationActive={false} />
+                <Line type="monotone" dataKey="counts" stroke="#6378EC" strokeWidth="2" isAnimationActive={false} />
+              </LineChart>
+            </ResponsiveContainer>
+            <div className="-mt-24 text-center text-12 text-bold opacity-40">Number of new signups in Moqop</div>
+          </div>
+        </div>
+      </div>{/* Content */}
       <Footer />
     </section>
   )
@@ -110,7 +108,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     return (
       <div className="custom-tooltip bg-black text-white px-8 rounded text-12">
         {/* <p className="label">{`${label} : ${payload[0].value} : ${payload[1].value}`}</p> */}
-        {`${payload[0].value}`}
+        {`${payload[1].value}`}
       </div>
     );
   }

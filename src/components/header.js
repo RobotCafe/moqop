@@ -26,12 +26,9 @@ export default function Header(props) {
       {/* <Button text="Send feedback" size="small" type="secondary" className="ml-auto" /> */}
       
       <div className="ml-auto">
-        {props.user && props.user.code !== 101 ?
           <Link href="/about">
             <a className="">About</a>
           </Link>
-          : ''
-        }
         {
           props.user && props.user.code === 200 ? 
             <div className="inline ml-8">
