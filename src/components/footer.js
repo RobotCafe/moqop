@@ -26,7 +26,7 @@ export default function Footer() {
             <a className="mx-8">Updates</a>
           </Link>
           ·
-          <Link href="mailto:hello@milangladis.com">
+          <Link href="mailto:hello@moqop.com">
             <a className="ml-8" target="_blank">Feedback</a>
           </Link>
         </div>
