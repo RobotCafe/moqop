@@ -36,28 +36,30 @@ export default function About() {
           <span className='block font-bold mb-4 text-16'>Pricing</span>
           <p className=''>Pricing depends on your usage of the social media. If your presence on social media brings you any value, you have to use Influencer package.</p>
           <div className="flex flex-col sm:flex-row gap-16 mt-24">
-            <div className='flex-1 bg-black text-white rounded border border-grey p-16'>
-              <div className='flex border-b border-grey/30 pb-8 mb-8 font-bold'>
-                <span className=''>🏃 Individual</span>
-                <div className='ml-auto text-12 opacity-50'>Free</div>
+            <div className='flex-1  rounded border border-blue'>
+              <div className='flex border-b border-blue/50 py-12 px-16 mb-8 font-bold'>
+                <span className=''>Individual</span>
+                <div className='ml-auto opacity-50'>Free</div>
               </div>
-              <ul className=''>
+              <ul className='py-8 px-16'>
                 <li>· Watermark</li>
-                <li>· 15 shots each month</li>
-              </ul>
-            </div>
-            <div className='flex-1 bg-blue text-white rounded border border-grey p-16'>
-              <div className='flex border-b border-grey/30 pb-8 mb-8 font-bold'>
-                <span className=''>🏃‍♀️ Influencer</span>
-                <div className='ml-auto text-12 opacity-50'>$9/m</div>
-              </div>
-              <ul>
-                <li>· No moqop branding</li>
                 <li>· Unlimited shots</li>
               </ul>
             </div>
+            <div className='flex-1 border border-red  rounded'>
+            <div className='flex border-b border-red/50 py-12 px-16 mb-8 font-bold'>
+                <span className=''>Influencer</span>
+                <div className='ml-auto opacity-50'>$9/m</div>
+              </div>
+              <div className='pt-8 pb-16 px-16'>
+                <ul>
+                  <li>· No Moqop branding</li>
+                  <li>· Unlimited shots</li>
+                </ul>
+                <Button text="Request a License" type="" href="mailto:support@moqop.com" className="mt-16 w-full bg-black" />
+              </div>
+            </div>
           </div>
-          <Button text="Request Influencer License" type="" href="mailto:support@moqop.com" className="mt-16 w-full" />
         </li>
         <li className='mb-16'>
           <span className='block font-bold mb-4 text-16'>Team</span>

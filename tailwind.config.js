@@ -6,6 +6,8 @@ module.exports = {
     colors: {
       'transparent': 'transparent',
       'blue': '#2F6EB5',
+      'green': '#79D292',
+      'red': '#DD9982',
       'blue-darken': '#225B9B',
       'grey': '#EFF0F4',
       'grey-darken': '#E5E7ED',
@@ -36,6 +38,7 @@ module.exports = {
       0: '0px',
       4: '4px',
       8: '8px',
+      12: '12px',
       16: '16px',
       24: '24px',
       32: '32px',
