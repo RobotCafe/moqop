@@ -6,12 +6,16 @@ module.exports = function(app) {
   var render   = require('./controller/render');
   // var user   = require('./controller/user');
   var auth   = require('./controller/auth');
+  var open   = require('./controller/open');
   var activity   = require('./controller/activity');
 
   // Static Pages
   app.route('/api/strava/:id').get(strava.activity);
   app.route('/api/render/:id').get(render.stravaOne);
   // app.route('/api/render/strava-one/:id').get(passport.authenticate('strava', { failureRedirect: '/login' }),render.stravaOne);
+  
+  // Open startup metrics
+  app.route('/api/open').get(open.metrics);
   
   // Cookies
   // app.route('/api/cookie/get').get(user.get);

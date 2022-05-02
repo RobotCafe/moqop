@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function Footer() {
   return (
     <section className='my-32'>
-      <div className="block sm:flex items-center wrapper h-48 justify-center text-center text-12 font-medium opacity-50 leading-6">
+      <div className="block md:flex items-center wrapper h-48 justify-center text-center text-12 font-medium opacity-50 leading-6">
         <div className="">
           <span>
             Made with 
@@ -18,6 +18,10 @@ export default function Footer() {
         </div>
         <div>
           <div className="sm:visible float-left invisible">·</div>
+          <Link href="/open-startup">
+            <a className="mx-8">Open Startup</a>
+          </Link>
+          ·
           <Link href="/updates">
             <a className="mx-8">Updates</a>
           </Link>

@@ -5,6 +5,12 @@ export default function Changelog() {
 
   var updates = [
     {
+      date: '05/02/2022',
+      log: [
+        'Added open startup section',
+      ]
+    },
+    {
       date: '04/30/2022',
       log: [
         'New homepage & responsivity',
