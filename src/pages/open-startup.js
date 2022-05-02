@@ -24,7 +24,7 @@ export default function OpenStartup() {
     return formatedDate
   }
 
-  const [usersData, setUsersData] = useState([{date: '2022-4-21', counts: 1, epoch: 1650492000}], {date: '2022-4-21', counts: 1, epoch: 1650492000});
+  const [usersData, setUsersData] = useState([{date: '2022-4-21', counts: 1, epoch: 1650492000}, {date: '2022-4-21', counts: 1, epoch: 1650492000}]);
 
   useEffect(() => {
 
@@ -86,11 +86,11 @@ export default function OpenStartup() {
           <ResponsiveContainer>
             <LineChart data={usersData} >
               {/* <CartesianGrid strokeDasharray="5 3" /> */}
-              <XAxis type="number" dataKey="epoch" domain={['dataMin', 'dataMax']} tick={false} axisLine={true} stroke="#ccc" />
-              <YAxis type="number" dataKey="counts" domain={[0, 'dataMax']} tick={{ fill: '#ccc' }} tickLine={false} axisLine={false}  />
+              <XAxis dataKey="epoch" domain={['dataMin', 'dataMax']} tick={false} axisLine={true} stroke="#ccc" />
+              <YAxis width={20}  dataKey="counts" domain={[0, 'dataMax']} tick={{ fill: '#ccc' }} tickLine={false} axisLine={false}  />
               <Tooltip content={<CustomTooltip />}  />
               {/* <Legend /> */}
-              <Line type="monotone" dataKey="date" stroke="#8884d8" strokeWidth="2" isAnimationActive={false} />
+              <Line type="monotone" dataKey="date" stroke="#6378EC" strokeWidth="2" isAnimationActive={false} />
               <Line type="monotone" dataKey="counts" stroke="#6378EC" strokeWidth="2" isAnimationActive={false} />
             </LineChart>
           </ResponsiveContainer>
@@ -110,7 +110,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     return (
       <div className="custom-tooltip bg-black text-white px-8 rounded text-12">
         {/* <p className="label">{`${label} : ${payload[0].value} : ${payload[1].value}`}</p> */}
-        {`${payload[1].value}`}
+        {`${payload[0].value}`}
       </div>
     );
   }
