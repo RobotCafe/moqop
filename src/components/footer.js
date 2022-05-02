@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function Footer() {
   return (
     <section className='my-32'>
-      <div className="block md:flex items-center wrapper h-48 justify-center text-center text-12 font-medium opacity-50 leading-6">
+      <div className="block md:flex items-center wrapper h-48 justify-center text-center font-medium opacity-50 leading-6">
         <div className="">
           <span>
             Made with 
