@@ -1,11 +1,10 @@
 const express = require('express')
-// const next = require('next')
+const next = require('next')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var session = require('express-session')
 var routes = require('./api/routes');
 var passport = require('passport');
-var util = require('util');
 
 const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
 const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
@@ -14,60 +13,72 @@ const serviceAccount = require('./api/utils/firebase.json');
 initializeApp({
   credential: cert(serviceAccount)
 });
-
 const db = getFirestore();
-
-
 var StravaStrategy = require('passport-strava-oauth2').Strategy;
-
-// const dev = process.env.NODE_ENV !== 'production';
 
 const port = parseInt(process.env.PORT, 10) || 8000
 const dev = process.env.NODE_ENV !== 'production'
-// const server = dev ? 'http://localhost:8000' : 'https://strava-story.vercel.app';
-// const app = next({ dev })
-const app = require('express')()
-// const handle = app.getRequestHandler()
-var STRAVA_CLIENT_ID = '80214';
-var STRAVA_CLIENT_SECRET = '25b8bfd5d74d1ed03eee1acb88f3ff664fdcc346';
+const server = dev ? 'http://localhost:8000' : 'https://moqop.com';
+const STRAVA_CLIENT_ID = dev ? '82996' : '80214';
+const STRAVA_CLIENT_SECRET = dev ? 'f13014b394b7ce47aff394a944028d0e96ce670b' : '25b8bfd5d74d1ed03eee1acb88f3ff664fdcc346';
 
-// console.log(STRAVA_CLIENT_ID);
-// console.log(STRAVA_CLIENT_SECRET)
+const app = next({ dev })
+const handle = app.getRequestHandler()
 
 passport.serializeUser(async function(user, done) {
-  // console.log('serialize: ' + user._json.id)
-  // console.log(user._json.id)
-  // console.log(user._json)
-
-  // console.log('serializeUser')
   var userIdString = String(user._json.id)
-  // console.log(userIdString)
   user._json.token = user.token
-  const res = await db.collection('users').doc(userIdString).set(user._json);
-  
-  // console.log(res)
-  // console.log('serializeUser')
+  console.log('user._json.id ' + user._json.id)
+
+  let document = await db.collection("users").doc(userIdString).get();
+  if (document && document.exists) {
+    console.log('document exists')
+    console.log(document)
+    if (!document.data().moqop || !document.data().moqop.created_at) {
+      var moqop_created_at = '2022-04-22T10:00:00Z'
+    } else {
+      var moqop_created_at = document.data().moqop.created_at
+    }
+    if (!document.data().moqop || !document.data().moqop.login_count) {
+      var moqop_signup_count = 1
+    } else {
+      var moqop_signup_count = document.data().moqop.login_count + 1
+    }
+    user._json.moqop = {
+      created_at: moqop_created_at,
+      updated_at: new Date().toISOString(),
+      login_count: moqop_signup_count
+    }
+    await document.ref.update(user._json)
+  } else {
+    user._json.moqop = {
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      login_count: 1
+    }
+    // Send webhook request
+    // https://discord.com/api/webhooks/970994761437683784/YfYoqdrYgzXs5K1LOzbZDLHzMEFMCbLUoOREzNG8hzCBoVGqmMzQlX1UYpim0F6kkTcj
+    await db.collection('users').doc(userIdString).set(user._json);
+  }
+
   done(null, user);
 });
 
 passport.deserializeUser(async function(obj, done) {
-  // console.log('deserialize')
-  // console.log(obj._json)
   var userIdString = String(obj._json.id)
-
   const user = await db.collection('users').doc(userIdString)
   const doc = await user.get();
   if (!doc.exists) {
-    // console.log('User does not exist')
+    console.log('User does not exist')
     return false
   } else {
     // console.log('User exists')
     done(null, obj);
     return (doc.data())
   }
-
-
+  done(null, obj);
 });
+
 passport.use(new StravaStrategy({
   clientID: STRAVA_CLIENT_ID,
   clientSecret: STRAVA_CLIENT_SECRET,
@@ -76,8 +87,8 @@ passport.use(new StravaStrategy({
 function(accessToken, refreshToken, profile, done) {
   // asynchronous verification, for effect...
   process.nextTick(function () {
-    // console.log('next tick')
-    // console.log(accessToken, refreshToken)
+    console.log('next tick')
+    console.log(accessToken, refreshToken)
     // console.log(profile._json)
     // To keep the example simple, the user's Strava profile is returned to
     // represent the logged-in user.  In a typical application, you would want
@@ -89,43 +100,30 @@ function(accessToken, refreshToken, profile, done) {
 ));
 
 
-// app.prepare().then(() => {
-//   const server = express()
+app.prepare().then(() => {
+  const server = express()
   
-//     server.use(cookieParser());
-//     server.use(bodyParser.urlencoded({ extended: false }))
-//     server.use(bodyParser.json()) // parse application/json
+  server.use(cookieParser());
+  server.use(bodyParser.urlencoded({ extended: false }))
+  server.use(bodyParser.json()) // parse application/json
 
-//     server.set('trust proxy', 1) // trust first proxy
-//     server.use(session({
-//       secret: 'keyboard cat',
-//       resave: false,
-//       saveUninitialized: true,
-//       //cookie: { secure: true } remove this line for HTTP connection
-//     }))
-//     server.use(passport.initialize());
-//     server.use(passport.session());
+  server.set('trust proxy', 1) // trust first proxy
+  server.use(session({
+    secret: 'f3f476826e0e83ae8e9a98c5e1db2e89a59927d909f425f5f28d17b4520fa65d',
+    resave: false,
+    saveUninitialized: true, //cookie: { secure: true } remove this line for HTTP connection
+  }))
+  server.use(passport.initialize());
+  server.use(passport.session());
 
-//     routes(server); 
-    
-//     // server.all('*', (req, res) => {
-//     //   return handle(req, res)
-//     // })
-    
-
-//   server.listen(port, (err) => {
-//     if (err) throw err
-//     console.log(`> Ready on http://localhost:${port}`)
-//   })
-
-// })
-
-const http = require('http');
-
-const requestListener = function (req, res) {
-  res.writeHead(200);
-  res.end('Hello, World!');
-}
-
-const server = http.createServer(requestListener);
-server.listen(8080);
+  routes(server); 
+  
+  server.all('*', (req, res) => {
+    return handle(req, res)
+  })
+  
+  server.listen(port, (err) => {
+    if (err) throw err
+    console.log(`> Ready on http://localhost:${port}`)
+  })
+})

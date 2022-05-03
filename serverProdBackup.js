@@ -32,7 +32,7 @@ passport.serializeUser(async function(user, done) {
 
   let document = await db.collection("users").doc(userIdString).get();
   if (document && document.exists) {
-    console.log('document exists')
+    // console.log('document exists')
     console.log(document)
     if (!document.data().moqop || !document.data().moqop.created_at) {
       var moqop_created_at = '2022-04-22T10:00:00Z'

@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tailwind:css": "postcss public/styles/tailwind.css -o public/styles/style.css",
     "build:next": "next build",
-    "start:prod": "npm run build:next && NODE_ENV=production node serverProd.js",
-    "start": "nodemon serverLocal.js -e js,html --ignore src"
+    "start:prod": "npm run build:next && NODE_ENV=production node server.js",
+    "start": "nodemon server.js -e js,html --ignore src"
   },
   "repository": {
     "type": "git",
