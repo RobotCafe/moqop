@@ -85,13 +85,13 @@ passport.deserializeUser(async function(obj, done) {
   const doc = await user.get();
   if (!doc.exists) {
     console.log('User does not exist')
+    done(null, obj);
     return false
   } else {
     // console.log('User exists')
     done(null, obj);
     return (doc.data())
   }
-  done(null, obj);
 });
 
 passport.use(new StravaStrategy({

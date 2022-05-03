@@ -343,7 +343,7 @@ export default function Home(props) {
                   return (
                     <div key={index}>
                       <Link href={`${server()}/api/render/${key.id}`}>
-                        <a className='flex items-center rounded-4 mb-4  py-8 px-8 hover:bg-grey' onClick={showLoading}>
+                        <a className='flex items-center rounded-4 mb-8  py-8 px-8 bg-grey/50 hover:bg-grey' onClick={showLoading}>
                           {key.map ? 
                             <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
                           : ''}
@@ -353,7 +353,7 @@ export default function Home(props) {
                           </div>
                         </a>
                       </Link>
-                      <div className="border-b border-grey mb-4 mx-4"></div>
+                      {/* <div className="border-b border-grey mb-4 mx-4"></div> */}
                     </div>
                   )
                 }) }
@@ -368,10 +368,11 @@ export default function Home(props) {
 
             { (!userData.errors && activityData.code === 101) ? 
               <div className='sectionBlock'>
-                <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey text-black/50'>Loading data...</div>
-                <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey/50'>&nbsp;</div>
-                <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey/20'>&nbsp;</div>
-              </div> : '' }
+                <LoadingRow />
+                <LoadingRow className="opacity-70" />
+                <LoadingRow className="opacity-40" />
+              </div> 
+            : '' }
 
             { !userData.errors && activityData.code === 200 && (activityData.data.length > itemsToShow) ?
               <div className="sectionBlock">
@@ -394,6 +395,20 @@ export default function Home(props) {
         <section>
         <Footer />
       </section>
+    </div>
+  )
+}
+
+
+function LoadingRow(props) {
+  console.log(props.className)
+  return (
+    <div className={`flex items-center gap-16 text-center rounded-4 h-[55px] mb-8 p-8 bg-grey text-black/50 ${props.className}`}>
+      <div className='block w-32 h-32 bg-black/10 ml-4 rounded'></div>
+      <div className='flex flex-1 flex-col justify-center'>
+          <div className='block h-8 w-1/3 bg-black/10 mb-8 rounded'></div>
+          <div className='block h-8 w-1/4 bg-black/10 rounded'></div>
+      </div>
     </div>
   )
 }
