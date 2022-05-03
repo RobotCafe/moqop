@@ -56,9 +56,24 @@ passport.serializeUser(async function(user, done) {
       updated_at: new Date().toISOString(),
       login_count: 1
     }
-    // Send webhook request
-    // https://discord.com/api/webhooks/970994761437683784/YfYoqdrYgzXs5K1LOzbZDLHzMEFMCbLUoOREzNG8hzCBoVGqmMzQlX1UYpim0F6kkTcj
     await db.collection('users').doc(userIdString).set(user._json);
+    
+    // Send webhook request
+    var discordUrl = `https://discord.com/api/webhooks/970994761437683784/YfYoqdrYgzXs5K1LOzbZDLHzMEFMCbLUoOREzNG8hzCBoVGqmMzQlX1UYpim0F6kkTcj`
+    var params = {
+      username: "moqop",
+      content: `New signup — ${user._json.username}`
+  }
+    fetch(discordUrl, {
+      method: "POST",
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    }).then(res => {
+        console.log(res);
+    }) 
+    
   }
 
   done(null, user);
