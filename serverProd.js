@@ -28,7 +28,37 @@ var STRAVA_CLIENT_SECRET = '25b8bfd5d74d1ed03eee1acb88f3ff664fdcc346';
 passport.serializeUser(async function(user, done) {
   var userIdString = String(user._json.id)
   user._json.token = user.token
-  const res = await db.collection('users').doc(userIdString).set(user._json);
+  console.log('user._json.id ' + user._json.id)
+
+  let document = await db.collection("users").doc(userIdString).get();
+  if (document && document.exists) {
+    console.log('document exists')
+    console.log(document)
+    if (!document.data().moqop || !document.data().moqop.created_at) {
+      var moqop_created_at = '2022-04-22T10:00:00Z'
+    } else {
+      var moqop_created_at = document.data().moqop.created_at
+    }
+    if (!document.data().moqop || !document.data().moqop.login_count) {
+      var moqop_signup_count = 1
+    } else {
+      var moqop_signup_count = document.data().moqop.login_count + 1
+    }
+    user._json.moqop = {
+      created_at: moqop_created_at,
+      updated_at: new Date().toISOString(),
+      login_count: moqop_signup_count
+    }
+    await document.ref.update(user._json)
+  } else {
+    user._json.moqop = {
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      login_count: 1
+    }
+    await db.collection('users').doc(userIdString).set(user._json);
+  }
+
   done(null, user);
 });
 
@@ -77,7 +107,7 @@ app.prepare().then(() => {
 
   server.set('trust proxy', 1) // trust first proxy
   server.use(session({
-    secret: 'keyboard cat',
+    secret: 'f3f476826e0e83ae8e9a98c5e1db2e89a59927d909f425f5f28d17b4520fa65d',
     resave: false,
     saveUninitialized: true, //cookie: { secure: true } remove this line for HTTP connection
   }))
