@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Header from 'components/header'
 import Footer from 'components/footer'
 import Button from 'components/button'
@@ -7,6 +8,11 @@ export default function About() {
 
   return(
     <section>
+      <Head>
+        <title>Moqop · What is moqop?</title>
+        <meta name="description" content="Moqop is online visualiser that generates content based on the specific data input, currently focusing on Strava activities, but it can be extendable by any type of content." />
+      </Head>
+
       <Header />
       <h1 className="title text-24 sm:text-32 md:text-40 font-black text-center">
         <span className='titleColor inline'>What is Moqop?</span>
@@ -21,7 +27,7 @@ export default function About() {
       <ul className='flex flex-col gap-16'>
         <li className='mb-16'>
           <span className='block font-bold mb-4 text-16'>About</span>
-          <p className=''>Moqop is online visualiser that generates content based on the specific data input, currently focusing on Strava activities, but it can be extendable by any type of content .</p>
+          <p className=''>Moqop is online visualiser that generates content based on the specific data input, currently focusing on Strava activities, but it can be extendable by any type of content.</p>
         </li>
         <li className='mb-16'>
           <span className='block font-bold mb-4 text-16'>Use-cases</span>
@@ -36,27 +42,31 @@ export default function About() {
           <span className='block font-bold mb-4 text-16'>Pricing</span>
           <p className=''>Pricing depends on your usage of the social media. If your presence on social media brings you any value, you have to use Influencer package.</p>
           <div className="flex flex-col sm:flex-row gap-16 mt-24">
-            <div className='flex-1  rounded border border-blue'>
-              <div className='flex border-b border-blue/50 py-12 px-16 mb-8 font-bold'>
-                <span className=''>Individual</span>
-                <div className='ml-auto opacity-50'>Free</div>
+            <div className='relative flex-1  rounded border border-red'>
+              <div className="absolute -top-12 bg-white left-1/2 -translate-x-1/2 whitespace-nowrap px-8 text-red text-12">Hobby</div>
+              <div className='flex border-b border-red/50 py-12 px-16 mb-8 text-red'>
+                <span className=' font-bold'>Individual</span>
+                <div className='ml-auto'>Free forever</div>
               </div>
               <ul className='py-8 px-16'>
                 <li>· Watermark</li>
                 <li>· Unlimited shots</li>
               </ul>
             </div>
-            <div className='flex-1 border border-red  rounded'>
-            <div className='flex border-b border-red/50 py-12 px-16 mb-8 font-bold'>
-                <span className=''>Influencer</span>
-                <div className='ml-auto opacity-50'>$9/m</div>
+            <div className='relative flex-1 border border-blue  rounded'>
+              <div className="absolute -top-12 bg-white left-1/2 -translate-x-1/2 whitespace-nowrap px-8 text-blue text-12">Professional</div>
+              <div className='flex border-b border-blue/50 py-12 px-16 mb-8 text-blue'>
+                <span className='font-bold'>
+                  Influencer
+                </span>
+                <div className='ml-auto'>$49 monthly</div>
               </div>
               <div className='pt-8 pb-16 px-16'>
                 <ul>
                   <li>· No Moqop branding</li>
                   <li>· Unlimited shots</li>
                 </ul>
-                <Button text="Request a License" type="" href="mailto:support@moqop.com" className="mt-16 w-full bg-black" />
+                <Button text="Request a License" type="" href="mailto:support@moqop.com" className="mt-16 w-full" />
               </div>
             </div>
           </div>

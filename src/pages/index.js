@@ -251,8 +251,8 @@ export default function Home(props) {
   return (
     <div className="">
       <Head>
-        <title>Strava activity image</title>
-        <meta name="description" content="Generated pretty image from your Strava activity" />
+        <title>Moqop · Generate Instagram Story from Strava activity</title>
+        <meta name="description" content="Visualise your excercise activity for Instagram story with a decent polyline over the picture you made during the workout." />
       </Head>
 
       <section>

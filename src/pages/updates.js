@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Header from 'components/header'
 import Footer from 'components/footer'
 
@@ -58,6 +59,11 @@ export default function Changelog() {
 
   return(
     <section>
+      <Head>
+        <title>Moqop · Updates</title>
+        <meta name="description" content="Check out the latest Moqop release notes" />
+      </Head>
+
       <Header />
 
       <h1 className="title text-24 sm:text-32 md:text-40 font-black text-center">

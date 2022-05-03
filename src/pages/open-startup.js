@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Header from 'components/header'
 import Footer from 'components/footer'
 import { useEffect, useState } from 'react'
@@ -111,6 +112,11 @@ export default function OpenStartup() {
 
   return(
     <section>
+      <Head>
+        <title>Moqop is open startup</title>
+        <meta name="description" content="Moqop is a part of open-startup movement. All of the metrics will be publicly available." />
+      </Head>
+
       <Header />
       <div className="page">
         <h1 className="title text-24 sm:text-32 md:text-40 font-black text-center">
