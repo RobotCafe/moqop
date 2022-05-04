@@ -289,7 +289,15 @@ exports.stravaOne = async function(req,res) {
           height: 1920
         }
       });
-      res.writeHead(200, { 'Content-Type': 'image/png' });
+
+      const base64Image = Buffer.from(image).toString('base64');
+      var dataURI = base64Image.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
+
+      // const dataURI = 'data:image/jpeg;base64,' + base64Image
+      console.log(dataURI)
+      // res.send(dataURI)
+      res.writeHead(200, { 'Content-Type': 'image/jpeg;base64' });
+      // res.writeHead(200, { 'Content-Type': 'image/png' });
       res.end(image, 'binary');
     }
 

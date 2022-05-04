@@ -8,6 +8,12 @@ export default function Changelog() {
     {
       date: '05/02/2022',
       log: [
+        'popup with the image content to download',
+      ]
+    },
+    {
+      date: '05/02/2022',
+      log: [
         'Added open startup section',
         'Video on the homepage',
       ]

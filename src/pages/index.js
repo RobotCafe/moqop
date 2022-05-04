@@ -15,7 +15,7 @@ import Button from 'components/button'
 import Theme from 'themes/strava/strava1'
 import Seturl from 'components/seturl'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import {server} from '../../api/utils/functions'
 
 export default function Home(props) {
@@ -27,11 +27,12 @@ export default function Home(props) {
   }
 
   const [loadingState, setLoadingState] = useState(false);
-  const [loadingSecondsState, setLoadingSecondsState] = useState(5);
+  const [loadingStateImageReady, setLoadingStateImageReady] = useState(false);
+  const [loadingImage, setLoadingImage] = useState('');
   const [activityData, setActivityData] = useState(initialData);
   const [userData, setUserData] = useState(initialData);
   const [itemsToShow, setItemsToShow] = useState(5);
-
+  const imageRef = useRef(null)
 
   function formatSeconds(time) {
     var hrs = ~~(time / 3600);
@@ -221,19 +222,29 @@ export default function Home(props) {
 
   
   // Countdown for loading state
-  var test = loadingSecondsState
-  const showLoading = () => {
+
+  const disableLoading = () => {
+    setLoadingState(false)
+    // setLoadingStateImageReady(5)
+  }
+
+  // var test = loadingStateImageReady
+  const showLoading = async(id) => {
+    setLoadingImage('')
     setLoadingState(true)
-    var interval = setInterval(() => {
-      test = test - 1
-      console.log(test)
-      if (test >= 1) {
-        setLoadingSecondsState(test)
-      } else {
-        setLoadingState(false)
-        clearInterval(interval);
-      }
-    }, 1000);
+    setLoadingStateImageReady(false)
+    var imageUrl = `${server()}/api/render/${id}`
+    // console.log(imageUrl)
+    
+    await fetch(imageUrl)
+      .then(res => res.blob()) // Gets the response and returns it as a blob
+      .then(blob => {
+        const objectURL = URL.createObjectURL(blob);
+        setLoadingImage(objectURL)
+        setLoadingStateImageReady(true)
+        imageRef.current.src = objectURL;
+      });
+
   }
 
 
@@ -342,8 +353,9 @@ export default function Home(props) {
                   var time = formatSeconds(key.moving_time)
                   return (
                     <div key={index}>
-                      <Link href={`${server()}/api/render/${key.id}`}>
-                        <a className='flex items-center rounded-4 mb-8  py-8 px-8 bg-grey/50 hover:bg-grey' onClick={showLoading}>
+                      {/* <Link href={`${server()}/api/render/${key.id}`}> */}
+                      <div>
+                        <div className='flex items-center rounded-4 mb-8  py-8 px-8 bg-grey/50 hover:bg-grey cursor-pointer' onClick={() => showLoading(key.id)}>
                           {key.map ? 
                             <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
                           : ''}
@@ -351,8 +363,9 @@ export default function Home(props) {
                             <span className='mt-4 leading-7'>{key.name}</span>
                             <span className='block text-12 opacity-50 leading-7'>{key.type} · {distance} · {key.total_elevation_gain > 100 ? `${key.total_elevation_gain} m` : formatPace(key.moving_time, key.distance) } · {time}</span>
                           </div>
-                        </a>
-                      </Link>
+                        </div>
+                      {/* </Link> */}
+                      </div>
                       {/* <div className="border-b border-grey mb-4 mx-4"></div> */}
                     </div>
                   )
@@ -382,11 +395,24 @@ export default function Home(props) {
 
 
 
-            { <div className={`absolute transition top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center text-center  bg-grey-darken/90 ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
-                <div className="rounded drop-shadow-md p-32 bg-white">
-                  Your image is ready in {loadingSecondsState} seconds. <br /> 
-                  Our designers are super fast :)
-                </div>
+            { <div className={`fixed transition top-0 left-0 right-0 bottom-0 z-50 text-center ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
+              <div className="mq:backdrop flex items-center justify-center w-full h-full bg-grey-darken/90" onClick={() => disableLoading()}></div>
+              <div className='absolute flex flex-col content-around top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-50 bg-white rounded drop-shadow-md p-16'>
+                {/* <div className="flex max-h-full rounded drop-shadow-md p-32 bg-white"> */}
+                  <div className='font-semibold'>  
+                    {loadingStateImageReady ?
+                      <span>Long press or right click <br />the image to download</span>
+                    :
+                    <span>Generating image... <br /> It can take 5 seconds</span> }
+                  </div> 
+                  { loadingStateImageReady ?
+                    // <a href={loadingImage} className=' max-h-[70vh] flex-1 overflow-hidden mt-8' download="moqop.jpg">
+                    <div className='flex-1 overflow-hidden mt-8'>
+                      <img ref={imageRef} src={loadingImage} className="object-contain w-auto max-h-[70vh] rounded block m-auto" />
+                    </div>
+                  : '' }
+                {/* </div> */}
+              </div>
             </div> }
           </section>
 

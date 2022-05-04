@@ -27,7 +27,7 @@ module.exports = function(app) {
   app.route('/api/user').get(auth.user)
   app.route('/test').get(passport.authenticate('strava'), auth.test)
   app.route('/auth/strava').get(passport.authenticate('strava', { scope: ['activity:read_all'] }), auth.strava)
-  app.route('/auth/strava/callback').get(passport.authenticate('strava', { failureRedirect: '/login' }), auth.callback)
+  app.route('/auth/strava/callback').get(passport.authenticate('strava', { failureRedirect: '/' }), auth.callback)
   app.route('/logout').get(auth.logout)
   
   app.route('/api/activity').get(activity.getAll)

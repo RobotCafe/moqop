@@ -18,7 +18,7 @@ var StravaStrategy = require('passport-strava-oauth2').Strategy;
 
 const port = parseInt(process.env.PORT, 10) || 8000
 const dev = process.env.NODE_ENV !== 'production'
-const server = dev ? 'http://localhost:8000' : 'https://moqop.com';
+const server = dev ? 'http://192.168.0.183:8000' : 'https://moqop.com';
 const STRAVA_CLIENT_ID = dev ? '82996' : '80214';
 const STRAVA_CLIENT_SECRET = dev ? 'f13014b394b7ce47aff394a944028d0e96ce670b' : '25b8bfd5d74d1ed03eee1acb88f3ff664fdcc346';
 
