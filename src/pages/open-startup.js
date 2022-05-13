@@ -145,7 +145,8 @@ export default function OpenStartup() {
        
        
         <div className="md:flex w-full gap-24 items-center">
-          <div className='flex-1 border border-grey p-16 rounded items-center mb-48 bg-grey/50'>
+
+          {/* <div className='flex-1 border border-grey p-16 rounded items-center mb-48 bg-grey/50'>
             <div className="flex-1">
               <span className='opacity-50 font-semibold'>MRR – Monthly Recurring Revenue</span>
               <div className="text-24 font-bold">$0</div>
@@ -158,7 +159,7 @@ export default function OpenStartup() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-          </div>
+          </div> */}
          
           <div className='flex-1 border border-grey p-16 rounded items-center mb-48 bg-grey/50'>
             <div className="flex-1">

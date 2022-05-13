@@ -38,7 +38,7 @@ export default function About() {
             <li>· Digital badges for running events</li>
           </ul>
         </li>
-        <li className='mb-16'>
+        {/* <li className='mb-16'>
           <span className='block font-bold mb-4 text-16'>Pricing</span>
           <p className=''>Pricing depends on your usage of the social media. If your presence on social media brings you any value, you have to use Influencer package.</p>
           <div className="flex flex-col sm:flex-row gap-16 mt-24">
@@ -70,11 +70,17 @@ export default function About() {
               </div>
             </div>
           </div>
-        </li>
+        </li> */}
         <li className='mb-16'>
           <span className='block font-bold mb-4 text-16'>Team</span>
           <div className="">
             <p>Moqop is one man show and has been developed by <a href="https://milangladis.com" target="_blank" className="mr-8 text-blue underline">Milan Gladis</a>– Trail runner 🏃 Product Manager, Designer, and Developer with a +15 years of experience in building products.</p>
+          </div>
+        </li>
+        <li className='mb-16'>
+          <span className='block font-bold mb-4 text-16'>Open Startup</span>
+          <div className="">
+            <p>I think the transparency and knowledge sharing is the key of growth. That's thy Moqop will share as much data as possible as an Open Startup. Check out our current data on the <Link href="open-startup"><a className='text-blue underline'>Open Startup</a></Link> page</p>
           </div>
         </li>
         <li className='mb-16'>

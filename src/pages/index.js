@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Header from 'components/header'
 import Footer from 'components/footer'
 import Integration from 'components/integration'
+import Slider from 'components/slider'
 
 import polyline from '@mapbox/polyline'
 import Canvas from 'canvas'
@@ -29,8 +30,10 @@ export default function Home(props) {
   const [loadingState, setLoadingState] = useState(false);
   const [loadingStateImageReady, setLoadingStateImageReady] = useState(false);
   const [loadingImage, setLoadingImage] = useState('');
+
   const [activityData, setActivityData] = useState(initialData);
   const [userData, setUserData] = useState(initialData);
+  
   const [itemsToShow, setItemsToShow] = useState(5);
   const imageRef = useRef(null)
 
@@ -214,7 +217,9 @@ export default function Home(props) {
           message: 'User response has been rejected.',
         })
       });
-    }, [])
+
+
+  }, [])
 
 
   console.log(userData)
@@ -288,137 +293,128 @@ export default function Home(props) {
 
         { (userData.code === 401) ?
           // Examples
-          <div className="mt-48">
-            <div className="relative overflow-auto no-scrollbar">
-              <div className="flex justify-center gap-8 md:gap-16 p-8">
-                <div><Image src="/images/examples/1.jpg" width="225" height="400" className="rounded flex-1" /></div>
-                <div><Image src="/images/examples/2.jpg" width="225" height="400" className="rounded flex-1" /></div>
-                <div className='hidden sm:block'><Image src="/images/examples/3.jpg" width="225" height="400" className="rounded flex-1" /></div>
-                <div className='hidden md:block'><Image src="/images/examples/4.jpg" width="225" height="400" className="rounded flex-1" /></div>
-                <div className='hidden lg:block'><Image src="/images/examples/5.jpg" width="225" height="400" className="rounded flex-1" /></div>
+            <Slider />
+           : '' }
+
+        { (userData.code === 401) ?
+          <>
+            <section className='my-64 text-center md:text-left'>
+              <div className="flex flex-col md:flex-row gap-64">
+                <div className='flex flex-1 flex-col justify-center'>
+                  <div className="uppercase font-bold opacity-50">Output in seconds</div>
+                  <h2 className='text-40 font-black mb-16'>Design <span className='text-orange'>100x faster</span> <br className='hidden sm:block' /> than Graphic Designer</h2>
+                  <div className="text-18">Spend more time on pushing your data and less on the designing <strong>social media content</strong>. Time to get result is less than you need to lace your running shoes laces.</div>
+                </div>
+                <div className="flex-1 flex justify-center">
+                  <Image src="/images/content/generation.jpg" width="427" height="339" />
+                </div>
               </div>
+
+              <div className="flex flex-col-reverse md:flex-row gap-64 mt-64">
+                <div className="flex-1 flex justify-center">
+                  <Image src="/images/content/posts.jpg" width="403" height="363" />
+                </div>
+                <div className='flex flex-1 flex-col justify-center'>
+                  <div className="uppercase font-bold opacity-50">Output in seconds</div>
+                  <h2 className='text-40 font-black k mb-16'>Share immersive <br className='hidden sm:block' /> <span className='text-blue'>social media</span> posts</h2>
+                  <div className="text-18"><strong>Predefined template</strong> keep your feed consistent and future features will allow you to personalize posts by using <strong>custom modifications</strong>.</div>
+                </div>
+              </div>
+
+              <div className="text-center mt-80">
+                <h2 className='text-40 font-black k mb-16'>How to use Moqop?</h2>
+                <div className="text-18">Watch a short video about how to set up strava activity to get solid results.</div>
+                <div className="video-container rounded mt-48 m-auto aspect-video max-w-7xl">
+                  <iframe className='' width="560" height="315" src="https://www.youtube-nocookie.com/embed/X3vaJhJyJZ0?controls=0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                </div>
+              </div>
+            
+            </section>
+
+            <div className="gradientFeedback text-center py-80">
+              <h2 className='text-40 font-black k mb-16'>Appreciate <span className='titleColor inline'>your feedback</span></h2>
+              <div className="text-18">Moqop needs your help by testing the product, providing good <br className='hidden md:block' />  or bad feedback, and suggesting new features. <br className='hidden md:block' /> Thanks a lot 🙏</div>
+
+              <a href="mailto:hello@moqop.com" target="_blank" className='inline-block bg-black text-white mt-32 py-16 px-32 text-16 font-semibold rounded'>Send a feedback</a>
             </div>
-          </div> : '' }
-
-          { (userData.code === 401) ?
-            <>
-              <section className='my-64 text-center md:text-left'>
-                <div className="flex flex-col md:flex-row gap-64">
-                  <div className='flex flex-1 flex-col justify-center'>
-                    <div className="uppercase font-bold opacity-50">Output in seconds</div>
-                    <h2 className='text-40 font-black mb-16'>Design <span className='text-orange'>100x faster</span> <br className='hidden sm:block' /> than Graphic Designer</h2>
-                    <div className="text-18">Spend more time on pushing your data and less on the designing <strong>social media content</strong>. Time to get result is less than you need to lace your running shoes laces.</div>
-                  </div>
-                  <div className="flex-1 flex justify-center">
-                    <Image src="/images/content/generation.jpg" width="427" height="339" />
-                  </div>
-                </div>
-
-                <div className="flex flex-col-reverse md:flex-row gap-64 mt-64">
-                  <div className="flex-1 flex justify-center">
-                    <Image src="/images/content/posts.jpg" width="403" height="363" />
-                  </div>
-                  <div className='flex flex-1 flex-col justify-center'>
-                    <div className="uppercase font-bold opacity-50">Output in seconds</div>
-                    <h2 className='text-40 font-black k mb-16'>Share immersive <br className='hidden sm:block' /> <span className='text-blue'>social media</span> posts</h2>
-                    <div className="text-18"><strong>Predefined template</strong> keep your feed consistent and future features will allow you to personalize posts by using <strong>custom modifications</strong>.</div>
-                  </div>
-                </div>
-
-                <div className="text-center mt-80">
-                  <h2 className='text-40 font-black k mb-16'>How to use Moqop?</h2>
-                  <div className="text-18">Watch a short video about how to set up strava activity to get solid results.</div>
-                  <div className="video-container rounded mt-48 m-auto aspect-video max-w-7xl">
-                    <iframe className='' width="560" height="315" src="https://www.youtube-nocookie.com/embed/X3vaJhJyJZ0?controls=0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                  </div>
-                </div>
-              
-              </section>
-
-              <div className="gradientFeedback text-center py-80">
-                <h2 className='text-40 font-black k mb-16'>Appreciate <span className='titleColor inline'>your feedback</span></h2>
-                <div className="text-18">Moqop needs your help by testing the product, providing good <br className='hidden md:block' />  or bad feedback, and suggesting new features. <br className='hidden md:block' /> Thanks a lot 🙏</div>
-
-                <a href="mailto:hello@moqop.com" target="_blank" className='inline-block bg-black text-white mt-32 py-16 px-32 text-16 font-semibold rounded'>Send a feedback</a>
-              </div>
-            </>
-          : '' }
-
-          <section>
-
-            { (!userData.errors && activityData.code === 200) ? 
-              <div className="sectionBlock">
-                { activityData.data.slice(0, itemsToShow).map(function(key, index){
-                  var distance = `${+parseFloat(key.distance/1000).toFixed(2)} km`;
-                  var time = formatSeconds(key.moving_time)
-                  return (
-                    <div key={index}>
-                      {/* <Link href={`${server()}/api/render/${key.id}`}> */}
-                      <div>
-                        <div className='flex items-center rounded-4 mb-8  py-8 px-8 bg-grey/50 hover:bg-grey cursor-pointer' onClick={() => showLoading(key.id)}>
-                          {key.map ? 
-                            <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
-                          : ''}
-                          <div className='flex flex-col justify-center'>
-                            <span className='mt-4 leading-7'>{key.name}</span>
-                            <span className='block text-12 opacity-50 leading-7'>{key.type} · {distance} · {key.total_elevation_gain > 100 ? `${key.total_elevation_gain} m` : formatPace(key.moving_time, key.distance) } · {time}</span>
-                          </div>
-                        </div>
-                      {/* </Link> */}
-                      </div>
-                      {/* <div className="border-b border-grey mb-4 mx-4"></div> */}
-                    </div>
-                  )
-                }) }
-              </div>
-            : '' }
-
-            { (!userData.errors && activityData.code === 204) ? 
-              <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey'>
-                You don't have any activity yet. <br />
-                Let's record some activity on Strava first.
-              </div> : '' }
-
-            { (!userData.errors && activityData.code === 101) ? 
-              <div className='sectionBlock'>
-                <LoadingRow />
-                <LoadingRow className="opacity-70" />
-                <LoadingRow className="opacity-40" />
-              </div> 
-            : '' }
-
-            { !userData.errors && activityData.code === 200 && (activityData.data.length > itemsToShow) ?
-              <div className="sectionBlock">
-                <button onClick={showmore} className="w-full rounded-4 mb-8 leading-7 py-8 bg-grey/50 hover:bg-grey mt-8 m-auto text-center text-black/70">Show more</button>
-              </div> : ''}
-
-
-
-
-            { <div className={`fixed transition top-0 left-0 right-0 bottom-0 z-50 text-center ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
-              <div className="mq:backdrop flex items-center justify-center w-full h-full bg-grey-darken/90" onClick={() => disableLoading()}></div>
-              <div className='absolute flex flex-col content-around top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-50 bg-white rounded drop-shadow-md p-16'>
-                {/* <div className="flex max-h-full rounded drop-shadow-md p-32 bg-white"> */}
-                  <div className='font-semibold'>  
-                    {loadingStateImageReady ?
-                      <span>Long press or right click <br />the image to download</span>
-                    :
-                    <span>Generating image... <br /> It can take 5 seconds</span> }
-                  </div> 
-                  { loadingStateImageReady ?
-                    // <a href={loadingImage} className=' max-h-[70vh] flex-1 overflow-hidden mt-8' download="moqop.jpg">
-                    <div className='flex-1 overflow-hidden mt-8'>
-                      <img ref={imageRef} src={loadingImage} className="object-contain w-auto max-h-[70vh] rounded block m-auto" />
-                    </div>
-                  : '' }
-                {/* </div> */}
-              </div>
-            </div> }
-          </section>
-
-        </div>{/* container */}
+          </>
+        : '' }
 
         <section>
+
+          { (!userData.errors && activityData.code === 200) ? 
+            <div className="sectionBlock">
+              { activityData.data.slice(0, itemsToShow).map(function(key, index){
+                var distance = `${+parseFloat(key.distance/1000).toFixed(2)} km`;
+                var time = formatSeconds(key.moving_time)
+                return (
+                  <div key={index}>
+                    {/* <Link href={`${server()}/api/render/${key.id}`}> */}
+                    <div>
+                      <div className='flex items-center rounded-4 mb-8  py-8 px-8 bg-grey/50 hover:bg-grey cursor-pointer' onClick={() => showLoading(key.id)}>
+                        {key.map ? 
+                          <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
+                        : ''}
+                        <div className='flex flex-col justify-center'>
+                          <span className='mt-4 leading-7'>{key.name}</span>
+                          <span className='block text-12 opacity-50 leading-7'>{key.type} · {distance} · {key.total_elevation_gain > 100 ? `${key.total_elevation_gain} m` : formatPace(key.moving_time, key.distance) } · {time}</span>
+                        </div>
+                      </div>
+                    {/* </Link> */}
+                    </div>
+                    {/* <div className="border-b border-grey mb-4 mx-4"></div> */}
+                  </div>
+                )
+              }) }
+            </div>
+          : '' }
+
+          { (!userData.errors && activityData.code === 204) ? 
+            <div className='flex justify-center text-center rounded-4 mb-8 border-grey p-16 bg-grey'>
+              You don't have any activity yet. <br />
+              Let's record some activity on Strava first.
+            </div> : '' }
+
+          { (!userData.errors && activityData.code === 101) ? 
+            <div className='sectionBlock'>
+              <LoadingRow />
+              <LoadingRow className="opacity-70" />
+              <LoadingRow className="opacity-40" />
+            </div> 
+          : '' }
+
+          { !userData.errors && activityData.code === 200 && (activityData.data.length > itemsToShow) ?
+            <div className="sectionBlock">
+              <button onClick={showmore} className="w-full rounded-4 mb-8 leading-7 py-8 bg-grey/50 hover:bg-grey mt-8 m-auto text-center text-black/70">Show more</button>
+            </div> : ''}
+
+
+
+
+          { <div className={`fixed transition top-0 left-0 right-0 bottom-0 z-50 text-center ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
+            <div className="mq:backdrop flex items-center justify-center w-full h-full bg-grey-darken/90" onClick={() => disableLoading()}></div>
+            <div className='absolute flex flex-col content-around top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-50 bg-white rounded drop-shadow-md p-16'>
+              {/* <div className="flex max-h-full rounded drop-shadow-md p-32 bg-white"> */}
+                <div className='font-semibold'>  
+                  {loadingStateImageReady ?
+                    <span>Long press or right click <br />the image to download</span>
+                  :
+                  <span>Generating image... <br /> It can take 5 seconds</span> }
+                </div> 
+                { loadingStateImageReady ?
+                  // <a href={loadingImage} className=' max-h-[70vh] flex-1 overflow-hidden mt-8' download="moqop.jpg">
+                  <div className='flex-1 overflow-hidden mt-8'>
+                    <img ref={imageRef} src={loadingImage} className="object-contain w-auto max-h-[70vh] rounded block m-auto" />
+                  </div>
+                : '' }
+              {/* </div> */}
+            </div>
+          </div> }
+        </section>
+
+      </div>{/* container */}
+
+      <section>
         <Footer />
       </section>
     </div>
