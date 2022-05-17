@@ -19,7 +19,9 @@ module.exports = {
       sans: ['Inter', 'sans-serif'],
     },
     fontSize: {
+      '11': '1.1rem',
       '12': '1.2rem',
+      '13': '1.3rem',
       '14': '1.4rem',
       '16': '1.6rem',
       '18': '1.8rem',
@@ -33,13 +35,16 @@ module.exports = {
     borderRadius: {
       'DEFAULT': '0.6rem',
       '4': '.4rem',
+      '2': '.2rem',
     },
     spacing: {
       0: '0px',
+      2: '2px',
       4: '4px',
       8: '8px',
       12: '12px',
       16: '16px',
+      20: '20px',
       24: '24px',
       32: '32px',
       48: '48px',

@@ -17,11 +17,10 @@ export default function Header(props) {
     <div className="flex items-center wrapper h-64 mb-24">
       <h1 className="font-medium">
         <Link href="/" as={`/`}>
-          <a className="mr-8 flex">
-            <Image src="/images/logo.svg" width="77" height="24" className='block' />
+          <a className="mr-8 -mt-4 flex">
+            <Image src="/images/logo.svg" width="77" height="28" className='block' />
           </a>
         </Link>
-        {/* <span className="opacity-50 mr-8">/</span> */}
       </h1>
       {/* <Button text="Send feedback" size="small" type="secondary" className="ml-auto" /> */}
       

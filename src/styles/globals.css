@@ -45,7 +45,7 @@ section {
 }
 
 .sectionBlock {
-  max-width: 49.2rem;
+  max-width: 69rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -54,8 +54,8 @@ section {
   max-width: 69rem;
   margin-left: auto;
   margin-right: auto;
-  font-size: 2rem;
-  line-height: 180%;
+  font-size: 1.8rem;
+  line-height: 160%;
 }
 
 .page {

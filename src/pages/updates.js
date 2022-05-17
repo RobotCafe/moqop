@@ -6,9 +6,22 @@ export default function Changelog() {
 
   var updates = [
     {
+      date: '17 May 2022',
+      log: [
+        'New blogpost about Design automation',
+        'Beta in the logo',
+      ]
+    },
+    {
+      date: '14 May 2022',
+      log: [
+        'Carousel that moves with the scroll',
+      ]
+    },
+    {
       date: '05/02/2022',
       log: [
-        'popup with the image content to download',
+        'Popup with the image content to download',
       ]
     },
     {
