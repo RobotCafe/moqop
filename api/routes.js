@@ -8,6 +8,8 @@ module.exports = function(app) {
   var auth   = require('./controller/auth');
   var open   = require('./controller/open');
   var activity   = require('./controller/activity');
+  var project   = require('./controller/project');
+  
 
   // Static Pages
   app.route('/api/strava/:id').get(strava.activity);
@@ -18,6 +20,10 @@ module.exports = function(app) {
   app.route('/api/open').get(open.metrics);
   app.route('/api/saveShot').post(open.saveShot);
   
+  
+  app.route('/api/project').get(project.getData);
+
+
   // Cookies
   // app.route('/api/cookie/get').get(user.get);
   // app.route('/api/cookie/set').get(user.set);

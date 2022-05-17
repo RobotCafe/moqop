@@ -14,7 +14,7 @@ export default function Workspage() {
         </div>
       </div> 
       <div className="flex flex-1">
-        <div className="i-sidebar w-[280px] h-full border-r border-grey-darken py-24 px-16">
+        <div className="i-sidebar w-[250px] h-full border-r border-grey-darken py-24 px-16">
           
           <MenuTitle text="Workspace"/>
           <MenuItem text="My projects" href="" />
