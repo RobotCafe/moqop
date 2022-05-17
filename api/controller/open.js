@@ -15,3 +15,12 @@ exports.metrics = async function(req, res) {
 
   res.json(data);
 }
+
+
+exports.saveShot = async function(req, res) {
+  var shotData = {
+    author: '2304923409',
+    time: new Date().toISOString()
+  }
+  var save = await db.collection('shots').doc().set(shotData);
+}

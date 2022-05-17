@@ -27,7 +27,7 @@ export default function Header(props) {
       
       <div className="ml-auto">
         <Link href="/about">
-          <a className="">About</a>
+          <a className="ml-8">About</a>
         </Link>
         {
           props.user && props.user.code === 200 ? 

@@ -29,6 +29,10 @@ a {
   color: inherit;
 }
 
+strong {
+  font-weight: 700;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -44,6 +48,14 @@ section {
   max-width: 49.2rem;
   margin-left: auto;
   margin-right: auto;
+}
+
+.sectionBlog {
+  max-width: 49.2rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.6rem;
+  line-height: 180%;
 }
 
 .page {

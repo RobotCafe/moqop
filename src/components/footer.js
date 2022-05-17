@@ -16,8 +16,12 @@ export default function Footer() {
             <a target="_blank" className="mr-8">Milan Gladis</a>
           </Link>
         </div>
-        <div>
+        <div className='flex flex-wrap justify-center'>
           <div className="sm:visible float-left invisible">·</div>
+          <Link href="/blog">
+            <a className="mx-8">Blog</a>
+          </Link>
+          ·
           <Link href="/open-startup">
             <a className="mx-8">Open Startup</a>
           </Link>

@@ -9,6 +9,7 @@
         "themes": "./src/themes",
         "utils": "./src/utils",
         "styles": "./src/styles",
+        "layout": "./src/layout",
         "api": "./api"
       }
     }]

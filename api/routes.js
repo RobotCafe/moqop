@@ -16,6 +16,7 @@ module.exports = function(app) {
   
   // Open startup metrics
   app.route('/api/open').get(open.metrics);
+  app.route('/api/saveShot').post(open.saveShot);
   
   // Cookies
   // app.route('/api/cookie/get').get(user.get);
