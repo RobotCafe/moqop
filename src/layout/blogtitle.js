@@ -8,10 +8,14 @@ export default function blogTitle(props) {
         <meta name="description" content={props.description} />
       </Head>
 
-      <h1 className="title text-24 sm:text-32 md:text-40 font-black text-center">
-        <span className='titleColor inline'>{props.title}</span>
+      <div className="flex">
+        <div className="uppercase text-12 pb-4 font-semibold text-blue">Industry</div>
+        <div className="uppercase text-12 pb-4 font-semibold flex-1 text-right opacity-50">17 May 2022</div>
+      </div>
+      <h1 className="title text-24 sm:text-32 md:text-40 font-black">
+        <span className=''>{props.title}</span>
       </h1>
-      <div className='text-16 md:text-18 md:w-2/3 text-center mt-8 mx-auto mb-32 font-semibold'>
+      <div className='text-16 opacity-50 mt-8 mb-32 leading-10'>
         {props.description}
       </div>
     </>

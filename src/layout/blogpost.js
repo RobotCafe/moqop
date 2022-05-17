@@ -12,13 +12,15 @@ export default function BlogPost({ children }) {
       <Header />
       
       <div className="page">
-        {children}
-        <Link href="/blog">
-          <a className='block mt-64 border border-grey p-16 bg-grey/50 rounded'>
-            <div className="text-center">Back to blogposts</div>
+        <div className="sectionBlog">
+          {children}
+          <Link href="/blog">
+            <a className='block mt-64 border border-grey p-8 bg-grey/50 rounded'>
+              <div className="text-center text-16">Back to blogposts</div>
 
-          </a>
-        </Link>
+            </a>
+          </Link>
+        </div>
       </div>
 
       <Footer />
