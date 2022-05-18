@@ -17,13 +17,13 @@ export default function Workspage() {
         <div className="i-sidebar w-[250px] h-full border-r border-grey-darken py-24 px-16">
           
           <MenuTitle text="Workspace"/>
-          <MenuItem text="My projects" href="" />
+          <MenuItem text="My projects" href="#" />
           
           <MenuTitle text="Community"/>
-          <MenuItem text="Templates" href="" />
+          <MenuItem text="Templates" href="#" />
 
           <MenuTitle text="User"/>
-          <MenuItem text="Settings" href="" />
+          <MenuItem text="Settings" href="#" />
         </div>
         <div className="i-content flex-1 h-full overflow-auto bg-grey/5">
           <div className="grid grid-cols-5 grid-rows-4  gap-24 p-32">
