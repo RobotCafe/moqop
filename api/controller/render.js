@@ -275,6 +275,11 @@ exports.stravaOne = async function(req,res) {
     
     `)
 
+
+    saveShot(stravaData);
+
+
+
     if (req.query.type === 'html') {
       console.log(stravaData)
       res.send(output)
@@ -306,4 +311,26 @@ exports.stravaOne = async function(req,res) {
       message: 'User is not logged in!'
     });
   }
+}
+
+
+function saveShot(data) {
+  console.log('saveShots')
+  var savingData = {
+    'athlete': data.athlete,
+    'name' : data.name,
+    'distance': data.distance,
+    'moving_time': data.moving_time,
+    'type': data.type
+  }
+  console.log(savingData)
+  fetch(`${server()}/api/saveShot`, {
+    method: "POST",
+    headers: {
+        'Content-type': 'application/json'
+    },
+    body: JSON.stringify(savingData)
+  }).then(res => {
+      console.log(res);
+  }) 
 }

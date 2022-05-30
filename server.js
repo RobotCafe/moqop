@@ -63,7 +63,7 @@ passport.serializeUser(async function(user, done) {
     var params = {
       username: "moqop",
       content: `New signup — ${user._json.username}`
-  }
+    }
     fetch(discordUrl, {
       method: "POST",
       headers: {

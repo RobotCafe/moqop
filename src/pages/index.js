@@ -238,16 +238,18 @@ export default function Home(props) {
     setLoadingImage('')
     setLoadingState(true)
     setLoadingStateImageReady(false)
-    var imageUrl = `${server()}/api/render/${id}`
+    // var imageUrl = `${server()}/api/render/${id}`
     // console.log(imageUrl)
     
-    await fetch(imageUrl)
+    await fetch(`/api/render/${id}`)
       .then(res => res.blob()) // Gets the response and returns it as a blob
       .then(blob => {
         const objectURL = URL.createObjectURL(blob);
         setLoadingImage(objectURL)
         setLoadingStateImageReady(true)
         imageRef.current.src = objectURL;
+      }).catch(error => {
+        console.log(error)
       });
 
   }
@@ -351,7 +353,7 @@ export default function Home(props) {
                   <div key={index}>
                     {/* <Link href={`${server()}/api/render/${key.id}`}> */}
                     <div>
-                      <div className='flex items-center rounded-4 mb-8  py-8 px-8 bg-grey/50 hover:bg-grey cursor-pointer' onClick={() => showLoading(key.id)}>
+                      <div className='flex items-center rounded-4 mb-8  py-8 px-8 bg-grey/50 hover:bg-grey cursor-pointer' onClick={() => showLoading(key.id)} activityId={key.id}>
                         {key.map ? 
                           <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
                         : ''}

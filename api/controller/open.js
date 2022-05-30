@@ -19,8 +19,28 @@ exports.metrics = async function(req, res) {
 
 exports.saveShot = async function(req, res) {
   var shotData = {
-    author: '2304923409',
+    shot: req.body,
     time: new Date().toISOString()
   }
-  var save = await db.collection('shots').doc().set(shotData);
+  
+  await db.collection('shots').doc().set(shotData);
+
+  // Send webhook request
+  var discordUrl = `https://discord.com/api/webhooks/980779489778868284/imqYAQyz82fF-y_FafbOOxjMi66rt7phDy3mxiw7b3QK4nohSSYAAWIpbgebNiAH-u1N`
+  var params = {
+    username: "moqop",
+    content: `New shot — "${shotData.shot.name}" by ${shotData.shot.athlete.id}: ${shotData.shot.type}: ${shotData.shot.distance}m - ${shotData.shot.moving_time}s`
+  }
+  fetch(discordUrl, {
+    method: "POST",
+    headers: {
+        'Content-type': 'application/json'
+    },
+    body: JSON.stringify(params)
+  }).then(res => {
+      console.log(res);
+  }) 
+
+
+  res.sendStatus(200);
 }

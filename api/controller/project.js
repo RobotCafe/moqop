@@ -85,6 +85,7 @@ exports.getData = async function(req,res) {
                   'left': '0',
                   'right': '0',
                   'whiteSpace': 'nowrap',
+                  'borderRadius': '4px',
                   'padding': '4px 16px'
                 }
               }
