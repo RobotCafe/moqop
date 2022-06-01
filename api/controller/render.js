@@ -25,7 +25,7 @@ exports.stravaOne = async function(req,res) {
     //     return data
     //   })
 
-    var stravaData = await fetch(
+    var stravaDataa = fetch(
         // 'https://www.strava.com/api/v3/athletes/42409445/stats',
         `https://www.strava.com/api/v3/activities/${req.params.id}`,
         // 'https://www.strava.com/api/v3/athlete',
@@ -37,25 +37,34 @@ exports.stravaOne = async function(req,res) {
           },
         },
       ).then(
-        response => (response.json())
+        r => r.json()
       ).then(dataActivity => {
         console.log('Fetch - activity data')
+        console.log(stravaData)
         return dataActivity
       })
-    
-      if ((stravaData.photos === undefined) || (stravaData.photos.count === undefined) || (stravaData.photos.count === 0)) {
-        var stravaPicture = false
-        // return false
-      } else {
-        var stravaPicture = hdImage(stravaData.photos.primary.urls[600])
-      }
-    var mapPolyline = stravaData.map.polyline
 
-    // Render canvas
-    function renderCanvas() {
-      var Image = Canvas.Image;
-      var canvas = Canvas.createCanvas(1000, 1300);
-      var context = canvas.getContext('2d');
+      var stravaData = await stravaDataa
+    
+      // async function getImage() {
+        if ((stravaData.photos === undefined) || (stravaData.photos.count === undefined) || (stravaData.photos.count === 0)) {
+          var stravaPicture = false
+          console.log('stravaPicture something is wrong here')
+          console.log(stravaPicture)
+          // return false
+        } else {
+          var stravaPicture = await hdImage(stravaData.photos.primary.urls[600])
+          console.log('stravaPicture is cool')
+          console.log(stravaPicture)
+        }
+      // }
+      
+      // Render canvas
+      function renderCanvas() {
+        var Image = Canvas.Image;
+        var canvas = Canvas.createCanvas(1000, 1300);
+        var context = canvas.getContext('2d');
+        var mapPolyline = stravaData.map.polyline
       let arr = polyline.decode(mapPolyline);
 
       context.clearRect(0, 0, canvas.width, canvas.height);
@@ -136,7 +145,11 @@ exports.stravaOne = async function(req,res) {
     }
 
     function stats() {
+      console.log('stravaData2')
+      // console.log(stravaData)
       var distance = `${toFixedIfNecessary(stravaData.distance/1000, 2)} km`
+      console.log('distance')
+      console.log(distance)
       var content = `
         <div>
           <div class="title">${stravaData.type}</div>
@@ -259,12 +272,8 @@ exports.stravaOne = async function(req,res) {
             <div class="stats">
               ${stats()}
             </div>
-            ${stravaPicture ? 
-              `
-              <div class="gradient"></div>
-              <img src=${stravaPicture} class="picture" />
-              `
-            : '<div class="solid"></div>'}
+            <div class="gradient"></div>
+            <img src=${stravaPicture} class="picture" />
             <img src="${renderCanvas()}" class="canvas" />
           </div>
           <script>
@@ -281,7 +290,7 @@ exports.stravaOne = async function(req,res) {
 
 
     if (req.query.type === 'html') {
-      console.log(stravaData)
+      // console.log(stravaData)
       res.send(output)
     } else {
       //Render image and send to front-end
@@ -331,6 +340,6 @@ function saveShot(data) {
     },
     body: JSON.stringify(savingData)
   }).then(res => {
-      console.log(res);
+      console.log('Shot saved');
   }) 
 }

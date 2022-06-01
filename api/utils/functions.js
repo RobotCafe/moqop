@@ -48,7 +48,17 @@ exports.server = function() {
   return server
 }
 
-exports.hdImage = function(url) {
+async function fileExists(fileUrl) {
+  if (!fileUrl) {
+      return false;
+  }
+  const res = await fetch(fileUrl, {
+    method: 'HEAD',
+  });
+  return !!res.ok;
+}
+
+exports.hdImage = async function(url) {
   const path = url.split('-')
   // console.log(path)
   var size = path[path.length - 1];
@@ -68,13 +78,25 @@ exports.hdImage = function(url) {
   }
 
 
-  // console.log('---------')
-  // console.log(url)
-  // console.log(path)
-
+  console.log('---------')
+  console.log(url)
+  console.log(path)
   path[path.length - 1] = `${newSize[0]}x${newSize[1]}.jpg`
   var newPath = path.join('-')
-  // console.log(newPath)
+  console.log(newPath)
+
+  console.log(await fileExists(newPath));
+
+  var checkAvailability = await await fileExists(newPath)
+  if (checkAvailability) {
+    console.log('newPath')
+    console.log(newPath)
+    return newPath
+  } else {
+    console.log('url')
+    console.log(url)
+    return url
+  }
+
   // console.log(x, y, ratio, newSize)
-  return newPath
 }

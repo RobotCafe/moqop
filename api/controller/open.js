@@ -9,7 +9,7 @@ exports.metrics = async function(req, res) {
   snapshot.forEach(doc => {
     data.push(new Date(doc.data().moqop.created_at))
     // console.log(doc.id, '=>', doc.data().moqop.created_at);
-    console.log(new Date(doc.data().moqop.created_at));
+    // console.log(new Date(doc.data().moqop.created_at));
   });
   data = data.sort((date1, date2) => date1 - date2);
 
@@ -38,9 +38,8 @@ exports.saveShot = async function(req, res) {
     },
     body: JSON.stringify(params)
   }).then(res => {
-      console.log(res);
-  }) 
-
+      console.log('Shot saved to firebase');
+  })
 
   res.sendStatus(200);
 }
