@@ -17,8 +17,9 @@ module.exports = function(app) {
   // app.route('/api/render/strava-one/:id').get(passport.authenticate('strava', { failureRedirect: '/login' }),render.stravaOne);
   
   // Open startup metrics
-  app.route('/api/open').get(open.metrics);
-  app.route('/api/saveShot').post(open.saveShot);
+  app.route('/api/open/users').get(open.usersCount);
+  app.route('/api/open/shots').get(open.shotsCount);
+  app.route('/api/open/saveShot').post(open.saveShot);
   
   
   app.route('/api/project').get(project.getData);

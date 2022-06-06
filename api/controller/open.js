@@ -2,7 +2,7 @@ const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestor
 const db = getFirestore();
 
 
-exports.metrics = async function(req, res) {
+exports.usersCount = async function(req, res) {
   const userRef = db.collection('users');
   const snapshot = await userRef.get();
   var data = [`2022-04-21T00:00:00.000Z`]
@@ -12,6 +12,14 @@ exports.metrics = async function(req, res) {
     // console.log(new Date(doc.data().moqop.created_at));
   });
   data = data.sort((date1, date2) => date1 - date2);
+
+  res.json(data);
+}
+
+exports.shotsCount = async function(req, res) {
+  db.collection('shots').get().then(snap => {
+    res.status(200).send({length: 150 + snap.size});
+  });
 
   res.json(data);
 }

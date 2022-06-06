@@ -6,6 +6,18 @@ export default function Changelog() {
 
   var updates = [
     {
+      date: '4 Jun 2022',
+      log: [
+        'Added shots counter',
+      ]
+    },
+    {
+      date: '1 Jun 2022',
+      log: [
+        'Fixed missing HD resolution in API request',
+      ]
+    },
+    {
       date: '17 May 2022',
       log: [
         'New blogpost about Design automation',
@@ -19,26 +31,28 @@ export default function Changelog() {
       ]
     },
     {
-      date: '05/02/2022',
+      date: '02 May 2022',
       log: [
         'Popup with the image content to download',
       ]
     },
     {
-      date: '05/02/2022',
+      date: '02 May 2022',
       log: [
         'Added open startup section',
         'Video on the homepage',
       ]
     },
     {
-      date: '04/30/2022',
+      type: 'major',
+      date: '30 April 2022',
       log: [
-        'New homepage & responsivity',
+        'Launched moqop.com 🚀',
+        'New homepage and mobile responsivity',
       ]
     },
     {
-      date: '04/26/2022',
+      date: '26 April 2022',
       log: [
         'Fixed pace calculations', 
         'Fixed not-logged state', 
@@ -48,31 +62,40 @@ export default function Changelog() {
       ]
     },
     {
-      date: '04/25/2022',
+      date: '25 April 2022',
       log: [
         'Loading state, Updates log, Improved data structure'
       ]
     },
     {
-      date: '04/24/2022',
+      date: '24 April 2022',
       log: 'Error handling'
     },
     {
-      date: '04/22/2022',
+      date: '22 April 2022',
+      type: 'major',
       log: 'Released first MVP version to strava.moqop.com 🎉'
     },
     {
-      date: '04/21/2022',
+      date: '21 April 2022',
       log: [
-        'Finished Strava OAuth', 
         'Rendering images with pace instead of elevation gain', 
         'List with activities on homepage', 
         'Rendered polylines'
       ]
     },
     {
-      date: '04/15/2022',
+      date: '15 April 2022',
       log: 'Finished Strava OAuth'
+    },
+    {
+      date: '04 April 2022',
+      log: 'Started with Strava to Instagram story implementation'
+    },
+    {
+      type: 'major',
+      date: '25 Sep 2019',
+      log: "First Moqop's product was an online 3D templates tool that allowed users to customize 3D devices, or other 3D models and export them as an image."
     }
   ]
 
@@ -102,8 +125,8 @@ export default function Changelog() {
           updates.map(function(key, index){
             // console.log(key)
             return (
-              <div className="flex flex-col border-b border-grey py-16 leading-8" key={index}>
-                {/* <div className="text-12 text-black/70">{key.date}</div> */}
+              <div className={`flex flex-col border-b border-grey py-16 leading-8 ${key.type || key.type === 'major' ? 'bg-grey -mx-24 -mt-2 px-24 rounded' : ''} `} key={index}>
+                <div className="text-12 text-black/70">{key.date}</div>
                 <div>
                   {Array.isArray(key.log) ? (
                     // key.log.forEach(function(element, indexx){
@@ -111,12 +134,12 @@ export default function Changelog() {
                     // key.log.forEach(element => (
                       console.log(element, index)
                       return (
-                        <div className="" key={index} >· {element}</div>
+                        <div className="pb-4" key={index} >{element}</div>
                       )
                     })
 
                   ) : (
-                    `- ${key.log}`
+                    `${key.log}`
                   )
                   
                   }

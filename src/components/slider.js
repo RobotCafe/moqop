@@ -8,7 +8,7 @@ export default function Slider() {
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log(window.scrollY)
+      // console.log(window.scrollY)
       setScrollY(window.scrollY);
     };
     handleScroll();

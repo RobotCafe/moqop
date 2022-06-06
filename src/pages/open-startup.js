@@ -26,10 +26,11 @@ export default function OpenStartup() {
   }
 
   const [usersData, setUsersData] = useState([{date: '2022-4-21', counts: 1, epoch: 1650492000}, {date: '2022-4-21', counts: 1, epoch: 1650492000}]);
+  const [shotsData, setShotsData] = useState({"length": 89});
 
   useEffect(() => {
 
-    fetch(`/api/open`)
+    fetch(`/api/open/users`)
       .then(response => response.json())
       .then(data => {
         // console.log(data)
@@ -66,6 +67,15 @@ export default function OpenStartup() {
         }
       }
     )
+
+    fetch(`/api/open/shots`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        setShotsData(data)
+      })
+
+
   }, []);
   
   var expenses = [
@@ -95,18 +105,24 @@ export default function OpenStartup() {
       value: 14.3
     },
     {
-      date: '2021-05-22T00:00:00Z',
+      date: '2021-05-02T00:00:00Z',
       name: 'server',
       value: 16.38
     },
+    {
+      date: '2021-05-22T00:00:00Z',
+      name: 'server',
+      value: 16.38
+    }
   ]
 
   var  totalExpenses = 0, i
   for (i=0; i < expenses.length; i++) {
     totalExpenses = totalExpenses + expenses[i].value
     expenses[i].absolute = totalExpenses
-    console.log(totalExpenses)
+    // console.log(totalExpenses)
   }
+  totalExpenses = parseFloat(totalExpenses).toFixed(0)
 
 
 
@@ -124,6 +140,14 @@ export default function OpenStartup() {
         </h1>
         <div className='text-16 md:text-18 md:w-2/3 text-center mt-8 mx-auto mb-32 font-semibold'>Moqop is a part of open-startup movement. <br className='hidden sm:block' />All of the metrics will be publicly available.</div>
         
+        
+        <div className="w-full bg-grey/50 border border-grey p-16 rounded items-center mb-24">
+          <div className="flex-1">
+            <span className='opacity-50 font-semibold'>Shots generated</span>
+            <div className="text-24 font-bold">{shotsData.length}</div>
+          </div>
+        </div>
+       
         <div className="w-full bg-grey/50 border border-grey p-16 rounded items-center mb-24">
           <div className="flex-1">
             <span className='opacity-50 font-semibold'>Signed People</span>

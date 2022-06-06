@@ -333,7 +333,7 @@ function saveShot(data) {
     'type': data.type
   }
   console.log(savingData)
-  fetch(`${server()}/api/saveShot`, {
+  fetch(`${server()}/api/open/saveShot`, {
     method: "POST",
     headers: {
         'Content-type': 'application/json'
