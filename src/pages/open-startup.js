@@ -25,8 +25,8 @@ export default function OpenStartup() {
     return formatedDate
   }
 
-  const [usersData, setUsersData] = useState([{date: '2022-4-21', counts: 1, epoch: 1650492000}, {date: '2022-4-21', counts: 1, epoch: 1650492000}]);
-  const [shotsData, setShotsData] = useState({"length": 89});
+  const [usersData, setUsersData] = useState([{date: '2022-4-21', counts: '', epoch: 1650492000}, {date: '2022-4-21', counts: '', epoch: 1650492000}]);
+  const [shotsData, setShotsData] = useState({"length": ''});
 
   useEffect(() => {
 

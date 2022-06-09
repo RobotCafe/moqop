@@ -32,7 +32,8 @@ exports.getData = async function(req,res) {
           zIndex: 0,
           position: 'absolute',
           // background: '#cccccc',
-          background: 'url(https://dgtzuqphqg23d.cloudfront.net/KIEYq_tzqXFc4KRPWI5r0GsLeCN5Xu4f1nH-ayoPuXs-1536x2048.jpg)',
+          // backgroundImage: 'url(/images/tmp/strava.jpg)',
+          backgroundImage: 'url(https://dgtzuqphqg23d.cloudfront.net/KIEYq_tzqXFc4KRPWI5r0GsLeCN5Xu4f1nH-ayoPuXs-1536x2048.jpg)',
           backgroundSize: 'cover'
         }
       }, {
@@ -44,8 +45,11 @@ exports.getData = async function(req,res) {
         style: {
           top: 40,
           left: 50,
-          width: 100,
+          right: 50,
           height: 200,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
           zIndex: 1,
           background: '#555',
           color: 'white',

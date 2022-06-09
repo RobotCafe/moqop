@@ -272,8 +272,12 @@ exports.stravaOne = async function(req,res) {
             <div class="stats">
               ${stats()}
             </div>
-            <div class="gradient"></div>
-            <img src=${stravaPicture} class="picture" />
+            ${stravaPicture ? 
+              `
+              <div class="gradient"></div>
+              <img src=${stravaPicture} class="picture" />
+              `
+            : '<div class="solid"></div>'}
             <img src="${renderCanvas()}" class="canvas" />
           </div>
           <script>

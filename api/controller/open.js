@@ -20,8 +20,6 @@ exports.shotsCount = async function(req, res) {
   db.collection('shots').get().then(snap => {
     res.status(200).send({length: 150 + snap.size});
   });
-
-  // res.json(data);
 }
 
 
