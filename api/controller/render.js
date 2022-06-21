@@ -296,7 +296,7 @@ exports.stravaOne = async function(req,res) {
 
 
     // TMP disabled for testing purposes
-    // saveShot(stravaData);
+    saveShot(stravaData);
 
 
 
