@@ -275,7 +275,7 @@ export default function Home(props) {
     <div className="">
       <Head>
         <title>Moqop · Generate Instagram Story from Strava activity</title>
-        <meta name="description" content="Visualise your excercise activity for Instagram story with a decent polyline over the picture you made during the workout." />
+        <meta name="description" content="Visualise your exercise activity for Instagram story with a decent polyline over the picture you made during the workout." />
       </Head>
 
       <section>
@@ -290,7 +290,7 @@ export default function Home(props) {
                 Generate Instagram story <br className='hidden md:block' /> 
                 <span className='titleColor inline'>from Strava activity</span>
               </h1>
-              <div className='text-18 md:w-2/3 text-center mt-24 mx-auto mb-32 font-semibold'>Visualise your excercise activity for Instagram story with a decent polyline over the picture you made during the workout.</div>
+              <div className='text-18 md:w-2/3 text-center mt-24 mx-auto mb-32 font-semibold'>Visualise your exercise activity for Instagram story with a decent polyline over the picture you made during the workout.</div>
             </>
           : ''}
 
