@@ -49,13 +49,13 @@ exports.stravaOne = async function(req,res) {
       // async function getImage() {
         if ((stravaData.photos === undefined) || (stravaData.photos.count === undefined) || (stravaData.photos.count === 0)) {
           var stravaPicture = false
-          console.log('stravaPicture something is wrong here')
-          console.log(stravaPicture)
+          // console.log('stravaPicture something is wrong here')
+          // console.log(stravaPicture)
           // return false
         } else {
           var stravaPicture = await hdImage(stravaData.photos.primary.urls[600])
-          console.log('stravaPicture is cool')
-          console.log(stravaPicture)
+          // console.log('stravaPicture is cool')
+          // console.log(stravaPicture)
         }
       // }
       
@@ -91,10 +91,16 @@ exports.stravaOne = async function(req,res) {
       const mapCenterX = (maxX + minX) / 2;
       const mapCenterY = (maxY + minY) / 2;
 
-      // console.log(mapWidth, mapHeight, mapCenterX, mapCenterY)
-
+      
       // to find the scale that will fit the canvas get the min scale to fit height or width
-      const scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.9;
+
+      var scale
+      if (mapWidth > mapHeight) {
+        scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.9;
+      } else {
+        scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.6;
+      }
+      // console.log(mapWidth, mapHeight, mapCenterX, mapCenterY, scale)
 
       // Now you can draw the map centered on the cavas
       context.beginPath();
@@ -103,11 +109,11 @@ exports.stravaOne = async function(req,res) {
       arr.forEach((p, i) => {
         if (i === 0) {
           firstPoint[0] = (p[1] - mapCenterX) * scale + canvas.width / 2
-          firstPoint[1] = (p[0] - mapCenterY) * -scale + canvas.height / 2
+          firstPoint[1] = (p[0] - mapCenterY) * -scale*1.5 + canvas.height / 2
         }
         context.lineTo(
           (p[1] - mapCenterX) * scale + canvas.width / 2,
-          (p[0] - mapCenterY) * -scale + canvas.height / 2
+          (p[0] - mapCenterY) * -scale*1.5 + canvas.height / 2
         );
       });
 
@@ -148,8 +154,8 @@ exports.stravaOne = async function(req,res) {
       console.log('stravaData2')
       // console.log(stravaData)
       var distance = `${toFixedIfNecessary(stravaData.distance/1000, 2)} km`
-      console.log('distance')
-      console.log(distance)
+      // console.log('distance')
+      // console.log(distance)
       var content = `
         <div>
           <div class="title">${stravaData.type}</div>
@@ -159,7 +165,7 @@ exports.stravaOne = async function(req,res) {
           stravaData.total_elevation_gain > 100 ? 
             `<div>
               <div class="title">Elev Gain</div>
-              <div class="value">${stravaData.total_elevation_gain} m</div>
+              <div class="value">${Math.ceil(stravaData.total_elevation_gain)} m</div>
             </div>`
            : 
             `<div>
@@ -289,7 +295,8 @@ exports.stravaOne = async function(req,res) {
     `)
 
 
-    saveShot(stravaData);
+    // TMP disabled for testing purposes
+    // saveShot(stravaData);
 
 
 

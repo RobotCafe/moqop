@@ -101,7 +101,12 @@ export default function Home(props) {
     // console.log(mapWidth, mapHeight, mapCenterX, mapCenterY)
 
     // to find the scale that will fit the canvas get the min scale to fit height or width
-    const scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.9;
+    var scale
+    if (mapWidth > mapHeight) {
+      scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.9;
+    } else {
+      scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.6;
+    }
 
     // Now you can draw the map centered on the cavas
     context.beginPath();
@@ -110,11 +115,11 @@ export default function Home(props) {
     arr.forEach((p, i) => {
       if (i === 0) {
         firstPoint[0] = (p[1] - mapCenterX) * scale + canvas.width / 2
-        firstPoint[1] = (p[0] - mapCenterY) * -scale + canvas.height / 2
+        firstPoint[1] = (p[0] - mapCenterY) * -scale*1.5 + canvas.height / 2
       }
       context.lineTo(
         (p[1] - mapCenterX) * scale + canvas.width / 2,
-        (p[0] - mapCenterY) * -scale + canvas.height / 2
+        (p[0] - mapCenterY) * -scale*1.5 + canvas.height / 2
       );
     });
 
@@ -359,7 +364,7 @@ export default function Home(props) {
                         : ''}
                         <div className='flex flex-col justify-center'>
                           <span className='mt-4 leading-7'>{key.name}</span>
-                          <span className='block text-12 opacity-50 leading-7'>{key.type} · {distance} · {key.total_elevation_gain > 100 ? `${key.total_elevation_gain} m` : formatPace(key.moving_time, key.distance) } · {time}</span>
+                          <span className='block text-12 opacity-50 leading-7'>{key.type} · {distance} · {key.total_elevation_gain > 100 ? `${Math.ceil(key.total_elevation_gain)} m` : formatPace(key.moving_time, key.distance) } · {time}</span>
                         </div>
                       </div>
                     {/* </Link> */}

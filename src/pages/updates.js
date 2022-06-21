@@ -6,6 +6,12 @@ export default function Changelog() {
 
   var updates = [
     {
+      date: '19 Jun 2022',
+      log: [
+        'Fixed wrong scale of the polyline',
+      ]
+    },
+    {
       date: '4 Jun 2022',
       log: [
         'Added shots counter',
