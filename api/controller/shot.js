@@ -37,7 +37,6 @@ exports.render = async function(req,res) {
     });
 
     res.writeHead(200, { 'Content-Type': 'image/jpeg;base64' });
-    // res.writeHead(200, { 'Content-Type': 'image/png' });
     res.end(imageBuffer, 'binary');
   
     // Get the "viewport" of the page, as reported by the page.
@@ -53,8 +52,5 @@ exports.render = async function(req,res) {
   
     await browser.close();
   })();
-
-  console.log('test')  
-  // res.send('ok')
 }
 

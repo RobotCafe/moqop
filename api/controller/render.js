@@ -96,9 +96,9 @@ exports.stravaOne = async function(req,res) {
 
       var scale
       if (mapWidth > mapHeight) {
-        scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.9;
+        scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.85;
       } else {
-        scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.6;
+        scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.55;
       }
       // console.log(mapWidth, mapHeight, mapCenterX, mapCenterY, scale)
 
