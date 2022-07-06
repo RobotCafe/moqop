@@ -101,12 +101,7 @@ export default function Home(props) {
     // console.log(mapWidth, mapHeight, mapCenterX, mapCenterY)
 
     // to find the scale that will fit the canvas get the min scale to fit height or width
-    var scale
-    if (mapWidth > mapHeight) {
-      scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.9;
-    } else {
-      scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.6;
-    }
+    var scale = Math.min(canvas.width / mapWidth, canvas.height / mapHeight) * 0.6;
 
     // Now you can draw the map centered on the cavas
     context.beginPath();

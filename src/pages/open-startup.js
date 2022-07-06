@@ -144,26 +144,22 @@ export default function OpenStartup() {
         <div className="w-full bg-grey/50 border border-grey p-16 rounded items-center mb-24">
           <div className="flex-1">
             <span className='opacity-50 font-semibold'>Shots generated</span>
-            <div className="text-24 font-bold">{shotsData.length}</div>
+            <div className="text-24 font-bold">{shotsData.length ? shotsData.length : 0}</div>
           </div>
         </div>
        
         <div className="w-full bg-grey/50 border border-grey p-16 rounded items-center mb-24">
           <div className="flex-1">
             <span className='opacity-50 font-semibold'>Signed People</span>
-            <div className="text-24 font-bold">{usersData[usersData.length - 1].counts}</div>
+            <div className="text-24 font-bold">{usersData[usersData.length - 1].counts ? usersData[usersData.length - 1].counts : '0'}</div>
           </div>
           <div className="h-[100px] w-full -mt-32">
-            <ResponsiveContainer>
-              <LineChart data={usersData} >
-                {/* <CartesianGrid strokeDasharray="5 3" /> */}
-                {/* <XAxis dataKey="epoch" domain={['dataMin', 'dataMax']} tick={false} axisLine={false} stroke="#ccc" /> */}
-                {/* <YAxis width={20}  dataKey="counts" domain={[0, 'dataMax']} tick={{ fill: '#ccc' }} tickLine={false} axisLine={false}  /> */}
-                <Tooltip content={<CustomTooltip />} cursor={{stroke: 'transparent'}}  />
-                {/* <Legend /> */}
-                <Line type="monotone" dataKey="counts" stroke="#6378EC" strokeWidth="2" isAnimationActive={false} />
-              </LineChart>
-            </ResponsiveContainer>
+          <ResponsiveContainer>
+            <LineChart data={usersData} >
+              <Tooltip content={<CustomTooltip />} cursor={{stroke: 'transparent'}}  />
+              <Line type="monotone" dataKey="counts" stroke="#6378EC" strokeWidth="2" isAnimationActive={false} />
+            </LineChart>
+          </ResponsiveContainer>
           </div>
         </div>
        
@@ -208,11 +204,11 @@ export default function OpenStartup() {
 }
 
 const CustomTooltip = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
+  if (active && payload[0] && payload.length) {
     return (
       <div className="custom-tooltip bg-black text-white px-8 rounded text-12">
         {/* <p className="label">{`${label} : ${payload[0].value} : ${payload[1].value}`}</p> */}
-        {`${payload[0].value.toFixed(0)}`}
+        {payload[0].value ? payload[0].value.toFixed(0): ''}
       </div>
     );
   }
