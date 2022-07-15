@@ -140,14 +140,6 @@ export default function OpenStartup() {
         </h1>
         <div className='text-16 md:text-18 md:w-2/3 text-center mt-8 mx-auto mb-32 font-semibold'>Moqop is a part of open-startup movement. <br className='hidden sm:block' />All of the metrics will be publicly available.</div>
         
-        
-        <div className="w-full bg-grey/50 border border-grey p-16 rounded items-center mb-24">
-          <div className="flex-1">
-            <span className='opacity-50 font-semibold'>Shots generated</span>
-            <div className="text-24 font-bold">{shotsData.length ? shotsData.length : 0}</div>
-          </div>
-        </div>
-       
         <div className="w-full bg-grey/50 border border-grey p-16 rounded items-center mb-24">
           <div className="flex-1">
             <span className='opacity-50 font-semibold'>Signed People</span>
@@ -163,6 +155,14 @@ export default function OpenStartup() {
           </div>
         </div>
        
+        <div className="w-full bg-grey/50 border border-grey p-16 rounded items-center mb-24">
+          <div className="flex-1">
+            <span className='opacity-50 font-semibold'>Shots generated</span>
+            <div className="text-24 font-bold">{shotsData.length ? shotsData.length : 0}</div>
+          </div>
+        </div>
+       
+        
        
         <div className="md:flex w-full gap-24 items-center">
 
@@ -181,7 +181,7 @@ export default function OpenStartup() {
             </div>
           </div> */}
          
-          <div className='flex-1 border border-grey p-16 rounded items-center mb-48 bg-grey/50'>
+          {/* <div className='flex-1 border border-grey p-16 rounded items-center mb-48 bg-grey/50'>
             <div className="flex-1">
               <span className='opacity-50 font-semibold'>Costs</span>
               <div className="text-24 font-bold">${totalExpenses}</div>
@@ -194,7 +194,7 @@ export default function OpenStartup() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-          </div>
+          </div> */}
          
         </div>
       </div>{/* Content */}

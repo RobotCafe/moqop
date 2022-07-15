@@ -1,4 +1,5 @@
 const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
+const {toFixedIfNecessary} = require('../utils/functions')
 const db = getFirestore();
 
 
@@ -34,8 +35,8 @@ exports.saveShot = async function(req, res) {
   // Send webhook request
   var discordUrl = `https://discord.com/api/webhooks/980779489778868284/imqYAQyz82fF-y_FafbOOxjMi66rt7phDy3mxiw7b3QK4nohSSYAAWIpbgebNiAH-u1N`
   var params = {
-    username: "moqop",
-    content: `New shot — "${shotData.shot.name}" by ${shotData.shot.athlete.id}: ${shotData.shot.type}: ${shotData.shot.distance}m - ${shotData.shot.moving_time}s`
+    username: "moqop · shot",
+    content: `${shotData.shot.type} · ${toFixedIfNecessary(shotData.shot.distance/1000, 2)} km · ${shotData.shot.moving_time}s · ${shotData.shot.name} by https://strava.com/athletes/${shotData.shot.athlete.id}`
   }
   fetch(discordUrl, {
     method: "POST",

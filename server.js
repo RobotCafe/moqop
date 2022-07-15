@@ -61,8 +61,8 @@ passport.serializeUser(async function(user, done) {
     // Send webhook request
     var discordUrl = `https://discord.com/api/webhooks/970994761437683784/YfYoqdrYgzXs5K1LOzbZDLHzMEFMCbLUoOREzNG8hzCBoVGqmMzQlX1UYpim0F6kkTcj`
     var params = {
-      username: "moqop",
-      content: `New signup — ${user._json.username}`
+      username: "moqop · user",
+      content: `${user._json.firstname} ${user._json.lastname} · ${user._json.username} · https://strava.com/athletes/${user._json.id}`
     }
     fetch(discordUrl, {
       method: "POST",

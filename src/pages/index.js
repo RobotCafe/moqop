@@ -326,9 +326,34 @@ export default function Home(props) {
               <div className="text-center mt-80">
                 <h2 className='text-40 font-black k mb-16'>How to use Moqop?</h2>
                 <div className="text-18">Watch a short video about how to set up strava activity to get solid results.</div>
-                <div className="video-container rounded mt-48 m-auto aspect-video max-w-7xl">
-                  <iframe className='' width="560" height="315" src="https://www.youtube-nocookie.com/embed/X3vaJhJyJZ0?controls=0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                <div className="flex flex-col text-left gap-16 mt-32 max-w-[500px] m-auto">
+                  <div className="flex flex-1 items-center px-32 py-16 border border-grey-darken rounded cursor-pointer hover:bg-grey/50 ">
+                    <span className='text-40 font-bold text-[#7475D5]'>1</span>
+                    <div className="ml-32">
+                      <h3 className='text-20 font-semibold mb-4'>Save Strava activity</h3>
+                      <span className='text-16 opacity-50'>Finish your workout in Strava and make sure everything's saved.</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-1 items-center px-32 py-16 border border-grey-darken rounded">
+                    <span className='text-40 font-bold text-[#AD6881]'>2</span>
+                    <div className="ml-32">
+                      <h3 className='text-20 font-semibold mb-4'>Import image to Strava</h3>
+                      <span className='text-16 opacity-50'>Upload photo to your Strava Activity, otherwise it won't appear in Moqop.</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-1 items-center px-32 py-16 border border-grey-darken rounded">
+                    <span className='text-40 font-bold text-[#DF5D3A]'>3</span>
+                    <div className="ml-32">
+                      <h3 className='text-20 font-semibold mb-4'>Generate image with Moqop</h3>
+                      <span className='text-16 opacity-50'>Connect your Strava and generate Instagram Story with Moqop</span>
+                    </div>
+                  </div>
+                  <div className='mt-8 border-grey'>
+                    <Button text="Connect with Strava" href="/auth/strava" className="mt-8 bg-orange w-full" />
+                  </div>
                 </div>
+
+
               </div>
             
             </section>
@@ -353,7 +378,7 @@ export default function Home(props) {
                   <div key={index}>
                     {/* <Link href={`${server()}/api/render/${key.id}`}> */}
                     <div>
-                      <div className='flex items-center rounded-4 mb-8  py-8 px-8 bg-grey/50 hover:bg-grey cursor-pointer' onClick={() => showLoading(key.id)} activityId={key.id}>
+                      <div className='flex items-center rounded-4 mb-8  py-8 px-8 bg-grey/50 hover:bg-grey cursor-pointer' onClick={() => showLoading(key.id)} activityid={key.id}>
                         {key.map ? 
                           <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
                         : ''}
