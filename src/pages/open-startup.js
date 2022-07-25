@@ -142,7 +142,7 @@ export default function OpenStartup() {
         
         <div className="w-full bg-grey/50 border border-grey p-16 rounded items-center mb-24">
           <div className="flex-1">
-            <span className='opacity-50 font-semibold'>Signed People</span>
+            <span className='opacity-50 font-semibold'>People</span>
             <div className="text-24 font-bold">{usersData[usersData.length - 1].counts ? usersData[usersData.length - 1].counts : '0'}</div>
           </div>
           <div className="h-[100px] w-full -mt-32">
@@ -157,7 +157,7 @@ export default function OpenStartup() {
        
         <div className="w-full bg-grey/50 border border-grey p-16 rounded items-center mb-24">
           <div className="flex-1">
-            <span className='opacity-50 font-semibold'>Shots generated</span>
+            <span className='opacity-50 font-semibold'>Shots</span>
             <div className="text-24 font-bold">{shotsData.length ? shotsData.length : 0}</div>
           </div>
         </div>

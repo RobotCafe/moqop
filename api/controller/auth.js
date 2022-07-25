@@ -35,10 +35,10 @@ exports.callback = async function(req, res) {
   
   console.log(req._passport.session.user._json)
   var user = req._passport.session.user._json
-  console.log('user.id')
+  console.log(`Logged User · ${user.id} · ${user.firstname} ${user.lastname} `)
   console.log(user.id)
-  console.log('user')
-  console.log(user)
+  // console.log('user')
+  // console.log(user)
   // const response = await db.collection('users').doc(user.id).set(req._passport.session.user._json);
 
   const usersRef = db.collection('users');
