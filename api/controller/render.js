@@ -265,7 +265,7 @@ exports.stravaOne = async function(req,res) {
             .watermark {
               position: absolute;
               top: 2.9rem;
-              right: 5.5rem;
+              right: 10rem;
               font-size: 2rem;
               z-index: 1000;
               opacity: 0.5;

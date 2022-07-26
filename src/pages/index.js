@@ -193,6 +193,7 @@ export default function Home(props) {
                 message: 'Activities are available to show.',
                 data: data
               })
+              console.log(data)
             }
           })
           .catch(rejected => {
@@ -382,10 +383,11 @@ export default function Home(props) {
                         {key.map ? 
                           <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
                         : ''}
-                        <div className='flex flex-col justify-center'>
-                          <span className='mt-4 leading-7'>{key.name}</span>
+                        <div className='flex flex-col justify-center overflow-hidden pr-16'>
+                          <span className='mt-4 leading-7 max-w-full whitespace-nowrap overflow-hidden text-ellipsis'>{key.name}</span>
                           <span className='block text-12 opacity-50 leading-7'>{key.type} · {distance} · {key.total_elevation_gain > 100 ? `${Math.ceil(key.total_elevation_gain)} m` : formatPace(key.moving_time, key.distance) } · {time}</span>
                         </div>
+                        {(key.total_photo_count == 0) ? <div className="text-12 bg-black/10 text-black/80 rounded px-8 ml-auto mr-8 whitespace-nowrap">⚠️ No photo on Strava</div> : '' }
                       </div>
                     {/* </Link> */}
                     </div>
