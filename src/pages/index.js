@@ -387,7 +387,7 @@ export default function Home(props) {
                           <span className='mt-4 leading-7 max-w-full whitespace-nowrap overflow-hidden text-ellipsis'>{key.name}</span>
                           <span className='block text-12 opacity-50 leading-7'>{key.type} · {distance} · {key.total_elevation_gain > 100 ? `${Math.ceil(key.total_elevation_gain)} m` : formatPace(key.moving_time, key.distance) } · {time}</span>
                         </div>
-                        {(key.total_photo_count == 0) ? <div className="text-12 bg-black/10 text-black/80 rounded px-8 ml-auto mr-8 whitespace-nowrap">⚠️ No photo on Strava</div> : '' }
+                        {(key.total_photo_count == 0) ? <div className="text-12 bg-black/10 text-black/80 rounded px-8 ml-auto mr-8 whitespace-nowrap">⚠️ No photo at Strava</div> : '' }
                       </div>
                     {/* </Link> */}
                     </div>
@@ -425,17 +425,30 @@ export default function Home(props) {
             <div className='absolute flex flex-col content-around top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-50 bg-white rounded drop-shadow-md p-16'>
               {/* <div className="flex max-h-full rounded drop-shadow-md p-32 bg-white"> */}
                 <div className='font-semibold'>  
-                  {loadingStateImageReady ?
-                    <span>Long press or right click <br />the image to download</span>
+                  {loadingStateImageReady ? 
+                    <div className="flex bg-grey rounded px-16 py-8 mb-16 text-left items-center gap-16">
+                      <svg className='flex-none w-24 opacity-50' width="36" height="35" viewBox="0 0 37 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 21.4608C18 15.9608 17 7.12654 20 4.12654C23 1.12654 26.5 1.46084 29.699 4.12651C32.964 7.22433 35 11.6048 35 16.4608C35 25.8496 27.3888 33.4608 18 33.4608C8.61116 33.4608 1 25.8496 1 16.4608C1 11.6048 3.03603 7.22433 6.30099 4.12651C8.30037 2.22947 11.5 1 13 1M18 21.4608L13 16.4608M18 21.4608L23 16.4608" stroke="black" strokeWidth="3" strokeLinecap="round"/>
+                      </svg>
+                      <div className="">
+                        <div className="font-bold">Download image </div>
+                        <div className='opacity-70 text-12 leading-6 text-left mx-auto -mt-2'>Long-press or right-click the image to download so you can share it on Instagram as a Story.</div>
+                      </div>
+                    </div>
                   :
-                  <span>Generating image... <br /> It can take 5 seconds</span> }
+                  <span>
+                      <div className="mx-auto my-32 w-32 h-32 border-2 border-transparent border-r-blue rounded-full animate-spin"></div>
+                      <div className="text-16 font-bold mb-8">Rendering image </div>
+                      <div className="opacity-70">Your image's beeing generated,<br />it may take up to 5 seconds.</div>
+                    </span> 
+                  }
                 </div> 
-                { loadingStateImageReady ?
-                  // <a href={loadingImage} className=' max-h-[70vh] flex-1 overflow-hidden mt-8' download="moqop.jpg">
-                  <div className='flex-1 overflow-hidden mt-8'>
-                    <img ref={imageRef} src={loadingImage} className="object-contain w-auto max-h-[70vh] rounded block m-auto" />
-                  </div>
-                : '' }
+                  {loadingStateImageReady ?
+                    // <a href={loadingImage} className=' max-h-[70vh] flex-1 overflow-hidden mt-8' download="moqop.jpg">
+                    <div className='flex-1 overflow-hidden'>
+                      <img ref={imageRef} src={loadingImage} className="object-contain w-auto max-h-[70vh] rounded block m-auto" />
+                    </div>
+                  : '' }
               {/* </div> */}
             </div>
           </div> }

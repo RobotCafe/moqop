@@ -41,6 +41,7 @@ module.exports = {
       'DEFAULT': '0.6rem',
       '4': '.4rem',
       '2': '.2rem',
+      'full': '99999rem',
     },
     spacing: {
       0: '0px',
