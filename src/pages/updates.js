@@ -6,6 +6,20 @@ export default function Changelog() {
 
   var updates = [
     {
+      type: 'major',
+      date: '09 Aug 2022',
+      log: [
+        'New render modal',
+        'Link to questionnaire',
+      ]
+    },
+    {
+      date: '01 Aug 2022',
+      log: [
+        'Added loading state with animation',
+      ]
+    },
+    {
       date: '19 Jun 2022',
       log: [
         'Fixed wrong scale of the polyline',

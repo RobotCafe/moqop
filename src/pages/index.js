@@ -30,6 +30,8 @@ export default function Home(props) {
   const [loadingState, setLoadingState] = useState(false);
   const [loadingStateImageReady, setLoadingStateImageReady] = useState(false);
   const [loadingImage, setLoadingImage] = useState('');
+  const [showQuestionnaire, setShowQuestionnaire] = useState(true);
+
 
   const [activityData, setActivityData] = useState(initialData);
   const [userData, setUserData] = useState(initialData);
@@ -226,6 +228,15 @@ export default function Home(props) {
   console.log(userData)
   console.log(activityData)
 
+
+  useEffect(() => {
+    const data = window.localStorage.getItem('MY_APP_STATE');
+    if ( data !== null ) setShowQuestionnaire(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('MY_APP_STATE', JSON.stringify(showQuestionnaire));
+  }, [showQuestionnaire]);
   
   // Countdown for loading state
 
@@ -421,18 +432,21 @@ export default function Home(props) {
 
 
           { <div className={`fixed transition top-0 left-0 right-0 bottom-0 z-50 text-center ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
-            <div className="mq:backdrop flex items-center justify-center w-full h-full bg-grey-darken/90" onClick={() => disableLoading()}></div>
-            <div className='absolute flex flex-col content-around top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-50 bg-white rounded drop-shadow-md p-16'>
+            <div className="mq:backdrop flex items-center justify-center w-full h-full bg-black/95" onClick={() => disableLoading()}></div>
+            {/* <div className='absolute flex flex-col justify-center top-24 right-24 bottom-24 left-24 z-50 bg-white rounded-12 drop-shadow-md p-16'> */}
+            <div className='absolute flex flex-col justify-center top-0 right-0 bottom-0 left-0 z-50 bg-white p-32 drop-shadow-md'>
               {/* <div className="flex max-h-full rounded drop-shadow-md p-32 bg-white"> */}
+                <div className="absolute w-64 h-64 top-0 right-0 flex items-center justify-center cursor-pointer hover:bg-grey" onClick={() => disableLoading()}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 6L18 18M18 6L6 18" stroke="black" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
                 <div className='font-semibold'>  
                   {loadingStateImageReady ? 
-                    <div className="flex bg-grey rounded px-16 py-8 mb-16 text-left items-center gap-16">
-                      <svg className='flex-none w-24 opacity-50' width="36" height="35" viewBox="0 0 37 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 21.4608C18 15.9608 17 7.12654 20 4.12654C23 1.12654 26.5 1.46084 29.699 4.12651C32.964 7.22433 35 11.6048 35 16.4608C35 25.8496 27.3888 33.4608 18 33.4608C8.61116 33.4608 1 25.8496 1 16.4608C1 11.6048 3.03603 7.22433 6.30099 4.12651C8.30037 2.22947 11.5 1 13 1M18 21.4608L13 16.4608M18 21.4608L23 16.4608" stroke="black" strokeWidth="3" strokeLinecap="round"/>
-                      </svg>
-                      <div className="">
-                        <div className="font-bold">Download image </div>
-                        <div className='opacity-70 text-12 leading-6 text-left mx-auto -mt-2'>Long-press or right-click the image to download so you can share it on Instagram as a Story.</div>
+                    <div className="">
+                      <div className="flex flex-col mb-16 px-8 p-8">
+                          <div className="font-bold">Download image </div>
+                          <div className='opacity-70 text-12 leading-6 mt-4'>Long-press or right-click the image to download so you can share it on Instagram as a Story.</div>
                       </div>
                     </div>
                   :
@@ -443,12 +457,31 @@ export default function Home(props) {
                     </span> 
                   }
                 </div> 
-                  {loadingStateImageReady ?
-                    // <a href={loadingImage} className=' max-h-[70vh] flex-1 overflow-hidden mt-8' download="moqop.jpg">
-                    <div className='flex-1 overflow-hidden'>
-                      <img ref={imageRef} src={loadingImage} className="object-contain w-auto max-h-[70vh] rounded block m-auto" />
-                    </div>
-                  : '' }
+                
+                {loadingStateImageReady ?
+                  // <a href={loadingImage} className=' max-h-[70vh] flex-1 overflow-hidden mt-8' download="moqop.jpg">
+                  <div className='flex h-full flex-1 overflow-hidden'>
+                    <img ref={imageRef} src={loadingImage} className="object-contain w-auto max-h-full rounded-8 block m-auto" />
+                  </div>
+                : '' }
+                {loadingStateImageReady && showQuestionnaire ?
+                  <div className="flex flex-col px-16 pt-16 -mx-32 -mb-16 gap-4 text-12 justify-center items-center">
+                      <div className="">Would you mind sharing your feedback?</div>
+                      <a href='https://forms.gle/38hJsbRgjCi9bFbp7' target='_blank' className="flex items-center gap-4 bg-grey py-4 px-8 rounded font-semibold pointer" onClick={() => setShowQuestionnaire(false)}>
+                        Open questionnaire
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M8.3999 7.59995L12.7999 3.19995M12.7999 3.19995H8.7999M12.7999 3.19995V7.19995" stroke="black" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M11.2 10.4V12.8H3.19995V4.80005H5.59995" stroke="black" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+
+                      </a>
+                      {/* <div className="">Do you like the result? </div> */}
+                      {/* <div className='flex justify-center gap-8 mt-2 font-semibold'>
+                      <div className="bg-grey py-4 px-8 rounded">Yes 👍</div>
+                        <div className="bg-grey py-4 px-8 rounded">No 👎</div>
+                      </div> */}
+                  </div>
+                : '' }
               {/* </div> */}
             </div>
           </div> }

@@ -39,8 +39,10 @@ module.exports = {
     },
     borderRadius: {
       'DEFAULT': '0.6rem',
-      '4': '.4rem',
       '2': '.2rem',
+      '4': '.4rem',
+      '8': '.8rem',
+      '12': '1.2rem',
       'full': '99999rem',
     },
     spacing: {
@@ -54,6 +56,7 @@ module.exports = {
       20: '20px',
       24: '24px',
       32: '32px',
+      40: '40px',
       48: '48px',
       64: '64px',
       80: '80px'
