@@ -7,6 +7,13 @@ export default function Changelog() {
   var updates = [
     {
       type: 'major',
+      date: '03 Oct 2022',
+      log: [
+        'Render also Instagram Post resolution',
+        'Udated watermark',
+      ]
+    },
+    {
       date: '09 Aug 2022',
       log: [
         'New render modal',

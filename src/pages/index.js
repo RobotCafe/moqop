@@ -27,8 +27,9 @@ export default function Home(props) {
     message: 'Data are being fetched.'
   }
 
-  const [loadingState, setLoadingState] = useState(false);
-  const [loadingStateImageReady, setLoadingStateImageReady] = useState(false);
+  const [modalState, setModalState] = useState({
+    show: false
+  });
   const [loadingImage, setLoadingImage] = useState('');
   const [showQuestionnaire, setShowQuestionnaire] = useState(true);
 
@@ -240,25 +241,44 @@ export default function Home(props) {
   
   // Countdown for loading state
 
-  const disableLoading = () => {
-    setLoadingState(false)
-    // setLoadingStateImageReady(5)
+  const disablePopup = () => {
+    setModalState({show: false})
   }
 
-  // var test = loadingStateImageReady
-  const showLoading = async(id) => {
+  const pickResolution = async(id) => {
+    // Todo: implement popup showcase
+  }
+
+  const modalResolution = async(activityId) => {
+    console.log(activityId)
+    setModalState({
+      show: true,
+      type: 'resolution',
+      id: activityId
+    })
+  }
+
+  // var test = modalState
+  const modalDownloadImage = async(resolutionType) => {
+    let id = modalState.id
     setLoadingImage('')
-    setLoadingState(true)
-    setLoadingStateImageReady(false)
+    setModalState({
+      show: true,
+      type: 'loading'
+    })
     // var imageUrl = `${server()}/api/render/${id}`
     // console.log(imageUrl)
     
-    await fetch(`/api/render/${id}`)
+    // await fetch(`/api/render/${id}?resolution=square`)
+    await fetch(`/api/render/${id}${resolutionType === 'post' ? '?resolution=square' : ''}`)
       .then(res => res.blob()) // Gets the response and returns it as a blob
       .then(blob => {
         const objectURL = URL.createObjectURL(blob);
         setLoadingImage(objectURL)
-        setLoadingStateImageReady(true)
+        setModalState({
+          show: true,
+          type: 'download'
+        })
         imageRef.current.src = objectURL;
       }).catch(error => {
         console.log(error)
@@ -390,15 +410,15 @@ export default function Home(props) {
                   <div key={index}>
                     {/* <Link href={`${server()}/api/render/${key.id}`}> */}
                     <div>
-                      <div className='flex items-center rounded-4 mb-8  py-8 px-8 bg-grey/50 hover:bg-grey cursor-pointer' onClick={() => showLoading(key.id)} activityid={key.id}>
+                      <div className='flex items-center rounded-4 mb-8  py-8 px-8 bg-grey/50 hover:bg-grey cursor-pointer' onClick={() => modalResolution(key.id)} activityid={key.id}>
                         {key.map ? 
                           <img src={renderCanvas(key.map.summary_polyline)} className="w-32 h-32 ml-4 mr-16 opacity-50" />
                         : ''}
                         <div className='flex flex-col justify-center overflow-hidden pr-16'>
                           <span className='mt-4 leading-7 max-w-full whitespace-nowrap overflow-hidden text-ellipsis'>{key.name}</span>
-                          <span className='block text-12 opacity-50 leading-7'>{key.type} · {distance} · {key.total_elevation_gain > 100 ? `${Math.ceil(key.total_elevation_gain)} m` : formatPace(key.moving_time, key.distance) } · {time}</span>
+                          <span className='block text-12 opacity-50 leading-7'>{key.type} · {distance} · {key.total_elevation_gain > 100 ? `${Math.ceil(key.total_elevation_gain)} m` : `${formatPace(key.moving_time, key.distance)} /km`} · {time}</span>
                         </div>
-                        {(key.total_photo_count == 0) ? <div className="text-12 bg-black/10 text-black/80 rounded px-8 ml-auto mr-8 whitespace-nowrap">⚠️ No photo at Strava</div> : '' }
+                        {(key.total_photo_count == 0) ? <div className="text-12 border-red border text-red rounded px-8 ml-auto mr-8 whitespace-nowrap">No image</div> : '' }
                       </div>
                     {/* </Link> */}
                     </div>
@@ -431,40 +451,65 @@ export default function Home(props) {
 
 
 
-          { <div className={`fixed transition top-0 left-0 right-0 bottom-0 z-50 text-center ${loadingState ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
-            <div className="mq:backdrop flex items-center justify-center w-full h-full bg-black/95" onClick={() => disableLoading()}></div>
+          { <div className={`fixed transition top-0 left-0 right-0 bottom-0 z-50 text-center ${modalState.show ? ' opacity-100 pointer-events-auto': ' opacity-0 pointer-events-none'}`}>
+            <div className="mq:backdrop flex items-center justify-center w-full h-full bg-black/95" onClick={() => disablePopup()}></div>
             {/* <div className='absolute flex flex-col justify-center top-24 right-24 bottom-24 left-24 z-50 bg-white rounded-12 drop-shadow-md p-16'> */}
             <div className='absolute flex flex-col justify-center top-0 right-0 bottom-0 left-0 z-50 bg-white p-32 drop-shadow-md'>
-              {/* <div className="flex max-h-full rounded drop-shadow-md p-32 bg-white"> */}
-                <div className="absolute w-64 h-64 top-0 right-0 flex items-center justify-center cursor-pointer hover:bg-grey" onClick={() => disableLoading()}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 6L18 18M18 6L6 18" stroke="black" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
-                </div>
-                <div className='font-semibold'>  
-                  {loadingStateImageReady ? 
-                    <div className="">
-                      <div className="flex flex-col mb-16 px-8 p-8">
-                          <div className="font-bold">Download image </div>
-                          <div className='opacity-70 text-12 leading-6 mt-4'>Long-press or right-click the image to download so you can share it on Instagram as a Story.</div>
+
+                
+                {modalState.show ?
+                  <div className="absolute w-64 h-64 top-0 right-0 flex items-center justify-center cursor-pointer hover:bg-grey" onClick={() => disablePopup()}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6 6L18 18M18 6L6 18" stroke="black" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                : ''}
+
+
+
+                {modalState.type === "resolution" ?
+                  <div className='flex justify-center gap-32'>
+                    <div className='cursor-pointer' onClick={() => modalDownloadImage('post')}>
+                      <img src="/images/content/formatPost.svg" />
+                      <span className='block pt-16'>Instagram Post</span>
+                      <span className='block opacity-50 text-12'>1:1 · 1920 x 1920</span>
+                    </div>
+                    <div className='cursor-pointer' onClick={() => modalDownloadImage('story')}>
+                      <img src="/images/content/formatStory.svg" />
+                      <span className='block pt-16'>Instagram Story</span>
+                      <span className='block opacity-50 text-12'>9:16 · 1080x1920</span>
+                    </div>
+                  </div>
+                : ''}
+
+                  {modalState.type === 'download' ?
+                    <div className='font-semibold'>  
+                      <div className="">
+                        <div className="flex flex-col mb-16 px-8 p-8">
+                            <div className="font-bold">Download image </div>
+                            <div className='opacity-70 text-12 leading-6 mt-4'>Long-press or right-click the image to download so you can share it on Instagram as a Story.</div>
+                        </div>
                       </div>
                     </div>
-                  :
-                  <span>
-                      <div className="mx-auto my-32 w-32 h-32 border-2 border-transparent border-r-blue rounded-full animate-spin"></div>
-                      <div className="text-16 font-bold mb-8">Rendering image </div>
-                      <div className="opacity-70">Your image's beeing generated,<br />it may take up to 5 seconds.</div>
-                    </span> 
-                  }
-                </div> 
+                  : ''}
+
+                  {modalState.type === 'loading' ?
+                    <div className='font-semibold'>  
+                      <span>
+                        <div className="mx-auto my-32 w-32 h-32 border-2 border-transparent border-r-blue rounded-full animate-spin"></div>
+                        <div className="text-16 font-bold mb-8">Rendering image </div>
+                        <div className="opacity-70">Your image's beeing generated,<br />it may take up to 5 seconds.</div>
+                      </span> 
+                    </div> 
+                  : ''}
                 
-                {loadingStateImageReady ?
+                {modalState.type === 'download' ?
                   // <a href={loadingImage} className=' max-h-[70vh] flex-1 overflow-hidden mt-8' download="moqop.jpg">
                   <div className='flex h-full flex-1 overflow-hidden'>
                     <img ref={imageRef} src={loadingImage} className="object-contain w-auto max-h-full rounded-8 block m-auto" />
                   </div>
-                : '' }
-                {loadingStateImageReady && showQuestionnaire ?
+                : ''}
+                {(modalState.type === 'download' && showQuestionnaire) ?
                   <div className="flex flex-col px-16 pt-16 -mx-32 -mb-16 gap-4 text-12 justify-center items-center">
                       <div className="">Would you mind sharing your feedback?</div>
                       <a href='https://forms.gle/38hJsbRgjCi9bFbp7' target='_blank' className="flex items-center gap-4 bg-grey py-4 px-8 rounded font-semibold pointer" onClick={() => setShowQuestionnaire(false)}>
@@ -481,7 +526,7 @@ export default function Home(props) {
                         <div className="bg-grey py-4 px-8 rounded">No 👎</div>
                       </div> */}
                   </div>
-                : '' }
+                : ''}
               {/* </div> */}
             </div>
           </div> }

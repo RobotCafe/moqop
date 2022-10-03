@@ -14,16 +14,28 @@ exports.stravaOne = async function(req,res) {
     console.log('req.user: ' + req._passport.session.user)
     console.log('req.user.token: ' + req._passport.session.user.token)
     var access_token = req._passport.session.user.token
-    // console.log(req)
 
-    // OLD: Fetch strava data
-    // urlStravaData = `${server()}/api/strava/${req.params.id}`
-    // var stravaData = await fetch(urlStravaData)
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     // console.log(data)
-    //     return data
-    //   })
+    let renderScale = {
+      width: 1080,
+      height: 1920,
+      fontSize: 20,
+      canvasTransform: 'translate(-50%, -55%)',
+      splineWidth: 8
+    }
+
+    if (req.query.resolution === 'square') {
+      renderScale = {
+        width: 1920,
+        height: 1920,
+        fontSize: 30,
+        canvasTransform: 'translate(-50%, -67%) scale(1.1)',
+        splineWidth: 12
+      }
+    }
+
+    console.log(req.query)
+    console.log(renderScale)
+
 
     var stravaDataa = fetch(
         // 'https://www.strava.com/api/v3/athletes/42409445/stats',
@@ -120,13 +132,13 @@ exports.stravaOne = async function(req,res) {
       // TODO - make it rounded
       // https://stackoverflow.com/questions/29074956/in-mapbox-js-how-to-smooth-a-polyline
 
-      context.lineWidth = 8;
+      context.lineWidth = renderScale.splineWidth;
       context.strokeStyle = 'white';
       context.lineJoin = "round";
       context.lineCap = 'round',
       context.stroke();
 
-      const radius = 15;
+      const radius = renderScale.splineWidth*2;
       const x = firstPoint[0]
       const y = firstPoint[1]
       context.beginPath();
@@ -140,7 +152,7 @@ exports.stravaOne = async function(req,res) {
       
       // Starting point circle
       context.beginPath();
-      context.lineWidth = 16;
+      context.lineWidth = renderScale.splineWidth*2;
       context.strokeStyle = 'white';
       context.arc(x, y, radius, 0, 2 * Math.PI, false);
       // console.log('radius: ' + radius)
@@ -182,10 +194,6 @@ exports.stravaOne = async function(req,res) {
       return content
     }
 
-
-
-  // console.log(stats())
-
     const output = (`
     
       <html>
@@ -194,9 +202,9 @@ exports.stravaOne = async function(req,res) {
           <style>
             ${fontRoboto()}
             html {
-              width: 1080px;
+              width: ${renderScale.width}px;
               height: 1920px;
-              font-size: 20px;
+              font-size: ${renderScale.fontSize}px;
               font-family: "Roboto";
               padding: 0;
               margin: 0;
@@ -260,13 +268,21 @@ exports.stravaOne = async function(req,res) {
               top: 50%;
               width: 1000px;
               height: 1300px;
-              transform: translate(-50%, -55%);
+              transform: ${renderScale.canvasTransform};
             }
             .watermark {
               position: absolute;
-              top: 2.9rem;
-              right: 10rem;
-              font-size: 2rem;
+              width: 100%;
+              height: 10rem;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+              font-size: 1.4rem;
+              letter-spacing: 0.1rem;
               z-index: 1000;
               opacity: 0.5;
             }
@@ -274,7 +290,7 @@ exports.stravaOne = async function(req,res) {
         </head>
         <body>
           <div style="position:relative; width: 100%; height: 100%;">
-            <div class="watermark">moqop</div>
+            <div class="watermark">made with moqop</div>
             <div class="stats">
               ${stats()}
             </div>
@@ -298,8 +314,6 @@ exports.stravaOne = async function(req,res) {
     // TMP disabled for testing purposes
     saveShot(stravaData);
 
-
-
     if (req.query.type === 'html') {
       // console.log(stravaData)
       res.send(output)
@@ -310,7 +324,7 @@ exports.stravaOne = async function(req,res) {
         html: output,
         puppeteerArgs: puppeteer,
         defaultViewport: {
-          width: 1080,
+          width: renderScale.width,
           height: 1920
         }
       });
