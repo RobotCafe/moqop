@@ -359,21 +359,21 @@ export default function Home(props) {
                 <h2 className='text-40 font-black k mb-16'>How to use Moqop?</h2>
                 <div className="text-18">Watch a short video about how to set up strava activity to get solid results.</div>
                 <div className="flex flex-col text-left gap-16 mt-32 max-w-[500px] m-auto">
-                  <div className="flex flex-1 items-center px-32 py-16 border border-grey-darken rounded cursor-pointer hover:bg-grey/50 ">
+                  <div className="flex flex-1 items-center px-32 py-16 border border-grey-darken rounded cursor-default hover:bg-grey/50 ">
                     <span className='text-40 font-bold text-[#7475D5]'>1</span>
                     <div className="ml-32">
                       <h3 className='text-20 font-semibold mb-4'>Save Strava activity</h3>
                       <span className='text-16 opacity-50'>Finish your workout in Strava and make sure everything's saved.</span>
                     </div>
                   </div>
-                  <div className="flex flex-1 items-center px-32 py-16 border border-grey-darken rounded">
+                  <div className="flex flex-1 items-center px-32 py-16 border border-grey-darken rounded cursor-default hover:bg-grey/50 ">
                     <span className='text-40 font-bold text-[#AD6881]'>2</span>
                     <div className="ml-32">
                       <h3 className='text-20 font-semibold mb-4'>Import image to Strava</h3>
                       <span className='text-16 opacity-50'>Upload photo to your Strava Activity, otherwise it won't appear in Moqop.</span>
                     </div>
                   </div>
-                  <div className="flex flex-1 items-center px-32 py-16 border border-grey-darken rounded">
+                  <div className="flex flex-1 items-center px-32 py-16 border border-grey-darken rounded cursor-default hover:bg-grey/50 ">
                     <span className='text-40 font-bold text-[#DF5D3A]'>3</span>
                     <div className="ml-32">
                       <h3 className='text-20 font-semibold mb-4'>Generate image with Moqop</h3>
@@ -381,7 +381,7 @@ export default function Home(props) {
                     </div>
                   </div>
                   <div className='mt-8 border-grey'>
-                    <Button text="Connect with Strava" href="/auth/strava" className="mt-8 bg-orange w-full" />
+                    <Button text="Connect with Strava" href="/auth/strava" size="large" className="mt-8 bg-orange w-full" />
                   </div>
                 </div>
 

@@ -1,10 +1,17 @@
 import Head from 'next/head'
 import Header from 'components/header'
 import Footer from 'components/footer'
+import { useEffect, useState } from 'react'
 
 export default function Changelog() {
 
   var updates = [
+    {
+      date: '19 Nov 2022',
+      log: [
+        'Added coming soon page for Twitter integration',
+      ]
+    },
     {
       type: 'major',
       date: '03 Oct 2022',
@@ -126,6 +133,37 @@ export default function Changelog() {
     }
   ]
 
+  // User fetching
+  var initialData = {
+    code: 101,
+    errors: 'Loading',
+    message: 'Data are being fetched.'
+  }
+  const [userData, setUserData] = useState(initialData);
+
+    useEffect(() => {
+      console.log('useEffects')
+      fetch(`/api/user`)
+      .then(response => response.json())
+      .then(userData => {
+        console.log('Fetch: User')
+        if (!userData.errors) {
+          setUserData({
+            code: 200,
+            message: 'User logged in',
+            data: userData
+          })
+        } else {
+          setUserData({
+            code: 401,
+            errors: 'Unauthorized',
+            message: 'User is not logged in.'
+          })
+        }
+      })
+    }, [])
+
+
   return(
     <section>
       <Head>
@@ -133,7 +171,7 @@ export default function Changelog() {
         <meta name="description" content="Check out the latest Moqop release notes" />
       </Head>
 
-      <Header />
+      <Header user={userData} />
 
       <h1 className="title text-24 sm:text-32 md:text-40 font-black text-center">
         <span className='titleColor inline'>Updates</span>

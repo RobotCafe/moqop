@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function Integration(props) {
   // console.log(props.loginButton)
   return(
-    <div className="sectionBlock flex flex-col border-2 border-grey rounded p-16 mb-24 text-center font-semibold">
+    <div className="sectionBlock flex flex-col border-2 border-grey rounded-8 p-16 mb-24 text-center font-semibold">
       <div className="flex gap-16 justify-center items-center p-8">
         <div className="flex flex-1 flex-col sm:flex-row items-center justify-center gap-8">
           <Image src="/images/services/strava.svg" width="24" height="24" alt="Strava" />
@@ -22,7 +22,7 @@ export default function Integration(props) {
       </div>
       {props.loginButton ? 
         <div className='mt-8 border-grey'>
-          <Button text="Connect with Strava" href="/auth/strava" className="mt-8 bg-orange w-full" />
+          <Button text="Connect with Strava" size="large" href="/auth/strava" className="mt-8 bg-orange w-full" />
         </div>
       : 
       '' }

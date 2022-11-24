@@ -3,8 +3,40 @@ import Header from 'components/header'
 import Footer from 'components/footer'
 import Button from 'components/button'
 import Link from 'next/link'
+import { useEffect, useState, useRef } from 'react'
+
 
 export default function About() {
+// User fetching
+var initialData = {
+  code: 101,
+  errors: 'Loading',
+  message: 'Data are being fetched.'
+}
+const [userData, setUserData] = useState(initialData);
+
+useEffect(() => {
+  console.log('useEffects')
+  fetch(`/api/user`)
+  .then(response => response.json())
+  .then(userData => {
+    console.log('Fetch: User')
+    if (!userData.errors) {
+      setUserData({
+        code: 200,
+        message: 'User logged in',
+        data: userData
+      })
+    } else {
+      setUserData({
+        code: 401,
+        errors: 'Unauthorized',
+        message: 'User is not logged in.'
+      })
+    }
+  })
+}, [])
+
 
   return(
     <section>
@@ -13,7 +45,8 @@ export default function About() {
         <meta name="description" content="Moqop is online visualiser that generates content based on the specific data input, currently focusing on Strava activities, but it can be extendable by any type of content." />
       </Head>
 
-      <Header />
+      <Header user={userData} />
+
       <h1 className="title text-24 sm:text-32 md:text-40 font-black text-center">
         <span className='titleColor inline'>What is Moqop?</span>
       </h1>
@@ -28,18 +61,21 @@ export default function About() {
 
         <ul className='flex flex-col gap-16'>
           <li className='mb-16'>
-            <span className='block font-bold mb-4 text-20'>About</span>
-            <p className=''>Moqop is online visualiser that generates content based on the specific data input, currently focusing on Strava activities, but it can be extendable by any type of content.</p>
+            <span className='block font-bold mb-4 text-20'>About product</span>
+            <p className=''>Moqop generates visual content based on various data inputs, currently focusing on Strava activities with a plan to cover other services and integrations, but also include AI in the design process.</p>
           </li>
           <li className='mb-16'>
             <span className='block font-bold mb-4 text-20'>Use-cases</span>
+            <p>Currently, we perfectly cover Strava to Instagram content creation that keeps the feed consistent. </p>
+          </li>
+          <li className='mb-16'>
+            <span className='block font-bold mb-4 text-20'>Design export</span>
             <ul>
-              <li>· Social media</li>
-              <li>· Newsletters</li>
-              <li>· Website content</li>
-              <li>· Digital badges for running events</li>
+              <li>· Instagram Story in 9:16 ration format</li>
+              <li>· Instagram Post in 1:1 ratio format</li>
             </ul>
           </li>
+          <li className='bg-grey h-2 mb-16' />
           {/* <li className='mb-16'>
             <span className='block font-bold mb-4 text-20'>Pricing</span>
             <p className=''>Pricing depends on your usage of the social media. If your presence on social media brings you any value, you have to use Influencer package.</p>
@@ -76,21 +112,22 @@ export default function About() {
           <li className='mb-16'>
             <span className='block font-bold mb-4 text-20'>Team</span>
             <div className="">
-              <p>Moqop is one man show and has been developed by <a href="https://milangladis.com" target="_blank" className="mr-8 text-blue underline">Milan Gladis</a>– Trail runner 🏃 Product Manager, Designer, and Developer with a +15 years of experience in building products.</p>
+              <p>One-man show project developed by <a href="https://milangladis.com" target="_blank" className="mr-8 text-blue underline">Milan Gladis</a>– Full Stack Product Designer and Trail runner 🏃 with a +15 years of experience in building web products.</p>
             </div>
           </li>
           <li className='mb-16'>
             <span className='block font-bold mb-4 text-20'>Open Startup</span>
             <div className="">
-              <p>I think the transparency and knowledge sharing is the key of growth. That's thy Moqop will share as much data as possible as an Open Startup. Check out our current data on the <Link href="open-startup"><a className='text-blue underline'>Open Startup</a></Link> page</p>
+              <p>We embrace transparency and openness by sharing our metrics with everyone. Check out our current metrics on the <Link href="open-startup"><a className='text-blue underline'>Open Startup</a></Link> page</p>
             </div>
           </li>
           <li className='mb-16'>
             <span className='block font-bold mb-4 text-20'>Technology</span>
             <div className="">
-              <p>The product is built on nodejs, nextjs, tailwind and uses technologies like firebase, passport, oauth, Strava API etc.</p>
+              <p>The product is built on Node.js, Next.js, Tailwind CSS and uses technologies like Google Firebase, Passport, OAuth, Strava API etc.</p>
             </div>
           </li>
+          <li className='bg-grey h-2 mb-16' />
           <li className='mb-16'>
             <span className='block font-bold mb-4 text-20'>Support</span>
             <div className="">

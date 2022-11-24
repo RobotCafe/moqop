@@ -26,6 +26,10 @@ export default function Footer() {
             <a className="mx-8">Open Startup</a>
           </Link>
           ·
+          <Link href="/apps">
+            <a className="mx-8">Apps</a>
+          </Link>
+          ·
           <Link href="/updates">
             <a className="mx-8">Updates</a>
           </Link>

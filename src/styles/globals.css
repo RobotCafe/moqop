@@ -17,6 +17,7 @@ html {
 body {
   padding: 0;
   margin: 0;
+  min-height: 100vh;
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -59,7 +60,7 @@ section {
 }
 
 .page {
-  min-height: calc(100vh - 200px);
+  min-height: calc(100vh - 167px);
 }
 
 .video-container { position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; }

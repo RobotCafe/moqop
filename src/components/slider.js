@@ -28,10 +28,10 @@ export default function Slider() {
           <div className='h-[400] '><Image src="/images/examples/2.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
           <div className='h-[400]'><Image src="/images/examples/3.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
           <div className='h-[400] hidden sm:block'><Image src="/images/examples/4.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
-          <div className='h-[400] hidden sm:block'><Image src="/images/examples/5.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
+          {/* <div className='h-[400] hidden sm:block'><Image src="/images/examples/5.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
           <div className='h-[400] hidden md:block'><Image src="/images/examples/1.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
           <div className='h-[400] hidden lg:block'><Image src="/images/examples/2.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
-          <div className='h-[400] hidden lg:block'><Image src="/images/examples/3.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
+          <div className='h-[400] hidden lg:block'><Image src="/images/examples/3.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div> */}
         </div>
       </div>
     </div>

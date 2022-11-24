@@ -22,18 +22,22 @@ export default function Header(props) {
           </a>
         </Link>
       </h1>
-      {/* <Button text="Send feedback" size="small" type="secondary" className="ml-auto" /> */}
+      {/* <Button text="Send feedback" size="small" className="ml-16" /> */}
       
-      <div className="ml-auto">
+      <div className="ml-auto font-semibold">
+        <Link href="/apps">
+          <a className="ml-32 mr-16">Apps</a>
+        </Link>
+        ·
         <Link href="/about">
-          <a className="ml-8">About</a>
+          <a className="ml-16">About</a>
         </Link>
         {
           props.user && props.user.code === 200 ? 
-            <div className="inline ml-8">
+            <div className="inline ml-16">
               ·
               <Link href="/logout">
-                <a className="ml-8">Log out</a>
+                <a className="ml-18">Log out</a>
               </Link> 
             </div>
             : ''

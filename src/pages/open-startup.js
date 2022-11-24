@@ -25,6 +25,40 @@ export default function OpenStartup() {
     return formatedDate
   }
 
+
+// User fetching
+var initialData = {
+  code: 101,
+  errors: 'Loading',
+  message: 'Data are being fetched.'
+}
+const [userData, setUserData] = useState(initialData);
+
+  useEffect(() => {
+    console.log('useEffects')
+    fetch(`/api/user`)
+    .then(response => response.json())
+    .then(userData => {
+      console.log('Fetch: User')
+      if (!userData.errors) {
+        setUserData({
+          code: 200,
+          message: 'User logged in',
+          data: userData
+        })
+      } else {
+        setUserData({
+          code: 401,
+          errors: 'Unauthorized',
+          message: 'User is not logged in.'
+        })
+      }
+    })
+  }, [])
+
+
+
+  // Stats
   const [usersData, setUsersData] = useState([{date: '2022-4-21', counts: '', epoch: 1650492000}, {date: '2022-4-21', counts: '', epoch: 1650492000}]);
   const [shotsData, setShotsData] = useState({"length": ''});
 
@@ -133,7 +167,8 @@ export default function OpenStartup() {
         <meta name="description" content="Moqop is a part of open-startup movement. All of the metrics will be publicly available." />
       </Head>
 
-      <Header />
+      <Header user={userData} />
+
       <div className="page">
         <h1 className="title text-24 sm:text-32 md:text-40 font-black text-center">
           <span className='titleColor inline'>Open startup</span>
