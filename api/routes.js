@@ -2,23 +2,25 @@
 var passport = require('passport');
 
 module.exports = function(app) {
-  // var strava   = require('./controller/strava'); obsolete
-
-  var render   = require('./controller/render');
+  var renderStrava   = require('./controller/render/strava');
+  var renderTwitter   = require('./controller/render/twitter');
   var shot   = require('./controller/shot');
-  
-  // var user   = require('./controller/user');
   var auth   = require('./controller/auth');
   var open   = require('./controller/open');
   var activity   = require('./controller/activity');
   var project   = require('./controller/project');
+  var twitter   = require('./controller/services/twitter');
   
 
   // Render shots
   // app.route('/api/strava/:id').get(strava.activity); obsolete
-  app.route('/api/render/:id').get(render.stravaOne);
+  app.route('/api/render/strava/:id').get(renderStrava.stravaOne);
   app.route('/api/shot/').get(shot.render);
-
+  // Twitter
+  // app.route('/api/service/twitter/:id').get(ensureAuthenticated, twitter.get)
+  app.route('/api/render/twitter/:id').get(renderTwitter.render)
+  app.route('/api/service/twitter/:id').get(twitter.get)
+  
 
   
   // Open startup metrics

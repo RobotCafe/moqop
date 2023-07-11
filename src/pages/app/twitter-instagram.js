@@ -8,6 +8,7 @@ import Header from 'components/header'
 import Footer from 'components/footer'
 
 import Button from 'components/button'
+import Input from 'components/input'
 
 export default function App(props) {
   
@@ -40,6 +41,35 @@ export default function App(props) {
       }
     })
   }, [])
+
+
+
+  const requestTwitter = async(e) => {
+    e.preventDefault();
+    let id = e.target[0].value;
+    console.log(id)
+
+    if (isValidTweetId(id)) {
+      fetch(`/api/service/twitter/${id}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log('Fetching tweet from the backend')
+          if (!data.errors) {
+            console.log(data)
+          } else {
+            console.log('error fetching twitter')
+          }
+        })
+    } else {
+      console.log('invalid tweet ID')
+    }
+
+  }
+
+
+  function isValidTweetId(id) {
+    return /^[0-9]+$/.test(id);
+  }
   
   return (
     <div className="">
@@ -71,7 +101,7 @@ export default function App(props) {
                 <div className="flex gap-16 justify-center items-center p-8">
                   <div className="flex flex-1 flex-col sm:flex-row items-center justify-center gap-8">
                     <Image src="/images/services/twitter.svg" width="24" height="24" alt="Strava" />
-                    Strava <br className='block sm:hidden' /> Activity
+                    Twitter<br className='block sm:hidden' /> Tweet
                   </div>
                   <span className='text-white/50'>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,10 +113,11 @@ export default function App(props) {
                     Instagram <br className='block sm:hidden' /> Story
                   </div>
                 </div>
-                <div className='mt-8 border-grey'>
-                <Button text="Request early access" href="https://forms.gle/m6WUF8zg9gAkW7JN9"  target="_blank" size="large" className="mt-8 bg-[#1D9BF0] w-full" />
+                <form onSubmit={requestTwitter} className='mt-8 pt-16 flex gap-16 border-t-2 border-grey'>
+                  <Input type="text" name="tweetUrl" id="tweetUrl" className=" w-full" placeholder="Tweet's ID" />
+                  <Button type="button" text="Render image"  target="_blank" size="large" className="bg-[#1D9BF0]" />
                   {/* <Button text="Connect with Strava" href="/auth/strava" className="mt-8 bg-orange w-full" /> */}
-                </div>
+                </form>
               </div>
             </>
 
@@ -98,10 +129,10 @@ export default function App(props) {
         <div className="mt-48">
           <div className="relative max-w-full overflow-hidden no-scrollbar">
             <div className="flex justify-center gap-8 md:gap-16 p-8 outline-hidden w-full">
-              <div className='h-[400] '><Image src="/images/examplesTwitter/1.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
-              <div className='h-[400] '><Image src="/images/examplesTwitter/2.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
-              <div className='h-[400]'><Image src="/images/examplesTwitter/3.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
-              <div className='h-[400] hidden sm:block'><Image src="/images/examplesTwitter/4.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
+              <div className='h-[400] '><Image alt="twitter image" src="/images/examplesTwitter/1.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
+              <div className='h-[400] '><Image alt="twitter image" src="/images/examplesTwitter/2.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
+              <div className='h-[400]'><Image alt="twitter image" src="/images/examplesTwitter/3.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
+              <div className='h-[400] hidden sm:block'><Image alt="twitter image" src="/images/examplesTwitter/4.jpg" width="225" height="400" className="rounded w-[225px] h-[400]" /></div>
             </div>
           </div>
         </div>
@@ -115,13 +146,13 @@ export default function App(props) {
               <div className="text-18">Focus on your <strong>social media audience</strong> and let the design creation on smart tools. Image render and export takes just a second so you won’t ever waste your time on content creation thanks to Moqop</div>
             </div>
             <div className="flex-1 flex justify-center">
-              <Image src="/images/examplesTwitter/feature1.png" width="466" height="322" />
+              <Image src="/images/examplesTwitter/feature1.png" width="466" height="322" alt="Feature 1" />
             </div>
           </div>
 
           <div className="flex flex-col-reverse md:flex-row gap-64 mt-64">
             <div className="flex-1 flex justify-center">
-            <Image src="/images/examplesTwitter/feature2.png" width="420" height="413" />
+            <Image src="/images/examplesTwitter/feature2.png" width="420" height="413" alt='Feature 2' />
             </div>
             <div className='flex flex-1 flex-col justify-center'>
               <div className="uppercase font-bold opacity-50">Click here and there</div>
@@ -137,7 +168,7 @@ export default function App(props) {
               <div className="text-18">Data rules them all. From Instagram Story to the post or any other format you need. Click one button and get <strong>content in all social media formats</strong>. What about posting them automatically everywhere? </div>
             </div>
             <div className="flex-1 flex justify-center">
-              <Image src="/images/examplesTwitter/feature3.png" width="403" height="404" />
+              <Image src="/images/examplesTwitter/feature3.png" width="403" height="404" alt='feature 3' />
             </div>
           </div>
 

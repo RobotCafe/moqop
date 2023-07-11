@@ -6,9 +6,9 @@ export default function Workspage() {
     <div className="flex flex-col h-screen w-screen overflow-hidden text-13">
       <div className="w-full px-12 py-12 border-b border-grey-darken">
         <div className="mr-8 flex">
-          <Link href="/workspace" >
+          <Link href="/workspace">
             <a className="block -mt-2 h-[28px]">
-              <Image src="/images/logo.svg" width="77" height="28" className='block' />
+              <Image src="/images/logo.svg" width="77" height="28" className='block' alt="logo" />
             </a>
           </Link>
         </div>
@@ -40,7 +40,7 @@ export default function Workspage() {
 export function Card(props) {
   return(
     <Link href="/m">
-      <a className="">
+      <a>
         <div className="bg-grey-darken w-full aspect-4/3 rounded"></div>
         <div className="py-8">{props.title}</div>
       </a>

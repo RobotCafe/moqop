@@ -17,7 +17,7 @@ import Theme from 'themes/strava/strava1'
 import Seturl from 'components/seturl'
 
 import { useEffect, useState, useRef } from 'react'
-import {server} from '../../api/utils/functions'
+import {formatPace} from '../../api/utils/functions'
 
 export default function Home(props) {
   
@@ -55,17 +55,17 @@ export default function Home(props) {
     return ret;
   }
 
-  function formatPace(timeInSeconds, distanceInMetres) {
-    var pace = (timeInSeconds/distanceInMetres)/60*1000;
-    var leftover = pace % 1;
-    var minutes = pace - leftover;
-    var seconds = Math.round(leftover * 60);
-    if (seconds < 10) {
-      seconds = `0${seconds}`
-    }
-    var finalPace = minutes+":"+seconds
-    return finalPace
-  }
+  // function formatPace(timeInSeconds, distanceInMetres) {
+  //   var pace = (timeInSeconds/distanceInMetres)/60*1000;
+  //   var leftover = pace % 1;
+  //   var minutes = pace - leftover;
+  //   var seconds = Math.round(leftover * 60);
+  //   if (seconds < 10) {
+  //     seconds = `0${seconds}`
+  //   }
+  //   var finalPace = minutes+":"+seconds
+  //   return finalPace
+  // }
 
   function renderCanvas(data) {
 
@@ -178,7 +178,7 @@ export default function Home(props) {
                 errors: 'No content',
                 message: 'User does not have any activities to show.'
               })
-              console.log(userData)
+              // console.log(userData)
             } else if(data.errors) {
               setActivityData({
                 code: 401,
@@ -196,11 +196,11 @@ export default function Home(props) {
                 message: 'Activities are available to show.',
                 data: data
               })
-              console.log(data)
+              // console.log(data)
             }
           })
           .catch(rejected => {
-            console.log(rejected)
+            // console.log(rejected)
             setActivityData({
               code: 404,
               message: 'Activity response has been rejected.',
@@ -215,7 +215,7 @@ export default function Home(props) {
         }
       })
       .catch(rejected => {
-        console.log(rejected)
+        // console.log(rejected)
         setUserData({
           code: 404,
           message: 'User response has been rejected.',
@@ -226,8 +226,8 @@ export default function Home(props) {
   }, [])
 
 
-  console.log(userData)
-  console.log(activityData)
+  // console.log(userData)
+  // console.log(activityData)
 
 
   useEffect(() => {
@@ -245,12 +245,27 @@ export default function Home(props) {
     setModalState({show: false})
   }
 
+  //add esc eventlistener and disablePopup when modalState is true
+  useEffect(() => {
+    const escFunction = (event) => {
+      if(event.keyCode === 27) {
+        disablePopup()
+      }
+    }
+    if(modalState.show) { 
+      document.addEventListener("keydown", escFunction, false);
+    }
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, [modalState.show])
+
   const pickResolution = async(id) => {
     // Todo: implement popup showcase
   }
 
   const modalResolution = async(activityId) => {
-    console.log(activityId)
+    // console.log(activityId)
     setModalState({
       show: true,
       type: 'resolution',
@@ -266,11 +281,11 @@ export default function Home(props) {
       show: true,
       type: 'loading'
     })
-    // var imageUrl = `${server()}/api/render/${id}`
+    // var imageUrl = `${server()}/api/render/strava/${id}`
     // console.log(imageUrl)
     
-    // await fetch(`/api/render/${id}?resolution=square`)
-    await fetch(`/api/render/${id}${resolutionType === 'post' ? '?resolution=square' : ''}`)
+    // await fetch(`/api/render/strava/${id}?resolution=square`)
+    await fetch(`/api/render/strava/${id}${resolutionType === 'post' ? '?resolution=square' : ''}`)
       .then(res => res.blob()) // Gets the response and returns it as a blob
       .then(blob => {
         const objectURL = URL.createObjectURL(blob);
@@ -340,13 +355,13 @@ export default function Home(props) {
                   <div className="text-18">Spend more time on pushing your data and less on the designing <strong>social media content</strong>. Time to get result is less than you need to lace your running shoes laces.</div>
                 </div>
                 <div className="flex-1 flex justify-center">
-                  <Image src="/images/content/generation.jpg" width="427" height="339" />
+                  <Image src="/images/content/generation.jpg" width="427" height="339" alt="generation" />
                 </div>
               </div>
 
               <div className="flex flex-col-reverse md:flex-row gap-64 mt-64">
                 <div className="flex-1 flex justify-center">
-                  <Image src="/images/content/posts.jpg" width="403" height="363" />
+                  <Image src="/images/content/posts.jpg" width="403" height="363" alt="post" />
                 </div>
                 <div className='flex flex-1 flex-col justify-center'>
                   <div className="uppercase font-bold opacity-50">Output in seconds</div>
@@ -408,7 +423,7 @@ export default function Home(props) {
                 var time = formatSeconds(key.moving_time)
                 return (
                   <div key={index}>
-                    {/* <Link href={`${server()}/api/render/${key.id}`}> */}
+                    {/* <Link href={`${server()}/api/render/strava/${key.id}`}> */}
                     <div>
                       <div className='flex items-center rounded-4 mb-8  py-8 px-8 bg-grey/50 hover:bg-grey cursor-pointer' onClick={() => modalResolution(key.id)} activityid={key.id}>
                         {key.map ? 
@@ -445,7 +460,7 @@ export default function Home(props) {
 
           { !userData.errors && activityData.code === 200 && (activityData.data.length > itemsToShow) ?
             <div className="sectionBlock">
-              <button onClick={showmore} className="w-full rounded-4 mb-8 leading-7 py-8 bg-grey/50 hover:bg-grey mt-8 m-auto text-center text-black/70">Show more</button>
+              <button onClick={showmore} className="w-full rounded-4 mb-8 leading-7 py-8 bg-grey/50 hover:bg-grey mt-8 m-auto font-semibold text-center text-black/70">Show more</button>
             </div> : ''}
 
 
@@ -470,13 +485,13 @@ export default function Home(props) {
                 {modalState.type === "resolution" ?
                   <div className='flex justify-center gap-32'>
                     <div className='cursor-pointer' onClick={() => modalDownloadImage('post')}>
-                      <img src="/images/content/formatPost.svg" />
-                      <span className='block pt-16'>Instagram Post</span>
+                      <Image width={220} height={336} alt="Format Post" src="/images/content/formatPost.svg" className='hover:shadow-outline transition rounded-12' />
+                      <span className='block pt-16'>Square</span>
                       <span className='block opacity-50 text-12'>1:1 · 1920 x 1920</span>
                     </div>
                     <div className='cursor-pointer' onClick={() => modalDownloadImage('story')}>
-                      <img src="/images/content/formatStory.svg" />
-                      <span className='block pt-16'>Instagram Story</span>
+                      <Image width={220} height={336} alt="Format Story" src="/images/content/formatStory.svg" className='hover:shadow-outline transition rounded-12' />
+                      <span className='block pt-16'>Portrait</span>
                       <span className='block opacity-50 text-12'>9:16 · 1080x1920</span>
                     </div>
                   </div>
@@ -543,7 +558,7 @@ export default function Home(props) {
 
 
 function LoadingRow(props) {
-  console.log(props.className)
+  // console.log(props.className)
   return (
     <div className={`flex items-center gap-16 text-center rounded-4 h-[55px] mb-8 p-8 bg-grey text-black/50 ${props.className}`}>
       <div className='block w-32 h-32 bg-black/10 ml-4 rounded'></div>

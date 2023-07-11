@@ -43,6 +43,7 @@ module.exports = {
       '4': '.4rem',
       '8': '.8rem',
       '12': '1.2rem',
+      '16': '1.6rem',
       'full': '99999rem',
     },
     spacing: {
@@ -77,7 +78,11 @@ module.exports = {
       'lg': '1024px',
       'xl': '1200px'
     },
-    extend: {},
+    extend: {
+      boxShadow: {
+        'outline': 'inset 0 0 0 2px #2F6EB5',
+      }
+    },
   },
   plugins: [
     'postcss-import',

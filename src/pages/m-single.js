@@ -37,7 +37,7 @@ export default function Workspage() {
 export function Card(props) {
   return(
     <Link href="/m">
-      <a className="">
+      <a>
         <div className="bg-grey-darken w-full aspect-4/3 rounded"></div>
         <div className="py-8">{props.title}</div>
       </a>

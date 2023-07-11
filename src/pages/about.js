@@ -118,7 +118,7 @@ useEffect(() => {
           <li className='mb-16'>
             <span className='block font-bold mb-4 text-20'>Open Startup</span>
             <div className="">
-              <p>We embrace transparency and openness by sharing our metrics with everyone. Check out our current metrics on the <Link href="open-startup"><a className='text-blue underline'>Open Startup</a></Link> page</p>
+              <p>We embrace transparency and openness by sharing our metrics with everyone. Check out our current metrics on the <Link href="open-startup" className='text-blue underline'>Open Startup</Link> page</p>
             </div>
           </li>
           <li className='mb-16'>

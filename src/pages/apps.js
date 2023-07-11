@@ -49,7 +49,7 @@ const [userData, setUserData] = useState(initialData);
       </Head>
 
       <Header user={userData} />
-      
+
       <div className='page'>
         <h1 className="title text-24 sm:text-32 md:text-40 font-black text-center">
           <span className='titleColor inline'>Explore apps</span>
@@ -81,11 +81,11 @@ const [userData, setUserData] = useState(initialData);
           </a>
         </Link>
 
-        <Link href="/twitter-instagram">
+        <Link href="/app/twitter-instagram" >
           <a className="sectionBlock flex flex-col border-2 border-grey rounded p-16 mb-24 text-center font-semibold bg-grey hover:bg-white transition">
             <div className="flex gap-16 justify-center items-center">
               <div className="flex flex-1 flex-col sm:flex-row items-center justify-center gap-8">
-                <Image src="/images/services/twitter.svg" width="24" height="24" alt="Strava" />
+                <Image src="/images/services/twitter.svg" width="24" height="24" alt="Twitter" />
                 Twitter <br className='block sm:hidden' />
               </div>
               <span className='text-white/50'>

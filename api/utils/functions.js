@@ -37,6 +37,10 @@ exports.formatPace = function(timeInSeconds, distanceInMetres) {
   if (seconds < 10) {
     seconds = `0${seconds}`
   }
+  if (seconds === 60) {
+    minutes++
+    seconds = `00`
+  }
   var finalPace = minutes+":"+seconds
   // console.log(finalPace)
   return finalPace

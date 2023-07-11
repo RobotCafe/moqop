@@ -26,7 +26,6 @@ export default function BlogPost() {
               </div>
               <div className="text-18 font-bold mb-8">What is design automation?</div>
               <div className="">Learn more abour how the design automation works and what's the future of generating content based on the data</div>
-
             </a>
           </Link>
         </div>

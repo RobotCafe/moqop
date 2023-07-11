@@ -12,31 +12,19 @@ export default function Footer() {
             </svg>
             by&nbsp;
           </span>
-          <Link href="https://milangladis.com">
-            <a target="_blank" className="mr-8">Milan Gladis</a>
-          </Link>
+          <Link href="https://milangladis.com"  target="_blank"><a className="mr-8">Milan Gladis</a></Link>
         </div>
-        <div className='flex flex-wrap justify-center'>
+        <div className='flex flex-wrap justify-center gap-8'>
           <div className="sm:visible float-left invisible">·</div>
-          <Link href="/blog">
-            <a className="mx-8">Blog</a>
-          </Link>
+          <Link href="/blog"><a className="">Blog</a></Link>
           ·
-          <Link href="/open-startup">
-            <a className="mx-8">Open Startup</a>
-          </Link>
+          <Link href="/open-startup"><a className=''>Open Startup</a></Link>
           ·
-          <Link href="/apps">
-            <a className="mx-8">Apps</a>
-          </Link>
+          <Link href="/apps"><a className=''>Apps</a></Link>
           ·
-          <Link href="/updates">
-            <a className="mx-8">Updates</a>
-          </Link>
+          <Link href="/updates"><a className=''>Updates</a></Link>
           ·
-          <Link href="mailto:hello@moqop.com">
-            <a className="ml-8" target="_blank">Feedback</a>
-          </Link>
+          <Link href="mailto:hello@moqop.com" target="_blank"><a className=''>Feedback</a></Link>
         </div>
       </div>
 

@@ -3,9 +3,9 @@
 const nodeHtmlToImage = require('node-html-to-image');
 var Canvas = require('canvas');
 const polyline = require("@mapbox/polyline");
-const font = require('../fonts/roboto.js');
+const font = require('../../fonts/roboto.js');
 const fontRoboto = font.roboto;
-const {toFixedIfNecessary, formatSeconds, server, hdImage, formatPace} = require('../utils/functions')
+const {toFixedIfNecessary, formatSeconds, server, hdImage, formatPace} = require('../../utils/functions')
 
 
 exports.stravaOne = async function(req,res) {
@@ -56,27 +56,27 @@ exports.stravaOne = async function(req,res) {
         return dataActivity
       })
 
-      var stravaData = await stravaDataa
+    var stravaData = await stravaDataa
+  
+    // async function getImage() {
+      if ((stravaData.photos === undefined) || (stravaData.photos.count === undefined) || (stravaData.photos.count === 0)) {
+        var stravaPicture = false
+        // console.log('stravaPicture something is wrong here')
+        // console.log(stravaPicture)
+        // return false
+      } else {
+        var stravaPicture = await hdImage(stravaData.photos.primary.urls[600])
+        // console.log('stravaPicture is cool')
+        // console.log(stravaPicture)
+      }
+    // }
     
-      // async function getImage() {
-        if ((stravaData.photos === undefined) || (stravaData.photos.count === undefined) || (stravaData.photos.count === 0)) {
-          var stravaPicture = false
-          // console.log('stravaPicture something is wrong here')
-          // console.log(stravaPicture)
-          // return false
-        } else {
-          var stravaPicture = await hdImage(stravaData.photos.primary.urls[600])
-          // console.log('stravaPicture is cool')
-          // console.log(stravaPicture)
-        }
-      // }
-      
-      // Render canvas
-      function renderCanvas() {
-        var Image = Canvas.Image;
-        var canvas = Canvas.createCanvas(1000, 1300);
-        var context = canvas.getContext('2d');
-        var mapPolyline = stravaData.map.polyline
+    // Render canvas
+    function renderCanvas() {
+      var Image = Canvas.Image;
+      var canvas = Canvas.createCanvas(1000, 1300);
+      var context = canvas.getContext('2d');
+      var mapPolyline = stravaData.map.polyline
       let arr = polyline.decode(mapPolyline);
 
       context.clearRect(0, 0, canvas.width, canvas.height);
@@ -300,7 +300,7 @@ exports.stravaOne = async function(req,res) {
               <img src=${stravaPicture} class="picture" />
               `
             : '<div class="solid"></div>'}
-            <img src="${renderCanvas()}" class="canvas" />
+            ${stravaData.map.polyline ? `<img src="${renderCanvas()}" class="canvas" />` : ''}
           </div>
           <script>
           
@@ -342,7 +342,7 @@ exports.stravaOne = async function(req,res) {
 
   } else {
     return res.status(400).send({
-      message: 'User is not logged in!'
+      message: 'User is notg logged in!'
     });
   }
 }
