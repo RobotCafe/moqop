@@ -1,15 +1,26 @@
-### About
-Moqop is a design automation platform. 
+### About Moqop
+[Moqop.com](https://moqop.com) is a design automation platform. 
 One of the first functionality is rendering social media content based on athletes' Strava activity. 
 The rendering engine can be extended to any design templates using APIs as a data source. 
 
 ### Become a sponsor
 Moqop is a one-man show, a non-profit project that generates costs. I'd appreciate any kind of support or sponsorship. Feel free to check my [Github Sponsor page](https://github.com/sponsors/milangladis)
 
+---
+
 #### Use cases
 - Generate an Instagram story or post based on the athlete's Strava activity
 - WIP contains rendering Twitter's Tweets as an image that can be shared on other social media platforms. 
 - Idea: Generate ads content via API for any resolution based on dynamic data and generated design templates
+
+---
+
+#### Examples
+<div style="display: flex; justify-content: space-between;">
+<img src="https://moqop.com/_next/image?url=%2Fimages%2Fexamples%2F3.jpg&w=640&q=75" width="30%">
+<img src="https://moqop.com/_next/image?url=%2Fimages%2Fexamples%2F4.jpg&w=640&q=75" width="30%">
+<img src="https://moqop.com/_next/image?url=%2Fimages%2Fexamples%2F1.jpg&w=640&q=75" width="30%">
+</div>
 
 ---
 
