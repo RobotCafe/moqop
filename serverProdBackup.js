@@ -5,10 +5,23 @@ var bodyParser = require('body-parser')
 var session = require('express-session')
 var routes = require('./api/routes');
 var passport = require('passport');
+require('dotenv').config();
 
 const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
 const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
-const serviceAccount = require('./api/utils/firebase.json');
+// const serviceAccount = require('./api/utils/firebase.json');
+const serviceAccount = {
+  "type": "service_account",
+  "project_id": "mokop-io",
+  "private_key_id": process.env.PRIVATE_KEY_ID,
+  "private_key": process.env.PRIVATE_KEY,
+  "client_email": process.env.CLIENT_EMAIL,
+  "client_id": process.env.CLIENT_ID,
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": process.env.CLIENT_X509_CERT_URL
+};
 
 initializeApp({
   credential: cert(serviceAccount)
@@ -22,8 +35,8 @@ const dev = process.env.NODE_ENV !== 'production'
 const server = dev ? 'http://192.168.0.182:8000' : 'https://moqop.com';
 const app = next({ dev })
 const handle = app.getRequestHandler()
-var STRAVA_CLIENT_ID = '80214';
-var STRAVA_CLIENT_SECRET = '25b8bfd5d74d1ed03eee1acb88f3ff664fdcc346';
+var STRAVA_CLIENT_ID = process.env.CLIENT_ID_STRAVA;
+var STRAVA_CLIENT_SECRET = process.env.CLIENT_SECRET_STRAVA;
 
 passport.serializeUser(async function(user, done) {
   var userIdString = String(user._json.id)

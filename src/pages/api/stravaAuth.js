@@ -1,3 +1,4 @@
+// require('dotenv').config();
 
 // export async function getStaticProps(context) {
 //   const entries = await db.collection('access_tokens').get()

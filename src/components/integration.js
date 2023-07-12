@@ -26,7 +26,6 @@ export default function Integration(props) {
         </div>
       : 
       '' }
-      {/* <Button text="Log in with Strava" href="https://www.strava.com/oauth/authorize?client_id=80214&redirect_uri=http://localhost:8000/api/cookie/set&response_type=code&scope=activity:read_all" className="mt-16 bg-orange" /> */}
     </div>
   )
 }

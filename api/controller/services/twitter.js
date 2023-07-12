@@ -1,11 +1,12 @@
 'use strict';
+require('dotenv').config();
 
 exports.get = async function(req, res) {
 
 
   // Replace the placeholder text with your own Twitter API keys
-  const twitterApiKey = "3WWVPkgczP0g6D6O7VWlUpMHG";
-  const twitterApiSecret = "mdqK9mFheGN8apGXhFtx1z9JINecWJkU2o8Ll3n3hSADYqppCP";
+  const twitterApiKey = process.env.TWITTER_API_KEY;
+  const twitterApiSecret = process.env.TWITTER_API_SECRET;
 
   const base64Credentials = btoa(`${twitterApiKey}:${twitterApiSecret}`);
   const credentials = `Basic ${base64Credentials}`;

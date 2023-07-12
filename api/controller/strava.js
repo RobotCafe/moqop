@@ -1,6 +1,7 @@
 'use strict';
 const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
 const db = getFirestore();
+require('dotenv').config();
 
 exports.activity = async function(req,res) {
 

@@ -3,7 +3,7 @@ const { initializeApp, applicationDefault, cert } = require('firebase-admin/app'
 const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
 const db = getFirestore();
 const crypto = require("crypto");
-
+require('dotenv').config();
 
 async function isUser(userSessionId) {
   // console.log('doc: '+userSessionId)
