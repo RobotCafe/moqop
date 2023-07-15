@@ -2,16 +2,14 @@
 [Moqop.com](https://moqop.com) is a design automation platform. 
 One of the first functionality is rendering social media content based on athletes' Strava activity. 
 The rendering engine can be extended to any design templates using APIs as a data source. 
-
-### Become a sponsor
-Moqop is a one-man show, a non-profit project that generates costs. I'd appreciate any kind of support or sponsorship. Feel free to check my [Github Sponsor page](https://github.com/sponsors/milangladis)
-
----
-
 #### Use cases
 - Generate an Instagram story or post based on the athlete's Strava activity
 - WIP contains rendering Twitter's Tweets as an image that can be shared on other social media platforms. 
 - Idea: Generate ads content via API for any resolution based on dynamic data and generated design templates
+
+
+### Become a sponsor
+Moqop is a one-man show, a non-profit project that generates costs. I'd appreciate any kind of support or sponsorship. Feel free to check my [Github Sponsor page](https://github.com/sponsors/milangladis)
 
 ---
 
@@ -25,14 +23,8 @@ Moqop is a one-man show, a non-profit project that generates costs. I'd apprecia
 ---
 
 #### How to set up Moqop locally?
-1. Signup to Strava and generate your API key
-2. Signup to Firebase and generate your API keys
-    - In Firebase, go to `Project settings` → `Service accounts` → `Generate new private keys`
-3. Set up the .env file
-4. Run the project with 
-    ```bash
-    npm start
-    ```
+1. Signup to Strava and Firebase to generate your API keys and set up your .env file
+2. Run the project with `npm start`
 5. Open [localhost:8000](http://localhost:8000)
 
 ---
